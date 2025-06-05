@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TMS</title>
+
+    <link rel=stylesheet href="/fontawesome-free-6.6.0-web/fontawesome-free-6.6.0-web/css/all.css">
+
+    <link rel="stylesheet" href="css/login.css">
+    <script src="jquery/jquery-3.7.1.min.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <!-- left side -->
+        <div class="image-section">
+            <!-- short  video -->
+            <video autoplay muted loop id="myVideo">
+                <source src="video/video.mp4" type="video/mp4">
+            </video>
+            <div class="image-content" align="center">
+                <h2>Welcome to OKI-DOKI Terminal</h2>
+                <p>Experience seamless collaboration and endless possibilities with our innovative tools.</p>
+            </div>
+        </div>
+
+        <!-- right side -->
+        <div class="login-section">
+            <div class="login-box">
+                <!-- login form header ->(logo)  -->
+                <div class="login-header">
+                    <img src="images/header-logo.png" alt="Logo">
+                    <h1>Welcome back</h1>
+                    <p>Enter your credentials to access your account</p>
+                </div>
+
+                <!-- login form -->
+                <form action="/login" method="post" class="sign-in-form">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <div class="input-group">
+                            <input type="text" id="textUsername" placeholder="Enter Username" required name="username">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="input-group">
+                            <input type="password" id="textPassword" placeholder="Enter Password" required
+                                name="password">
+                        </div>
+                    </div>
+
+                    <div class="remember-forgot">
+                        <label class="remember-me">
+                            <input type="checkbox">
+                            <span>Remember me</span>
+                        </label>
+                        <a href="#" class="forgot-password">Forgot password?</a>
+                    </div>
+                    <input type="submit" value="Sign in to your account" class="sign-in-button" id="loginButton"
+                        onclick="signingButton()">
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/login.js"></script>
+</body>
+
+</html>

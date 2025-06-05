@@ -1,0 +1,77 @@
+ /* goggle map */
+   html,
+   body {
+       height: 100%;
+       margin: 0;
+       padding: 0;
+   }
+
+   #container {
+       height: 100%;
+       display: flex;
+   }
+
+   #map {
+       flex-basis: 0;
+       flex-grow: 4;
+       height: 900px;
+   }
+
+   #map {
+       flex: auto;
+   }
+
+   #sidebar {
+       flex: 0 1 auto;
+       padding: 0;
+   }
+
+   #sidebar>div {
+       padding: 0.5rem;
+   }
+   /* ------------------------------------------------------------------- */
+
+ .section-title {
+     color: #1f2937;
+     border-bottom: 2px solid #e5e7eb;
+     padding-bottom: 12px;
+     margin-bottom: 20px;
+     font-weight: 600;
+     display: flex;
+     align-items: center;
+     gap: 10px;
+ }
+
+ .section-title::before {
+     content: '';
+     display: inline-block;
+     width: 8px;
+     height: 8px;
+     background: #10b981;
+     border-radius: 50%;
+ }
+ .nav-link {
+     color: #1f2937;
+ }
+ .nav-link:focus, .nav-link:hover {
+     color: #0CAF60;
+ }
+ .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+     color: var(--bs-nav-pills-link-active-color);
+     background-color: #0CAF60;
+ }
+
+ /* ---------------------------------- */
+ #viewMap {
+     flex-basis: 0;
+     flex-grow: 4;
+     height: 450px;
+     border-radius: 10px;
+ }
+
+ #viewMap {
+     flex: auto;
+ }
+ /* ------------------------------------------------------------------- */
+
+

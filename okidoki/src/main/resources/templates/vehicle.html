@@ -1,0 +1,296 @@
+<html lang="en">
+
+<head>
+    <head th:replace="fragments/head :: headFragment"></head>
+</head>
+
+<body>
+    <div class="sidebar">
+        <div th:replace="fragments/sidebar :: sidebarFragment"></div>
+    </div>
+    <div class="main-content">
+        <div th:replace="fragments/topbar :: topbarFragment"></div>
+
+        <div class="container-fluid">
+            <!-- head area  -->
+            <div class="row align-items-center justify-content-between mt-3 mb-4">
+                <div class="col-auto">
+                    <div class="title">Manage Vehicles</div>
+                    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/dashboard"
+                                    style="text-decoration: none; color: #0CAF60;">Dashboard</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Vehicle</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-primary" type="button" data-bs-toggle="modal" id="addButton"
+                        data-bs-target="#vehicleFormModal" aria-controls="staticBackdrop"><i
+                            class="fa-solid fa-plus"></i>
+                        Add Vehicle
+                    </button>
+                </div>
+            </div>
+            <!-- head area  -->
+
+
+            <!-- serarch area -->
+            <div class="main-card mb-3">
+                <div class="row">
+                    <div class="col-5"></div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-4">
+                                <label for="" class="form-label">Name</label>
+                                <input type="text" name="" id="" placeholder="Search Name" class="form-control">
+                            </div>
+                            <div class="col-4">
+                                <label for="" class="form-label">Vehicle Type</label>
+                                <select name="" id="" class="form-select">
+                                    <option value="">Select Vehicle Type</option>
+                                </select>
+                            </div>
+                            <div class="col-4">
+                                <label for="" class="form-label">Status</label>
+                                <select name="" id="" class="form-select">
+                                    <option value="">Select Status</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1 mt-4">
+                        <button class="btn btn-search mt-3" data-bs-toggle="tooltip" data-bs-placement="top"
+                            data-bs-title="Search"><i class="fas fa-search"></i></button>
+                        <button class="btn btn-reset mt-3" data-bs-toggle="tooltip" data-bs-placement="top"
+                            data-bs-title="Reset"><i class="fa-solid fa-rotate-right"></i></button>
+                    </div>
+                </div>
+            </div>
+            <!-- search area end -->
+
+
+            <!-- Table Area -->
+            <div class="main-card">
+                <div class="table-responsive">
+                    <table class="table table-hover" id="vehicleTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Transport Name</th>
+                                <th>Vehicle No</th>
+                                <th>Vehicle Type</th>
+                                <th>Make</th>
+                                <th>Model</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="vehicleTableBody">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- Table Area End -->
+
+            <!-- Modal -->
+            <div class="modal fade" id="vehicleFormModal" data-bs-backdrop="static" data-bs-keyboard="false"
+                tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Vehicle Registration</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                                onclick="refreshVehicleForm()"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="vehicleRegistrationForm" onsubmit="return false">
+                                <div class="row">
+                                    <div class="profile-section">
+                                        <div class="p-4">
+
+                                            <!-- Transport Details -->
+                                            <div class="mb-4">
+                                                <h4 class="section-title">Transport Information</h4>
+                                                <div class="row">
+                                                    <div class="col-md-12 mb-3">
+                                                        <label for="textVehicleTransportName"
+                                                            class="form-label ">Transport
+                                                            Name</label>
+                                                        <select name="" id="textVehicleTransportName"
+                                                            class="form-select"
+                                                            onchange="selectDynamicElementValidator(this,'vehicle','supplier_id')"
+                                                            required></select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Vehicle Details -->
+                                            <div class="mb-4">
+                                                <h4 class="section-title">Vehicle Information</h4>
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="textVehicleNo" class="form-label">Vehicle No<span
+                                                                class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control " id="textVehicleNo"
+                                                            placeholder="Enter Vehicle No"
+                                                            onkeyup="validator(this,'^[A-Za-z]{2}[-][A-Za-z]{2,3}[-][0-9]{4}$','vehicle','vehicle_no')"
+                                                            required>
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="selectVehicleType" class="form-label">Vehicle
+                                                            Type<span class="text-danger">*</span></label>
+                                                        <select type="text" class="form-select" id="selectVehicleType"
+                                                            placeholder="Enter Vehicle type"
+                                                            onchange="selectDynamicElementValidator(this,'vehicle','vehicle_type_id')"
+                                                            required>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-4 mb-3">
+                                                        <label for="selectVehicleMake" class="form-label">Make<span
+                                                                class="text-danger">*</span></label>
+                                                        <select type="text" class="form-select" id="selectVehicleMake"
+                                                            placeholder="Enter Vehicle type"
+                                                            onchange="selectDynamicElementValidator(this,'vehicle','vehicle_make_id')"
+                                                            required> </select>
+                                                    </div>
+                                                    <div class="col-md-4 mb-3">
+                                                        <label for="textVehicleModel" class="form-label">Model<span
+                                                                class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" id="textVehicleModel"
+                                                            placeholder="Enter Vehicle Model"
+                                                            onkeyup="validator(this,'^[A-Za-z]{1,30}$','vehicle','model')"
+                                                            required>
+                                                    </div>
+                                                    <div class="col-md-4 mb-3">
+                                                        <label for="textVehicleYear" class="form-label">Make Year<span
+                                                                class="text-danger">*</span></label>
+                                                        <input type="date" class="form-control" id="textVehicleYear"
+                                                            placeholder="Enter Vehicle Year"
+                                                            onchange="dateElementValidator(this,'vehicle','make_year')"
+                                                            required>
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="textVehicleInsuranceExpireDate"
+                                                            class="form-label ">Insurance
+                                                            Expire Date<span class="text-danger">*</span></label>
+                                                        <input type="date" class="form-control "
+                                                            id="textVehicleInsuranceExpireDate"
+                                                            onchange="dateElementValidator(this,'vehicle','insurance_expire_date')"
+                                                            required>
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="textVehicleRevenuLicenseExpireDate"
+                                                            class="form-label">Revenu
+                                                            License Expire Date<span
+                                                                class="text-danger">*</span></label>
+                                                        <input type="date" class="form-control"
+                                                            id="textVehicleRevenuLicenseExpireDate"
+                                                            onchange="dateElementValidator(this,'vehicle','revenu_license_expire_date')"
+                                                            required>
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="textVehicleStartMeterReading"
+                                                            class="form-label">Start
+                                                            Meter
+                                                            Reading<span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control"
+                                                            id="textVehicleStartMeterReading" required
+                                                            placeholder="Enter Start Meter Reading"
+                                                            onkeyup="validator(this,'^[0-9]{1,30}$','vehicle','startup_meter_reading')">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="textVehicleCurrentMeterReading"
+                                                            class="form-label">Current
+                                                            Meter Reading</label>
+                                                        <input type="text" class="form-control"
+                                                            id="textVehicleCurrentMeterReading" placeholder=""
+                                                            onkeyup="validator(this,'^[0-9]{1,30}$','vehicle','current_meter_reading')">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="row mt-3"></div>
+                                                        <label for="" class="form-label">Vehicle Category :</label>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio"
+                                                                name="inlineRadioOptions" id="radioOwnVehicle"
+                                                                value="Own" onchange="vehicle.category =this.value">
+                                                            <label class="form-check-label" for="radioOwnVehicle">Own
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio"
+                                                                name="inlineRadioOptions" id="radioNonOwnVehicle"
+                                                                value="Non Own" onchange="vehicle.category =this.value">
+                                                            <label class="form-check-label" for="radioNonOwnVehicle">Non
+                                                                own</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Additional Information -->
+                                            <div class="mb-4">
+                                                <h4 class="section-title">Additional Information</h4>
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Status</label>
+                                                        <select id="textVehicleStatus" class="form-select"
+                                                            onchange="selectDynamicElementValidator(this,'vehicle','vehicle_status_id')">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- buttons -->
+                                            <div  class="mb-4">
+                                                <div class="row" >
+                                                    <div class="col-6">
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="row">
+                                                            <div class="col-4"></div>
+                                                            <div class="col-4 ">
+                                                                <button type="button" id="deleteButtonFrom" class="btn-3d btn-3d-cancel text-end"
+                                                                        onclick="refreshVehicleForm()">
+                                                                    <i class="fa-solid fa-xmark me-3"></i>
+                                                                    Cancel</button>
+                                                            </div>
+                                                            <div class="col-4 text-end">
+                                                                <button type="button" class="btn-3d btn-3d-update text-end" id="updateButton"
+                                                                        onclick="vehicleFormUpdate()">
+                                                                    <i class="fa-solid fa-arrows-rotate me-3"></i>
+                                                                    Update</button>
+
+                                                                <button type="submit" id="submitButton" class="btn-3d btn-3d-submit text-end"
+                                                                        onclick="vehicleFormSubmit()">
+                                                                    <i class="fa-solid fa-check me-3"></i>
+                                                                    Submit</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <!-- buttons -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal End -->
+
+        </div>
+    </div>
+    <div th:replace="fragments/loading :: overlayFragment"></div>
+
+    <script src="/commenjs/reusabal.js"></script>
+    <script src="/commenjs/commanValidation.js"></script>
+    <script src="/commenjs/commonTable.js"></script>
+    <script src="js/vehicle.js"></script>
+    <script src="js/sidebar.js"></script>
+</body>
+
+</html>

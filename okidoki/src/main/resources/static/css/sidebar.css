@@ -1,0 +1,263 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #e2e8f0 0%, #f1f5f9 100%);
+
+    /*background-color: #f9fafb;*/
+}
+
+/* sidebar  */
+.sidebar {
+    width: 300px;
+    height: 100vh;
+    background-color: #ffffff;
+    /*border-right: 1px solid #e5e7eb;*/
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: 20px 0;
+    font-size: 14px;
+    /*border-radius: 25px;*/
+    /*margin-top: 20px;*/
+    margin-bottom: 20px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 20px;
+}
+
+.logo img {
+    height: 30px;
+}
+
+.search-container {
+    padding: 0 15px 20px;
+}
+
+/* serch box */
+.search-box {
+    position: relative;
+    width: 100%;
+}
+
+/* search input */
+.search-box input {
+    width: 100%;
+    padding: 8px 15px 8px 35px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 14px;
+    background-color: #f3f4f6;
+}
+
+/* serach icon */
+.search-icon {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    color: #9ca3af;
+}
+
+/* menu item */
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 18px;
+    color: #4b5563;
+    text-decoration: none;
+    position: relative;
+    margin: 2px 5px;
+    cursor: pointer;
+    font-weight: 600;
+    border-radius: 9px;
+}
+
+.dashboard-link {
+    color: #4b5563;
+    text-decoration: none;
+}
+
+.menu-item:hover .dashboard-link {
+    color: #f3f4f6;
+}
+
+/* menu item hover color */
+.menu-item:hover {
+    color: #f3f4f6;
+    background: linear-gradient(141.55deg, #8de7b7 3.46%, #0CAF60 99.86%), #0CAF60;
+    transform: translateX(5px);
+    transition: all 0.3s ease;
+}
+
+.menu-icon {
+
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* menu item icon hover design */
+.menu-item:hover i.menu-icon {
+    color: #0CAF60;
+    background-color: white;
+
+
+}
+
+/* active menu item */
+.menu-item.active {
+    background-color: #f0f4ff;
+    border-left: 3px solid #00a389;
+    padding-left: 12px;
+    color: #00a389;
+}
+
+/* menu item icon  */
+.menu-item i {
+    margin-right: 8px;
+    margin-left: 0;
+    font-size: 18px;
+    padding: 10px;
+    text-align: center;
+    border-radius: 9px;
+    transition: all 0.3s ease;
+}
+
+/* menu item arrow key of the dropdown */
+.menu-item .chevron {
+    position: absolute;
+    right: 15px;
+    transition: transform 0.3s;
+}
+
+/* menu item arrow key of the dropdown */
+.menu-item.open .chevron {
+    transform: rotate(90deg);
+}
+
+/* submenu */
+.submenu {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+/* when opening the menu tab */
+.submenu.open {
+    max-height: 500px;
+    transition: max-height 0.5s ease-in;
+}
+
+/* submenu items */
+.submenu-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px 10px 45px;
+    color: #4b5563;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* submenu circle icon */
+.submenu-item i {
+    margin-right: 10px;
+    font-size: 10px;
+    width: 20px;
+    text-align: center;
+    color: #0CAF60;
+
+}
+
+/* submenu hover colors */
+.submenu-item:hover {
+    background-color: #f3f4f6;
+    color: #00a389;
+}
+
+/* Main Content Area */
+.main-content {
+    margin-left: 300px;
+    /*padding: 15px;*/
+
+}
+
+.nav-container {
+    height: calc(100vh - 110px);
+    overflow-y: auto;
+}
+
+/*------------------topbat css----------------------------*/
+
+:root {
+    --primary-color: #4a90e2;
+    --text-color: #333;
+    --bg-color: #fff;
+    --border-color: #eee;
+}
+.profile-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.profile-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+}
+
+.profile-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: var(--bg-color);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    width: 200px;
+    display: none;
+    margin-top: 10px;
+}
+
+
+.profile-dropdown.active {
+    display: block;
+}
+
+.profile-menu {
+    list-style: none;
+    padding: 10px 0;
+}
+
+.profile-menu li {
+    padding: 10px 20px;
+    transition: 0.3s ease;
+}
+
+.profile-menu li:hover {
+    background: var(--border-color);
+}
+
+.profile-menu a {
+    color: var(--text-color);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

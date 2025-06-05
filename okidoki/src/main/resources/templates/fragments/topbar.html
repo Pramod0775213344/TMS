@@ -1,0 +1,89 @@
+<!-- side bar toggle-->
+<div class="topbar" th:fragment="topbarFragment" >
+    <div class="card static-position">
+
+        <div class="row">
+            <div class="col-6">
+                <input type="text" name="" id="" placeholder="Search Here..........." class="form-control">
+            </div>
+            <div class="col-2"></div>
+            <div class="col-4">
+
+                <div class="dropdown" style="margin-left: 450px">
+                    <button class="profile-btn">
+                        <div class="profile-avatar">A</div>
+                        <span class="fw-bold me-2" th:text ="${logedusername}"></span>
+                    </button>
+                    <div class="profile-dropdown">
+                        <ul class="profile-menu">
+                            <li>
+                                <button class="profile-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    👤 My Profile
+                                </button>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    ⚙️ Settings
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    📫 Messages
+                                </a>
+                            </li>
+                            <li class="logout-btn">
+                                <a href="/logout">
+                                    🚪 Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!-- <div class="toggle">
+    <span><i class="fa-solid fa-bars"></i></span>
+</div>
+<div class="serach-bar ">
+    <input type="text" name="" id="" placeholder="Serch Here..........." class="form-control">
+</div>
+<div>
+  
+</div> -->
+
+<!-- 
+<div class="profile-image">
+    <div class="" id="notification">
+        <i class="fa-solid fa-bell fa-shake "></i>
+    </div>
+    <img src="/css/WhatsApp Image 2024-10-12 at 14.52.27_a6b58bff.jpg" alt="">
+    <div class="profile-info">
+        <h5 class="prifile-name mb-0 fw-bold" th:text ="${logedusername}"></h5>
+        <p class="profile-role text-center mt-0">Admin</p>
+    </div>
+    
+
+</div> -->

@@ -1,0 +1,322 @@
+<html lang="en">
+
+<head th:replace="fragments/head :: headFragment"></head>
+
+<head>
+    <link rel="stylesheet" href="css/customerPayment.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div th:replace="fragments/sidebar :: sidebarFragment"></div>
+    </div>
+    <div class="main-content">
+        <div th:replace="fragments/topbar :: topbarFragment"></div>
+        <div class="container-fluid">
+
+            <!-- Title  and add button-->
+            <div class="row align-items-center justify-content-between mt-3 mb-4">
+                <div class="col-auto">
+                    <div class="title">Manage Payments</div>
+                    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/dashboard"
+                                    style="text-decoration: none; color: #0CAF60;">Dashboard</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Customer Payment</li>
+                        </ol>
+                    </nav>
+                </div>
+
+            </div>
+            <!-- serarch area -->
+            <div class="main-card mb-3">
+                <div class="row">
+                    <div class="col-5">
+                        <label for="selectCustomerForInvoice" class="form-label">Customer Name</label>
+                        <select id="selectCustomerForInvoice" class="form-select">
+                            <option>Select Customer</option>
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+            <!-- Main Table Card -->
+            <div class="main-card mb-3">
+                <!-- Table Area -->
+                <div class="table-responsive">
+
+                    <!-- table area -->
+                    <table class="table" id="customerPaymentTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Booking No</th>
+                                <th>Company Name</th>
+                                <th>Distance</th>
+                                <th>Amount</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customerPaymentTableBody">
+                        </tbody>
+                    </table>
+                    <!-- table area -->
+                </div>
+
+            </div>
+            <div class="main-card">
+                <div class="row">
+                    <div class="col-6">
+                        <h4>Total Amount</h4>
+                    </div>
+                    <div class="col-4">
+                        <input type="text" class="form-control"
+                               id="selectedCustomerTotalAmount"
+                               required>
+                    </div>
+                    <div class="col-2">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Invoice
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal for view invoice-->
+    <div class="modal fade" id="invoiceviewform"  data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="row" style="background-color: #F3F4FF; border-bottom: 2px solid #f0f0f0">
+                    <div class="col-4 text-center ">
+                        <img src="images/header-logo.png" alt="Logo" class="mt-5">
+                    </div>
+                    <div class="col-4"></div>
+                    <div class="col-4 text-center">
+                        <h1 class="mt-5" style="color: #4CAF50">INVOICE</h1>
+                        <p>Oki-doki Global</p>
+                    </div>
+                </div>
+                <div class="modal-body">
+<!--                    invoice infoe area-->
+                    <div class="invoice-info">
+                        <div class="billing-info">
+                            <div class="info-block">
+                                <h3>From</h3>
+                                <p><strong>OKi Doki Global.</strong></p>
+                                <p>No 390</p>
+                                <p>Avissawella Road</p>
+                                <p>Wellmpitiya</p>
+                                <p>Tax ID: 83-7245681</p>
+                            </div>
+
+                            <div class="info-block">
+                                <h3>Bill To</h3>
+                                <p><strong  id="viewCustomername"></strong></p>
+                                <p id="viewCustomerAddress">Attn: Accounts Payable</p>
+                                <p id="viewCustomerRegNo"></p>
+                            </div>
+                        </div>
+
+                        <div class="invoice-details">
+                            <div class="info-block">
+                                <h3>Invoice Details</h3>
+                                <p><strong>Invoice Number:</strong> INV-2025-04273</p>
+                                <p><strong>Invoice Date:</strong> April 27, 2025</p>
+                                <p><strong>Due Date:</strong> May 27, 2025</p>
+                                <p><strong>Payment Terms:</strong> Net 30</p>
+                                <p><strong>Reference:</strong> PO-20254821</p>
+                            </div>
+
+                            <div class="info-block">
+                                <h3>Account Manager</h3>
+                                <p><strong>Name:</strong> Michael Chen</p>
+                                <p><strong>Email:</strong> m.chen@freightmaster.com</p>
+                                <p><strong>Phone:</strong> (415) 555-8901 ext. 312</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 style="margin-bottom: 20px;margin-top: 20px; color: #4CAF50;">Booking Summery</h3>
+
+                        <div class="booking">
+                            <div class="card-header">
+                                <h3 id="viewBooking" class="viewBooking">Booking #<span id="viewBookingNo">CFC00001</span></h3>
+                                <h3 id="viewBookingStatus" class="booking-status status-completed"></h3>
+                            </div>
+                            <div class="card-body">
+                                    <div class="bookingDetails">
+                                        <h4>Pickup</h4>
+                                        <p id="viewPickupLocation"></p>
+                                    </div>
+                                    <div class="bookingDetails">
+                                        <h4>Delivery</h4>
+                                        <p id="viewDeliveryLocation"></p>
+                                    </div>
+                                    <div class="bookingDetails">
+                                        <h4>Distance</h4>
+                                        <p id="viewDistance"></p>
+                                    </div>
+                                    <div class="bookingDetails">
+                                        <h4>Pickup Date</h4>
+                                        <p id="viewPickupDateTime"></p>
+                                    </div>
+                                    <div class="bookingDetails">
+                                        <h4>Delivery Date</h4>
+                                        <p id="viewDeliveryDateTime"></p>
+                                    </div>
+                                    <div class="bookingDetails">
+                                        <h4>Vehicle Type</h4>
+                                        <p id="viewVehicleType"></p>
+                                    </div>
+                                </div>
+                            <div class="bookingDetailsTable">
+                                <table class="table">
+                                    <thead>
+                                    <th>Description</th>
+                                    <th>Quantity</th>
+                                    <th>Unit</th>
+                                    <th>Rate</th>
+                                    <th>Amount</th>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Distance</td>
+                                        <td id="viewDistanceQuantity"></td>
+                                        <td>Km</td>
+                                        <td id="viewDistanceRate"></td>
+                                        <td id="viewDistanceTotal" class="text-end"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Additional Distance</td>
+                                        <td id="viewAdditionalKm"></td>
+                                        <td>Km</td>
+                                        <td id="viewAdditionalKmRate"></td>
+                                        <td id="viewAdditionalDistanceTotal" class="text-end"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="booking-subtotal">
+                                <table class="subtotal-table">
+                                    <tr>
+                                        <td>Subtotal:</td>
+                                        <td class="subtotal-value" id="subtotalValue"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tax (18%):</td>
+                                        <td class="subtotal-value" id="taxValue"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Booking Total:</strong></td>
+                                        <td class="subtotal-value" id="lastTotalValue"><strong></strong></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+<!--                    invoice total last-->
+                    <div class="invoice-total">
+                        <div class="totallabel">INVOICE TOTAL</div>
+                        <div class="totalamount" id="totalInvoiceAmount"></div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-8">
+                        </div>
+                        <div class="col-4 text-end">
+                            <button class="btn btn-success" onclick="inovoiceGenearteButton()">Generate</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--all bookings  Modal -->
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="row" style="background-color: #F3F4FF; border-bottom: 2px solid #f0f0f0">
+                    <div class="col-4 text-center ">
+                        <img src="images/header-logo.png" alt="Logo" class="mt-5">
+                    </div>
+                    <div class="col-4"></div>
+                    <div class="col-4 text-center">
+                        <h1 class="mt-5" style="color: #4CAF50">INVOICE</h1>
+                        <p>Oki-doki Global</p>
+                    </div>
+                </div>
+                <div class="modal-body">
+                  <!--  invoice infoe area-->
+                    <div class="invoice-info"   >
+                        <div class="billing-info">
+                            <div class="info-block">
+                                <h3>From</h3>
+                                <p><strong>OKi Doki Global.</strong></p>
+                                <p>No 390</p>
+                                <p>Avissawella Road</p>
+                                <p>Wellmpitiya</p>
+                                <p>Tax ID: 83-7245681</p>
+                            </div>
+
+                            <div class="info-block">
+                                <h3>Bill To</h3>
+                                <p><strong  id="viewCustomerNameAll"></strong></p>
+                                <p id="viewCustomerAddressAll">Attn: Accounts Payable</p>
+                                <p id="viewCustomerRegNoAll"></p>
+                            </div>
+                        </div>
+
+                        <div class="invoice-details">
+                            <div class="info-block">
+                                <h3>Invoice Details</h3>
+                                <p><strong>Invoice Number:</strong> INV-2025-04273</p>
+                                <p><strong>Invoice Date:</strong> April 27, 2025</p>
+                                <p><strong>Due Date:</strong> May 27, 2025</p>
+                                <p><strong>Payment Terms:</strong> Net 30</p>
+                                <p><strong>Reference:</strong> PO-20254821</p>
+                            </div>
+
+                            <div class="info-block">
+                                <h3>Account Manager</h3>
+                                <p><strong>Name:</strong> Michael Chen</p>
+                                <p><strong>Email:</strong> m.chen@freightmaster.com</p>
+                                <p><strong>Phone:</strong> (415) 555-8901 ext. 312</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 style="margin-bottom: 20px;margin-top: 20px; color: #4CAF50;">Booking Summery</h3>
+<!--                        dynamic card create karanna oni-->
+                        <div class="booking" id="bookingInvoiceDiv">
+
+                        </div>
+
+                    </div>
+                   <!-- invoice total last-->
+                    <div class="invoice-total">
+                        <div class="totallabel">INVOICE TOTAL</div>
+                        <div class="totalamount" id="viewlastTotalValueAll"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="fragments/loading :: overlayFragment"></div>
+
+    <script src="/commenjs/reusabal.js"></script>
+    <script src="/commenjs/commanValidation.js"></script>
+    <script src="/commenjs/commonTable.js"></script>
+    <script src="js/customerPayment.js"></script>
+    <script src="js/sidebar.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,34 @@
+package lk.okidoki.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import lk.okidoki.modal.Supplier;
+
+public interface SupplierRepository extends JpaRepository<Supplier, Integer> {
+
+    // nic eka database eken ganna query eka
+    @Query(value = "select s from Supplier s where s.nic = ?1")
+    Supplier getByNic(String nic);
+
+    // email eka database eken ganna query eka
+    @Query(value = "select s from Supplier s where s.email = ?1")
+    Supplier getByEmail(String email);
+
+    // Mobile no eka database eken ganna query eka
+    @Query(value = "select s from Supplier s where s.mobileno = ?1")
+    Supplier getByMobileNo(String mobileno);
+
+    // driving license no eka database eken ganna quey eka
+    @Query(value = "select  s from Supplier  s where s.driving_licence_no =?1")
+    Supplier getByDL(String drivingLicenceNo);
+
+    // transport name eka database eken ganna query eka
+    @Query(value = "select s from Supplier s where s.transportname = ?1")
+    Supplier getByTransportName(String transportname);
+
+    @Query(value = "select s from Supplier s where s.supplier_status_id.id = 1")
+    List<Supplier> getAllActiveSupplier();
+}

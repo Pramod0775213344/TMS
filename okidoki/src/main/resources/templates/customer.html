@@ -1,0 +1,325 @@
+<html lang="en">
+
+<head th:replace="fragments/head :: headFragment"></head>
+
+<head>
+    <link rel="stylesheet" href="css/customer.css">
+
+</head>
+
+<body>
+    <div class="sidebar">
+        <div th:replace="fragments/sidebar :: sidebarFragment"></div>
+    </div>
+
+    <div class="main-content">
+        <div th:replace="fragments/topbar :: topbarFragment"></div>
+        <div class="container-fluid">
+
+
+            <!-- Title  and add button-->
+            <div class="row align-items-center justify-content-between mt-3 mb-4">
+                <div class="col-auto">
+                    <div class="title">Manage Customers</div>
+                    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li  class="breadcrumb-item"><a href="/dashboard" style="text-decoration: none; color: #0CAF60;">Dashboard</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Customer</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-primary" type="button" data-bs-toggle="modal" id="addButton"
+                        data-bs-target="#customerModal" aria-controls="staticBackdrop"><i class="fa-solid fa-plus"></i>
+                        Add Company
+                    </button>
+                </div>
+            </div>
+            <!-- serarch area -->
+            <div class="main-card mb-3">
+                <div class="row">
+                    <div class="col-5"></div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-4">
+                                <label for="" class="form-label">Name</label>
+                                <input type="text" name="" id="" placeholder="Search Name" class="form-control">
+                            </div>
+                            <div class="col-4">
+                                <label for="" class="form-label">Business Type</label>
+                                <select name="" id="" class="form-select">
+                                    <option value="">Select Business Type</option>
+                                </select>
+                            </div>
+                            <div class="col-4">
+                                <label for="" class="form-label">Status</label>
+                                <select name="" id="" class="form-select">
+                                    <option value="">Select Status</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1 mt-4">
+                        <button class="btn btn-search mt-3" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Search"><i class="fas fa-search"></i></button>
+                        <button class="btn btn-reset mt-3" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Reset"><i class="fa-solid fa-rotate-right"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Table Card -->
+            <div class="main-card">
+                <!-- Table Area -->
+                <div class="table-responsive">
+                    <table class="table table-hover " id="customerTable">
+                        <thead>
+                            <tr class="table">
+                                <th>#</th>
+                                <th>Company name</th>
+                                <th>Business Type</th>
+                                <th>Contact Person</th>
+                                <th>Mobile No</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customerTableBody">
+
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Table Area End -->
+            </div>
+
+            <!-- Form -->
+            <div class="modal fade" id="customerModal" data-bs-backdrop="static" data-bs-keyboard="false"
+                tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="header">
+                            <h1 class="document-title ">Customer Registration</h1>
+                        </div>
+                        <div class="modal-body">
+                            <form id="companyRegistrationForm" onsubmit="return false">
+                                <div class="row">
+                                    <div class="profile-section">
+                                        <div class="p-4">
+                                            <!-- Company Details -->
+                                            <div class="mb-4">
+                                                <h4 class="section-title">Company Details</h4>
+                                                <div class="row">
+                                                    <div class="col-md-12 mb-3">
+                                                        <label for="textCustomerName" class="form-label">Company
+                                                            Name<span class="text-danger ">*</span></label>
+                                                        <input type="text" id="textCustomerName" class="form-control"
+                                                            placeholder="Enter Company Name" required
+                                                            onkeyup="validator(this,'^([A-Za-z]{1,16})([ ]{0,1})([A-Za-z]{0,16})([ ]{0,1})([A-Za-z]{0,16})([ ]{0,1})([A-Za-z]{0,16})([ ]{0,1})([A-Za-z]{0,16})$','customer','company_name')">
+                                                        <div class="valid-feedback">
+                                                            valid Company Name
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            Invalid Company Name
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="textBusinessType" class="form-label">Business
+                                                            Type<span class="text-danger">*</span></label>
+                                                        <select id="textBusinessType" class="form-select" required
+                                                            onchange="selectDynamicElementValidator(this,'customer','business_type_id')">
+                                                            <option selected disabled>Select Type of
+                                                                Business</option>
+                                                            <option value="WareHouse">WareHouse</option>
+                                                            <option value="Retail">Retail</option>
+                                                            <option value="Courier Services">Courier
+                                                                Services</option>
+                                                            <option value="Manufacture">Manufacture</option>
+                                                        </select>
+                                                        <div class="valid-feedback">
+
+                                                        </div>
+                                                        <div class="invalid-feedback">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="textBusinessRegistrationNo"
+                                                            class="form-label">Business
+                                                            Registration No</label>
+                                                        <input type="text" class="form-control"
+                                                            id="textBusinessRegistrationNo"
+                                                            placeholder="Enter Registration no">
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="textEmail" class="form-label">Direct
+                                                            Email <span class="text-danger">*</span></label>
+                                                        <input type="email" id="textEmail" class="form-control"
+                                                            placeholder="Enter Direct Email" required
+                                                            onkeyup="validator(this, '^[a-z0-9]+[_a-z0-9\.-]*[a-z0-9]+@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$', 'customer','direct_email_no')">
+                                                        <div class="valid-feedback">
+
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            Invalid Email
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="textTelephoneNo" class="form-label">Direct Telephone
+                                                            No <span class="text-danger">*</span></label>
+                                                        <input type="text" id="textTelephoneNo" class="form-control"
+                                                            placeholder="Enter Direct Telephone No" required
+                                                            onkeyup="validator(this , '^[0][12345689][1-8][0-9]{7}$','customer','direct_telephone_no')">
+                                                        <div class="valid-feedback">
+
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            Invalid Land No
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Contact Details -->
+                                            <div class="mb-4">
+                                                <h4 class="section-title">Contact Details</h4>
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="textContactPersonFullName"
+                                                            class="form-label">Contact
+                                                            Person
+                                                            Name <span class="text-danger">*</span></label>
+                                                        <input type="text" id="textContactPersonFullName"
+                                                            class="form-control" placeholder="Enter Contact Person Name"
+                                                            required
+                                                            onkeyup="validator(this,'^([A-Za-z]{1,16})([ ]{0,1})([A-Za-z]{0,16})([ ]{0,1})([A-Za-z]{0,16})([ ]{0,1})([A-Za-z]{0,16})([ ]{0,1})([A-Za-z]{0,16})$', 'customer','contact_person_fullname')">
+                                                        <div class="valid-feedback">
+
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            Invalid Full Name
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="textContactPersonEmail" class="form-label">Business
+                                                            Email<span class="text-danger">*</span></label>
+                                                        <input type="email" id="textContactPersonEmail"
+                                                            class="form-control" placeholder="Enter Email" required
+                                                            onkeyup="validator(this, '^[a-z0-9]+[_a-z0-9\.-]*[a-z0-9]+@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$', 'customer','contact_person_email')">
+                                                        <div class="valid-feedback">
+
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            Invalid Email
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="textContactPersonMobileNo"
+                                                            class="form-label">Business
+                                                            Mobile
+                                                            No<span class="text-danger">*</span></label>
+                                                        <input type="text" id="textContactPersonMobileNo"
+                                                            class="form-control" placeholder="Enter Mobile No" required
+                                                            onkeyup="validator(this, '^[0][7][01245678][0-9]{7}$', 'customer','contact_person_mobileno')">
+                                                        <div class="valid-feedback">
+
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            Invalid Mobile No
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Business Address -->
+                                            <div class="md-4">
+                                                <h4 class="section-title">Company Address</h4>
+                                                <div class="row">
+                                                    <div class="col-md-12 mb-3">
+                                                        <label for="textCompanyAddress" class="form-label">Company
+                                                            Address<span class="text-danger">*</span></label>
+                                                        <textarea id="textCompanyAddress" class="form-control"
+                                                            placeholder="Enter Company Address" required
+                                                            onkeyup="validator(this , '^([A-Za-z0-9/.-]{1,16})([ ]{0,1})([A-Za-z0-9-]{1,16})([ ]{0,1})([A-Za-z0-9-]{1,16})([ ]{0,1})([A-Za-z0-9-]{1,16})([ ]{0,1})([A-Za-z0-9-]{1,16})([ ]{0,1})([A-Za-z0-9-]{1,16})([ ]{0,1})([A-Za-z0-9-]{1,16})([ ]{0,1})([A-Za-z0-9-]{1,16})$', 'customer','company_address')"></textarea>
+                                                        <div class="valid-feedback">
+                                                            Valid Company Address
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            Invalid Company Address
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Additional Information -->
+                                            <div class="mb-4" id="statusDiv">
+                                                <h4 class="section-title">Additional Information</h4>
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Work Status</label>
+                                                        <select id="textCustomerStatus" class="form-select"
+                                                            onchange="selectDynamicElementValidator(this,'customer','customer_status_id')">
+                                                        </select>
+                                                        <div class="valid-feedback ">
+                                                            Valid Full Name....
+                                                        </div>
+                                                        <div class="invalid-feedback ">
+                                                            Invalid Full Name...!
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- buttons -->
+                                            <div  class="mb-4 mt-4" >
+                                                <div class="row" >
+                                                    <div class="col-6">
+                                                        <button type="button" class="btn-3d btn-3d-cancel" data-bs-dismiss="modal" aria-label="Close"
+                                                                onclick="refreshCustomerForm()">Close</button>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="row">
+                                                            <div class="col-2"></div>
+                                                            <div class="col-5 text-start">
+                                                                <button type="button" id="deleteButtonFrom" class="btn-3d btn-3d-cancel"
+                                                                        onclick="refreshCustomerForm()">
+                                                                    <i class="fa-solid fa-xmark me-3"></i>
+                                                                    Cancel</button>
+                                                            </div>
+                                                            <div class="col-5 text-start">
+                                                                <button type="button" class="btn-3d btn-3d-update" id="updateButton"
+                                                                        onclick="customerFormUpdate()">
+                                                                    <i class="fa-solid fa-arrows-rotate me-3"></i>
+                                                                    Update</button>
+
+                                                                <button type="submit" id="submitButton" class="btn-3d btn-3d-submit"
+                                                                        onclick="customerFormSubmit()">
+                                                                    <i class="fa-solid fa-check me-3"></i>
+                                                                    Submit</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <!-- buttons -->
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Form -->
+        </div>
+    </div>
+    <div th:replace="fragments/loading :: overlayFragment"></div>
+
+    <script src="/commenjs/reusabal.js"></script>
+    <script src="/commenjs/commanValidation.js"></script>
+    <script src="/commenjs/commonTable.js"></script>
+    <script src="js/customer.js"></script>
+    <script src="js/sidebar.js"></script>
+
+
+</body>
+
+</html>
