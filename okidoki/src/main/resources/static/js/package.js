@@ -44,7 +44,7 @@ const fillDataIntoPackageCard = (ParentId, packages, propertyList, propertyListN
     // packages walin eka package ekak ekak create karanna
     packages.forEach((package) => {
         let card = document.createElement("div");
-        card.classList.add("package-card", "mb-3", "me-5");
+        card.classList.add("package-card", "mb-3", "me-3");
         card.style.display = "inline-block";
         card.style.width = "15.3rem";
         card.style.cursor = "pointer";
@@ -96,6 +96,23 @@ const getPackageStatus = (dataOb) => {
     }
     if (dataOb.package_status_id.status == "Deleted") {
         return "<span class='status-badge status-inactive'> <span class='dot'> </span>" + dataOb.package_status_id.status + "</span>";
+    }
+}
+
+// package name eka auto genearte karana function eka
+const generatePackageName = () =>{
+
+    const packageType = document.getElementById('packageType').value;
+    const distance = document.getElementById('packageDistance').value;
+    const packageNameInput = document.getElementById('textPackageName');
+
+    if (packageType =='Fix Rate'){
+        const packageName = packageType+ " - " + distance + " Km" ;
+        packageNameInput.value = packageName;
+        package.name = packageName;
+    } else{
+        packageNameInput.value = packageType;
+        package.name = packageName;
     }
 }
 
@@ -165,7 +182,9 @@ const packageDelete = () => {
 // edit function of package form
 const editFunction = (dataOb) => {
 
-    packageName.value = dataOb.name;
+    packageType.value = dataOb.package_type;
+
+    textPackageName.value = dataOb.name;
 
     packageDistance.value = dataOb.distance;
 
@@ -228,7 +247,7 @@ const checkFormError = () =>{
 const packageFormSubmit = () =>{
     console.log(package);
     // check form error for required element
-    // check form error for required element
+
     let errors = checkFormError();
     if (errors == "") {
         // errors not exit
@@ -414,14 +433,14 @@ const  packageFormUpdate = () =>{
     }
 }
 
-// form Refresh dunction
+// form Refresh function
 const refereshPackageForm = () => {
 
     package = new Object();
 
     packageForm.reset();
 
-     setDefault([packageName, packageDistance, packageCustomerCharge, packageSupplierCharge, packageAdditonalKmChargeCustomer, packageAdditonalKmChargeSupplier,selectPackageVehicleType,selectPackageStatus]);
+     setDefault([packageType,textPackageName, packageDistance, packageCustomerCharge, packageSupplierCharge, packageAdditonalKmChargeCustomer, packageAdditonalKmChargeSupplier,selectPackageVehicleType,selectPackageStatus]);
 
     let vehicleTypes = getServiceRequest('/vehicletype/alldata');;
     dataFilIntoSelect(selectPackageVehicleType, "Select Vehicle Type", vehicleTypes, "name")

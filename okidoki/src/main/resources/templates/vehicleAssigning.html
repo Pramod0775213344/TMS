@@ -15,84 +15,56 @@
         <div th:replace="fragments/topbar :: topbarFragment"></div>
         <div class="container-fluid">
 
-            <div class="row align-items-center justify-content-between mt-3 mb-4">
+            <div class="row align-items-center justify-content-between mb-2">
                 <div class="col-auto">
-                    <div class="title">Manage Vehicle Assigning</div>
-                    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/dashboard"
-                                    style="text-decoration: none; color: #0CAF60;">Dashboard</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Vehicle Assigning</li>
-                        </ol>
-                    </nav>
+                </div>
+                <div class="col-auto">
+                    <a href="/revenue" target="_blank" style="text-decoration: none"> <button class="btn-3d btn-3d-submit"
+                                                                              type="button" data-bs-toggle="modal" data-bs-target="#vehicleFormModal"
+                                                                              aria-controls="staticBackdrop"><i class="fa-solid fa-plus me-3"></i>
+                        Revenue
+                    </button></a>
                 </div>
             </div>
-    
-    
-            <!-- serarch area -->
+
+            <!--search area-->
             <div class="main-card mb-3">
-                <div class="row mt-3 mb-5">
-                    <div class="col-2">
-                        <label for="" class="form-label">From</label>
-                        <input type="date" name="" id="" placeholder="Search Name" class="form-control">
-                    </div>
-                    <div class="col-2">
-                        <label for="" class="form-label">To</label>
-                        <input type="date" name="" id="" placeholder="Search Name" class="form-control">
-    
-                    </div>
-                    <div class="col-3">
-                        <label for="" class="form-label">Pickup Location</label>
-                        <select name="" id="" class="form-select">
-                            <option value="">Select Location</option>
-                        </select>
-                    </div>
-                    <div class="col-3">
-                        <label for="" class="form-label">Delivery Location</label>
-                        <select name="" id="" class="form-select">
-                            <option value="">Select Location</option>
-                        </select>
-                    </div>
-                    <div class="col-2">
-                        <label for="" class="form-label">Status</label>
-                        <select name="" id="" class="form-select">
-                            <option value="">Select Status</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row mt-4">
-                    <div class="col-4">
-                        <label for="" class="form-label">Customer</label>
-                        <input type="text" name="" id="" placeholder="Search Name" class="form-control">
-                    </div>
-                    <div class="col-4">
-                        <label for="" class="form-label">Vehicle No</label>
-                        <input type="text" name="" id="" placeholder="Search Name" class="form-control">
-                        
-                    </div>
-                    <div class="col-4">
-                        <label for="" class="form-label">Vehicle Type</label>
-                        <select name="" id="" class="form-select">
-                            <option value="">Select Vehicle Type</option>
-                        </select>
-                    </div>
-                </div>
                 <div class="row">
-                    <div class="col-10"></div>
-                    <div class="col-2 mt-4 text-end">
-                        <button class="btn btn-info me-2">Search</button>
-                        <button class="btn btn-danger">Reset</button>
+                    <div class="col-5"></div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-4">
+                                <label for="dateFrom" class="form-label">From</label>
+                                <input type="date" name="" id="dateFrom" placeholder="Search Name" class="form-control" required>
+                            </div>
+                            <div class="col-4">
+                                <label for="dateTo" class="form-label">To</label>
+                                <input type="date" name="" id="dateTo" placeholder="Search Nic" class="form-control" required>
+                            </div>
+                            <div class="col-4">
+                                <label for="selectCustomerSearch" class="form-label">Customer</label>
+                                <select name="" id="selectCustomerSearch" class="form-select" required>
+                                    <option value="">Select Customer</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1 mt-4">
+                        <button class="btn btn-search mt-3" data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-title="Search" onclick="loadVehicleAssigningTable()"><i class="fas fa-search"></i></button>
+                        <button class="btn btn-reset mt-3" data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-title="Reset"><i class="fa-solid fa-rotate-right"></i></button>
                     </div>
                 </div>
-               
             </div>
-    
+            <!--search area-->
+
             <!-- Main Table Card -->
             <div class="main-card">
-    
+
                 <!-- Table Area -->
-                <div class="table-responsive" >
-                    <table class="table table-hover " id="vehicleAssigningTable" >
+                <div class="table-responsive">
+                    <table class="table table-hover " id="vehicleAssigningTable">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -121,11 +93,12 @@
                             </tr>
                         </thead>
                         <tbody id="vehicleAssigningTableBody">
-    
+
                         </tbody>
                     </table>
                 </div>
                 <!-- Table Area End -->
+
             </div>
             <!-- Main Table Card End -->
         </div>
@@ -134,7 +107,7 @@
     <div th:replace="fragments/loading :: overlayFragment"></div>
 
 
-    <!-- Form Area -->
+    <!-- Form Area for vehicle assigning -->
     <div class="modal fade" id="vehicleAssigning" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -146,23 +119,47 @@
                 </div>
                 <div class="modal-body">
                     <form id="vehicleAssigningForm" onsubmit="return false;">
+                      <!-- vehicle no and driver input area-->
                         <div class="row">
-<!--                            <div class="col-6">-->
-<!--                                <label for="selectTransportName" class="form-label">Transport Name</label>-->
-<!--                                <select class="form-select" id="selectTransportName"></select>-->
-<!--                            </div>-->
                             <div class="col-6">
-                                <label for="selectVehicleNo" class="form-label">Vehicle No<span class="text-danger">*</span></label>
+                                <label for="selectVehicleNo" class="form-label">Vehicle No<span
+                                        class="text-danger">*</span></label>
                                 <select class="form-select" id="selectVehicleNo" required></select>
                             </div>
                             <div class="col-6">
-                                <label for="selectdriver" class="form-label">Driver Name <span class="text-danger">*</span></label>
-                                <select class="form-select" id="selectdriver" onchange="selectDynamicElementValidator(this,'booking','driver_id')" required></select>
+                                <label for="selectdriver" class="form-label">Driver Name <span
+                                        class="text-danger">*</span></label>
+                                <select class="form-select" id="selectdriver"
+                                    onchange="selectDynamicElementValidator(this,'booking','driver_id')"
+                                    required></select>
                             </div>
                         </div>
+                        <!-- vehicle no and driver input area-->
+
+                        <!--revenue view table-->
+                        <div class="row mt-4" id="revenueTable">
+                            <div class="table-responsive">
+                                <div style="height: 300px; overflow-y: auto;">
+                                <table class="table table-hover " id="revenueViewTable" style="position: sticky">
+                                    <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Vehicle No</th>
+                                        <th>Total Distance</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="revenueViewTableBody">
+
+                                    </tbody>
+                                </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!--revenue view table-->
+
                         <!-- buttons -->
-                        <div  class="mb-4 mt-4">
-                            <div class="row" >
+                        <div class="mb-4 mt-4">
+                            <div class="row">
                                 <div class="col-6">
                                 </div>
                                 <div class="col-6">
@@ -170,18 +167,18 @@
                                         <div class="col-2"></div>
                                         <div class="col-5 text-start">
                                             <button type="button" id="deleteButtonFrom" class="btn-3d btn-3d-cancel"
-                                                    onclick="vehicleAssigningFormSubmitButton()">
+                                                onclick="vehicleAssigningFormSubmitButton()">
                                                 <i class="fa-solid fa-xmark me-3"></i>
                                                 Cancel</button>
                                         </div>
                                         <div class="col-5 text-start">
                                             <button type="button" class="btn-3d btn-3d-update" id="updateButton"
-                                                    onclick="vehicleAssigningFormUpdate()">
+                                                onclick="vehicleAssigningFormUpdate()">
                                                 <i class="fa-solid fa-arrows-rotate me-3"></i>
                                                 Update</button>
 
                                             <button type="submit" id="submitButton" class="btn-3d btn-3d-submit"
-                                                    onclick="vehicleAssigningFormSubmitButton()">
+                                                onclick="vehicleAssigningFormSubmitButton()">
                                                 <i class="fa-solid fa-check me-3"></i>
                                                 Submit</button>
                                         </div>
@@ -196,17 +193,17 @@
             </div>
         </div>
     </div>
-    <!-- Form Area -->
+    <!-- Form Area for vehicle assigning-->
 
-    <!-- Form Area -->
-    <div class="modal fade" id="datetimeAddingFormModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-         aria-labelledby="staticBackdropLabel2" aria-hidden="true">
+    <!-- Form Area date add-->
+    <div class="modal fade" id="datetimeAddingFormModal" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="staticBackdropLabel2">Date Adding Form</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                            onclick="refreshVehicleAssigningForm()"></button>
+                        onclick="refreshVehicleAssigningForm()"></button>
                 </div>
                 <div class="modal-body">
                     <form id="datetimeAddingForm" onsubmit="return false;">
@@ -214,24 +211,27 @@
                             <div class="col-6">
                                 <label for="pickupDateAndTime" class="form-label">Arrival At PickupTime</label>
                                 <input type="datetime-local" class="form-control" id="pickupDateAndTime"
-                                       onchange="dateElementValidator(this,'booking','arrived_at_pickup_datetime')"    >
+                                    onchange="dateElementValidator(this,'booking','arrived_at_pickup_datetime')">
                             </div>
                             <div class="col-6">
-                                <label for="departedPickupDateAndTime" class="form-label">Departed From Pickup Datetime</label>
+                                <label for="departedPickupDateAndTime" class="form-label">Departed From Pickup
+                                    Datetime</label>
                                 <input type="datetime-local" class="form-control" id="departedPickupDateAndTime"
-                                       onchange="dateRangeValidator(this, document.getElementById('pickupDateAndTime').value, 'booking', 'departed_from_pickup_datetime')"   >
+                                    onchange="dateRangeValidator(this, document.getElementById('pickupDateAndTime').value, 'booking', 'departed_from_pickup_datetime')">
                             </div>
                         </div>
                         <div class="row mt-3">
                             <div class="col-6">
-                                <label for="arrivedDeliveryDateAndTime" class="form-label">Arrived At Delivery Datetime</label>
+                                <label for="arrivedDeliveryDateAndTime" class="form-label">Arrived At Delivery
+                                    Datetime</label>
                                 <input type="datetime-local" class="form-control" id="arrivedDeliveryDateAndTime"
-                                       onchange="dateRangeValidator(this,document.getElementById('departedPickupDateAndTime').value,'booking','arrived_at_delivery_datetime')"    >
+                                    onchange="dateRangeValidator(this,document.getElementById('departedPickupDateAndTime').value,'booking','arrived_at_delivery_datetime')">
                             </div>
                             <div class="col-6">
-                                <label for="departedDeliveryDateAndTime" class="form-label">Departed From Delivery Datetime</label>
+                                <label for="departedDeliveryDateAndTime" class="form-label">Departed From Delivery
+                                    Datetime</label>
                                 <input type="datetime-local" class="form-control" id="departedDeliveryDateAndTime"
-                                       onchange="dateRangeValidator(this,document.getElementById('arrivedDeliveryDateAndTime').value,'booking','departed_from_delivery_datetime')"    >
+                                    onchange="dateRangeValidator(this,document.getElementById('arrivedDeliveryDateAndTime').value,'booking','departed_from_delivery_datetime')">
                             </div>
                         </div>
                         <div class="row mt-3" id="meterReadingDiv">
@@ -239,22 +239,23 @@
                                 <label for="textStartMeterReading">Start Meter Reading<span
                                         class="text-danger">*</span></label>
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" id="textStartMeterReading" placeholder="Type Start Meter Reading"
-                                           onkeyup="validator(this , '^[0-9]{2,15}$','booking','strat_meter_reading')">
+                                    <input type="text" class="form-control" id="textStartMeterReading"
+                                        placeholder="Type Start Meter Reading"
+                                        onkeyup="validator(this , '^[0-9]{2,15}$','booking','strat_meter_reading')">
                                 </div>
                             </div>
                             <div class="col-6">
                                 <label for="textEndtMeterReading">End Meter Reading<span
                                         class="text-danger">*</span></label>
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" id="textEndtMeterReading" placeholder="Type End Meter Reading"
-                                           >
+                                    <input type="text" class="form-control" id="textEndtMeterReading"
+                                        placeholder="Type End Meter Reading">
                                 </div>
                             </div>
                         </div>
                         <!-- buttons -->
-                        <div  class="mb-4 mt-4" >
-                            <div class="row" >
+                        <div class="mb-4 mt-4">
+                            <div class="row">
                                 <div class="col-6">
                                 </div>
                                 <div class="col-6">
@@ -262,11 +263,11 @@
                                         <div class="col-7"></div>
                                         <div class="col-5 text-start">
                                             <button type="button" class="btn-3d btn-3d-update" id="dateEditButton"
-                                                    onclick="dateUpadteButton()">
+                                                onclick="dateUpadteButton()">
                                                 <i class="fa-solid fa-arrows-rotate me-3"></i>
                                                 Update</button>
                                             <button type="submit" id="dateAddButton" class="btn-3d btn-3d-submit"
-                                                    onclick="dateAddingButton()">
+                                                onclick="dateAddingButton()">
                                                 <i class="fa-solid fa-check me-3"></i>
                                                 Submit</button>
                                         </div>
@@ -281,7 +282,7 @@
             </div>
         </div>
     </div>
-    <!-- Form Area -->
+    <!-- Form Area date add-->
 
     <script src="/commenjs/reusabal.js"></script>
     <script src="/commenjs/commanValidation.js"></script>

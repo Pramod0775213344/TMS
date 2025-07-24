@@ -536,6 +536,8 @@ const refreshSupplierForm = () => {
 
     submitButton.style.display = "";
     updateButton.style.display = "none";
+
+    currentdatevalidator('textSupplierDrivingLicenseExpireDate')
 }
 
 //Alert Box Call function

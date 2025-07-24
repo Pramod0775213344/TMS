@@ -1,8 +1,10 @@
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Inter', sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #e2e8f0 0%, #f1f5f9 100%);
+    /*background: linear-gradient(135deg, #e2e8f0 0%, #f1f5f9 100%);*/
+    /*background: linear-gradient(135deg, #f8fafc, #f1f5f9);*/
+    background:  #f4f6f8;
 
     /*background-color: #f9fafb;*/
 }
@@ -11,7 +13,7 @@ body {
 .sidebar {
     width: 300px;
     height: 100vh;
-    background-color: #ffffff;
+    /*background-color: #ffffff;*/
     /*border-right: 1px solid #e5e7eb;*/
     position: fixed;
     left: 0;
@@ -82,15 +84,17 @@ body {
 }
 
 .menu-item:hover .dashboard-link {
-    color: #f3f4f6;
+    color: #000000;
 }
 
 /* menu item hover color */
 .menu-item:hover {
-    color: #f3f4f6;
-    background: linear-gradient(141.55deg, #8de7b7 3.46%, #0CAF60 99.86%), #0CAF60;
+    color: #000000;
+    /*background: linear-gradient(141.55deg, #8de7b7 3.46%, #0CAF60 99.86%), #0CAF60;*/
+    background-color: #fff;
     transform: translateX(5px);
     transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .menu-icon {
@@ -101,18 +105,25 @@ body {
 
 /* menu item icon hover design */
 .menu-item:hover i.menu-icon {
-    color: #0CAF60;
-    background-color: white;
-
+    color: #ffffff;
+    background-color: #0CAF60;
 
 }
 
 /* active menu item */
 .menu-item.active {
-    background-color: #f0f4ff;
-    border-left: 3px solid #00a389;
-    padding-left: 12px;
-    color: #00a389;
+    color: #000000;
+    /*background: linear-gradient(141.55deg, #8de7b7 3.46%, #0CAF60 99.86%), #0CAF60;*/
+    background-color: #fff;
+    transform: translateX(5px);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+}
+/*menu item eka ative nam icon color ekath wenas karanna oni*/
+.menu-item.active i.menu-icon {
+    color: #ffffff;
+    background-color: #0CAF60;
 }
 
 /* menu item icon  */
@@ -184,7 +195,9 @@ body {
 /* Main Content Area */
 .main-content {
     margin-left: 300px;
-    /*padding: 15px;*/
+    padding: 15px;
+    /*background: linear-gradient(135deg, #f8fafc, #f1f5f9);*/
+    background:  #f4f6f8;
 
 }
 
@@ -225,7 +238,7 @@ body {
 
 .profile-dropdown {
     position: absolute;
-    top: 100%;
+    top: 5%;
     right: 0;
     background: var(--bg-color);
     border-radius: 8px;
@@ -233,6 +246,7 @@ body {
     width: 200px;
     display: none;
     margin-top: 10px;
+    z-index: 1000;
 }
 
 
@@ -261,3 +275,15 @@ body {
     align-items: center;
     gap: 10px;
 }
+/*profile edit view modal user photo*/
+#changeUserPreviewImage{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+}
+
+
+
+

@@ -40,9 +40,13 @@ public class UserController {
   public ModelAndView getUserUi() {
 
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    User logeduser = userRepository.getByUsername(auth.getName());
+
     ModelAndView userUi = new ModelAndView();
     userUi.setViewName("user.html");
     userUi.addObject("logedusername", auth.getName());
+    userUi.addObject("loggeduserphoto", logeduser.getUser_photo());
+    userUi.addObject("pageTitle", "User");
     return userUi;
   }
 

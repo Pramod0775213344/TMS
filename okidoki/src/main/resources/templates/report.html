@@ -1,0 +1,265 @@
+<html lang="en">
+
+<head th:replace="fragments/head :: headFragment"></head>
+
+<head>
+    <link rel="stylesheet" href="css/report.css">
+    <script src="chart/chart.min.js"></script>
+</head>
+
+<body>
+    <div class="sidebar">
+        <div th:replace="fragments/sidebar :: sidebarFragment"></div>
+    </div>
+    <div class="main-content">
+        <div th:replace="fragments/topbar :: topbarFragment"></div>
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <div class="card-glass p-4" onclick="openReportList('operational')">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fa-solid fa-gauge text-primary me-2"></i>
+                                    <h6 class="mb-0 fw-semibold">Operational Reports</h6>
+                                </div>
+                                <p class="text-muted small">Monitor operations, performance metrics, and system health.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card-glass p-4" onclick="openReportList('financial')">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fa-solid fa-chart-simple text-success me-2"></i>
+                                    <h6 class="mb-0 fw-semibold">Financial Reports</h6>
+                                </div>
+                                <p class="text-muted small">Track revenue, expenses, and profit margins.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card-glass p-4" onclick="openReportList('fleet')">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fa-solid fa-truck-front text-danger me-2"></i>
+                                    <h6 class="mb-0 fw-semibold">Fleet Reports</h6>
+                                </div>
+                                <p class="text-muted small">Vehicle usage, maintenance schedules, and analytics.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card-glass p-4" onclick="openReportList('driver')">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fa-solid fa-users-between-lines text-info me-2"></i>
+                                    <h6 class="mb-0 fw-semibold">Customer & Order Reports</h6>
+                                </div>
+                                <p class="text-muted small">View satisfaction, order trends, and service metrics.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card-glass p-4" onclick="openReportList('customer')">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fa-solid fa-arrows-left-right-to-line text-warning me-2"></i>
+                                    <h6 class="mb-0 fw-semibold">Analytics & KPI</h6>
+                                </div>
+                                <p class="text-muted small">Business intelligence and performance indicators.</p>
+                            </div>
+                        </div>
+                    </div>
+<!--                    <div class="row">-->
+<!--                        <div class="col-md-4">-->
+<!--                            <div class="report-card" onclick="openReportList('operational')">-->
+<!--                                <h3>Operational Reports</h3>-->
+<!--                                <p class="text-muted">Monitor daily operations, performance metrics, and system health-->
+<!--                                    across all departments.</p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="col-md-4">-->
+<!--                            <div class="report-card" onclick="openReportList('financial')">-->
+<!--                                <h3>Financial Reports</h3>-->
+<!--                                <p class="text-muted">Track revenue, expenses, profit margins, and financial KPIs with-->
+<!--                                    detailed breakdowns.</p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="col-md-4">-->
+<!--                            <div class="report-card" onclick="openReportList('fleet')">-->
+<!--                                <h3>Fleet Management Reports</h3>-->
+<!--                                <p class="text-muted">Oversee vehicle utilization, maintenance schedules, and fleet-->
+<!--                                    performance analytics.</p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                    <div class="row mt-4">-->
+<!--                        <div class="col-md-4">-->
+<!--                            <div class="report-card" onclick="openReportList('driver')">-->
+<!--                                <h3>Driver Performance Reports</h3>-->
+<!--                                <p class="text-muted">Analyze driver efficiency, safety records, and performance-->
+<!--                                    improvement-->
+<!--                                    opportunities.</p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="col-md-4">-->
+<!--                            <div class="report-card" onclick="openReportList('customer')">-->
+<!--                                <h3>Customer & Order Reports</h3>-->
+<!--                                <p class="text-muted">Examine customer satisfaction, order patterns, and service-->
+<!--                                    delivery-->
+<!--                                    metrics.</p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="col-md-4">-->
+<!--                            <div class="report-card" onclick="openReportList('analytics')">-->
+<!--                                <h3>Analytics & KPI Reports</h3>-->
+<!--                                <p class="text-muted">Deep dive into key performance indicators and business-->
+<!--                                    intelligence-->
+<!--                                    insights.</p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                    <div class="row mt-4">-->
+<!--                        <div class="col-md-4">-->
+<!--                            <div class="report-card" onclick="openReportList('compliance')">-->
+<!--                                <h3>Compliance & Safety Reports</h3>-->
+<!--                                <p class="text-muted">Ensure regulatory compliance and monitor safety protocols across-->
+<!--                                    operations.</p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+                </div>
+
+                <div class="col-md-4">
+                    <div class="main-card">
+                        <h2>Report List</h2>
+                        <div style="display: none" id="operationalReportList">
+                            <div class="list-group">
+
+                                <a href="/bookingreport"
+                                    class="list-group-item list-group-item-action list-group-item-primary mt-3">Booking/Shipment
+                                    Report</a>
+                                <a href="#"
+                                    class="list-group-item list-group-item-action list-group-item-secondary mt-3">Delivery
+                                    Status Report</a>
+                                <a href="#"
+                                    class="list-group-item list-group-item-action list-group-item-success  mt-3">Route
+                                    Optimization Report</a>
+                                <a href="#"
+                                    class="list-group-item list-group-item-action list-group-item-danger  mt-3">Driver
+                                    Assignment Report</a>
+                                <a href="#"
+                                    class="list-group-item list-group-item-action list-group-item-warning  mt-3">Fleet
+                                    Availability Report</a>
+                            </div>
+                        </div>
+                        <div style="display: none" id="financialReportList">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item list-group-item-action">A simple default list group
+                                    item</a>
+
+                                <a href="#"
+                                    class="list-group-item list-group-item-action list-group-item-primary mt-3">Invoice
+                                    Report</a>
+                                <a href="#"
+                                    class="list-group-item list-group-item-action list-group-item-secondary mt-3">Profit
+                                    and Loss Report</a>
+                            </div>
+                        </div>
+                        <div style="display: none" id="fleetManagementReportList">
+                            <div class="list-group">
+                                <a href="/revenuelicenseexpirereport"
+                                    class="list-group-item list-group-item-action list-group-item-primary mt-3">Expired
+                                    Revenue License Report</a>
+                                <a href="/insuranceexpirereport"
+                                    class="list-group-item list-group-item-action list-group-item-secondary mt-3">Expired
+                                    Insurance Report</a>
+                                <a href="#"
+                                    class="list-group-item list-group-item-action list-group-item-success  mt-3">Fuel
+                                    Consumption Report</a>
+                            </div>
+                        </div>
+                        <div style="display: none" id="driverPerformanceReportList">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item list-group-item-action">A simple default list group
+                                    item</a>
+
+                                <a href="#"
+                                    class="list-group-item list-group-item-action list-group-item-primary mt-3">Driver
+                                    Log Report</a>
+                                <a href="#"
+                                    class="list-group-item list-group-item-action list-group-item-secondary mt-3">Driver
+                                    Performance Report</a>
+                            </div>
+                        </div>
+                        <div style="display: none" id="customerOrderReportList">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item list-group-item-action">A simple default list group
+                                    item</a>
+
+                                <a href="#"
+                                    class="list-group-item list-group-item-action list-group-item-primary mt-3">Customer
+                                    Order History Report</a>
+                                <a href="#"
+                                    class="list-group-item list-group-item-action list-group-item-secondary mt-3">Order
+                                    Fulfillment Rate</a>
+
+                            </div>
+                        </div>
+                        <div style="display: none" id="analyticsReportList">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item list-group-item-action">A simple default list group
+                                    item</a>
+
+                                <a href="#"
+                                    class="list-group-item list-group-item-action list-group-item-primary mt-3">On-Time
+                                    Delivery Rate</a>
+                                <a href="#"
+                                    class="list-group-item list-group-item-action list-group-item-secondary mt-3">Cost
+                                    per Mile/Kilometer</a>
+                                <a href="#"
+                                    class="list-group-item list-group-item-action list-group-item-success  mt-3">Revenue
+                                    per Truck/Driver</a>
+                                <a href="#"
+                                    class="list-group-item list-group-item-action list-group-item-danger  mt-3">Monthly
+                                    Performance Summary</a>
+
+                            </div>
+                        </div>
+                        <div style="display: none" id="complianceReportList">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item list-group-item-action">A simple default list group
+                                    item</a>
+
+                                <a href="#"
+                                    class="list-group-item list-group-item-action list-group-item-primary mt-3">Regulatory
+                                    Compliance Report</a>
+                                <a href="#"
+                                    class="list-group-item list-group-item-action list-group-item-secondary mt-3">Incident
+                                    Report</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row mt-4">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <div class="main-card">
+                        <canvas id="myChart"></canvas>
+                    </div>
+
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="fragments/loading :: overlayFragment"></div>
+
+
+    <script src="/commenjs/reusabal.js"></script>
+    <script src="/commenjs/commanValidation.js"></script>
+    <script src="/commenjs/commonTable.js"></script>
+    <script src="js/report.js"></script>
+    <script src="js/sidebar.js"></script>
+</body>
+
+</html>

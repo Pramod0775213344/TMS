@@ -1,5 +1,6 @@
 package lk.okidoki.controller;
 
+import lk.okidoki.modal.Privilage;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -10,6 +11,7 @@ import lk.okidoki.repository.DriverStatusRepository;
 import lk.okidoki.repository.UserRepository;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,14 +39,21 @@ public class DriverController {
     @Autowired
     private DriverStatusRepository driverStatusRepository;
 
+    @Autowired
+    private UserPrivilageController userPrivilageController;
+
     // Request mapping for load Driver Ui (url -->/driver)
     @RequestMapping(value = "/driver")
     public ModelAndView loadDriverUI() {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User logeduser = userRepository.getByUsername(auth.getName());
+
         ModelAndView driverUI = new ModelAndView();
         driverUI.setViewName("driver.html");
         driverUI.addObject("logedusername", auth.getName());
+        driverUI.addObject("loggeduserphoto", logeduser.getUser_photo());
+        driverUI.addObject("pageTitle", "Driver");
 
         return driverUI;
     }
@@ -52,14 +61,22 @@ public class DriverController {
     // Request mapping for load all Driver data (url -->/driver/alldata)
     @GetMapping(value = "/driver/alldata", produces = "application/json")
     public List<Driver> getAllDriverData() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Privilage userPrivilage = userPrivilageController.getUserPrivilageByUserModule(auth.getName(), "Driver");
         // Last added data eke Mulata ganna oni nisa thama find all eke sort attributr
         // eka use karanne
-        return driverRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+        if (userPrivilage.getPrivi_select()) {
+            return driverRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+        }else {
+            return new ArrayList<>();
+        }
+
     }
 
      // Get mapping for get driver by supplier id (url -->/driver/bysupplierid?supplierid=1)
     @GetMapping(value = "/driver/bysupplierid",params = {"supplierid"}, produces = "application/json")
     public List<Driver> getMethodName(@RequestParam("supplierid") Integer supplierid) {
+
         return driverRepository.getDriverBySupplierId(supplierid);
     }
 
@@ -69,9 +86,10 @@ public class DriverController {
         // check authentication and authorization
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User logeduser = userRepository.getByUsername(auth.getName());
+        Privilage userPrivilage = userPrivilageController.getUserPrivilageByUserModule(auth.getName(), "Driver");
 
         // check existing
-
+        if (userPrivilage.getPrivi_insert()) {
         // nic
         Driver extDriverByNic = driverRepository.getByNic(driver.getNic());
         if (extDriverByNic != null) {
@@ -105,7 +123,10 @@ public class DriverController {
             
             return "Save Not Complete : " + e.getMessage();
         }
+        } else {
 
+            return "Save Not Successed : You have not access";
+        }
      
     }
 
@@ -115,7 +136,9 @@ public class DriverController {
         // check authentication and authorization
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User logeduser = userRepository.getByUsername(auth.getName());
+        Privilage userPrivilage = userPrivilageController.getUserPrivilageByUserModule(auth.getName(), "Driver");
 
+        if (userPrivilage.getPrivi_update()) {
         // check existing
         if (driver.getId() == null) {
             return "Update Not Success :Driver Not found";
@@ -160,6 +183,10 @@ public class DriverController {
         } catch (Exception e) {
             return "Update Not Complete : " + e.getMessage();
         }
+        } else {
+
+            return "Save Not Successed : You have not access";
+        }
 
     }
 
@@ -169,7 +196,9 @@ public class DriverController {
         // check authentication and authorization
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User logeduser = userRepository.getByUsername(auth.getName());
+        Privilage userPrivilage = userPrivilageController.getUserPrivilageByUserModule(auth.getName(), "Driver");
 
+        if (userPrivilage.getPrivi_delete()) {
         // check existing
         if (driver.getId() == null) {
             return "Delete Not Success: Driver not found ";
@@ -195,6 +224,10 @@ public class DriverController {
 
         } catch (Exception e) {
             return   "Delete Not Completed :" + e.getMessage();
+        }
+        }  else {
+
+            return "Save Not Successed : You have not access";
         }
     }
 }

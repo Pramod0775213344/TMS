@@ -47,7 +47,16 @@ public class Vehicle {
     @NotNull
     private LocalDate revenu_license_expire_date;
 
-    @NotNull
+    private byte[] vehicle_photo;
+
+    private byte[] cr_photo;
+
+    private byte[] revenue_license_photo;
+
+    private byte[] insurance_card_photo;
+
+    private byte[] inspection_report_photo;
+
     private Integer startup_meter_reading;
 
     private Integer current_meter_reading;
@@ -85,4 +94,6 @@ public class Vehicle {
     @JoinColumn(name = "vehicle_make_id", referencedColumnName = "id")
     private VehicleMake vehicle_make_id;
 
+
 }
+

@@ -12,6 +12,7 @@ const loadVehicleTable = () => {
     let vehicles = getServiceRequest('/vehicle/alldata');
 
     const propertyList = [
+        { propertyName: "vehicle_photo", dataType: "truck-image-array" },
         { propertyName: getTransportName, dataType: "function" },
         { propertyName: "vehicle_no", dataType: "string" },
         { propertyName: getVehicleType, dataType: "function" },
@@ -76,6 +77,57 @@ const vehicleEdit = (dataOb) => {
     } else {
         radioNonOwnVehicle.checked = "checked"
     }
+
+    if (dataOb.vehicle_photo != null){
+        previewImageVehicle.src = atob(dataOb.vehicle_photo);
+        photoPreviewVehicle.style.display = 'block';
+        uploadContainerVehiclePhoto.style.display = 'none';
+
+    }else {
+        photoPreviewVehicle.style.display = 'none';
+        uploadContainerVehiclePhoto.style.display = 'block';
+    }
+    // cr photo
+    if (dataOb.cr_photo != null){
+        previewImageCr.src = atob(dataOb.cr_photo);
+        photoPreviewCr.style.display = 'block';
+        uploadContainerCr.style.display = 'none';
+
+    }else {
+        photoPreviewCr.style.display = 'none';
+        uploadContainerCr.style.display = 'block';
+    }
+    // revenue license photo
+    if (dataOb.revenue_license_photo != null){
+        previewImageRl.src = atob(dataOb.revenue_license_photo);
+        photoPreviewRl.style.display = 'block';
+        uploadContainerRl.style.display = 'none';
+
+    }else {
+        photoPreviewRl.style.display = 'none';
+        uploadContainerRl.style.display = 'block';
+    }
+    // insurance card
+    if (dataOb.insurance_card_photo != null){
+        previewImageInsuranceCard.src = atob(dataOb.insurance_card_photo);
+        photoPreviewInsuranceCard.style.display = 'block';
+        uploadContainerInsuranceCard.style.display = 'none';
+
+    }else {
+        photoPreviewInsuranceCard.style.display = 'none';
+        uploadContainerInsuranceCard.style.display = 'block';
+    }
+    // imspection report
+    if (dataOb.inspection_report_photo != null){
+        previewImageInspectionReport.src = atob(dataOb.inspection_report_photo);
+        photoPreviewInspectionReport.style.display = 'block';
+        uploadContainerInspectionReport.style.display = 'none';
+
+    }else {
+        photoPreviewInspectionReport.style.display = 'none';
+        uploadContainerInspectionReport.style.display = 'block';
+    }
+
     textVehicleInsuranceExpireDate.value = dataOb.insurance_expire_date;
     textVehicleRevenuLicenseExpireDate.value = dataOb.revenu_license_expire_date;
     textVehicleStartMeterReading.value = dataOb.startup_meter_reading;
@@ -86,6 +138,7 @@ const vehicleEdit = (dataOb) => {
 
     updateButton.style.display = "";
     submitButton.style.display = "none";
+    additionalInformationSection.style.display = "";
 
 
     vehicle = JSON.parse(JSON.stringify(dataOb));
@@ -173,9 +226,6 @@ const checkFormError = () => {
     if (vehicle.revenu_license_expire_date == null) {
         errors = errors + "Please  Enter Revenu license expire date....... ";
     }
-    if (vehicle.startup_meter_reading == null) {
-        errors = errors + "Please Enter Start Meter reading....... ";
-    }
     if (vehicle.vehicle_type_id == null) {
         errors = errors + "Please select vehicle Type....... ";
     }
@@ -184,9 +234,6 @@ const checkFormError = () => {
     }
     if (vehicle.category == null) {
         errors = errors + "Please select the Category....... ";
-    }
-    if (vehicle.vehicle_status_id == null) {
-        errors = errors + "Please select the status....... ";
     }
 
     return errors;
@@ -304,6 +351,21 @@ const checkFormUpdates = () => {
         if (vehicle.vehicle_status_id.status != oldVehicle.vehicle_status_id.status) {
             updates = updates + "Status is changed.... ";
         }
+        if (vehicle.vehicle_photo != oldVehicle.vehicle_photo) {
+            updates = updates + "Vehicle photo is changed.... ";
+        }
+        if (vehicle.cr_photo != oldVehicle.cr_photo) {
+            updates = updates + "CR is changed.... ";
+        }
+        if (vehicle.revenue_license_photo != oldVehicle.revenue_license_photo) {
+            updates = updates + "Revenue License is changed.... ";
+        }
+        if (vehicle.insurance_card_photo != oldVehicle.insurance_card_photo) {
+            updates = updates + "Insurance card is changed.... ";
+        }
+        if (vehicle.inspection_report_photo != oldVehicle.inspection_report_photo) {
+            updates = updates + "Inspection Report is changed.... ";
+        }
     }
 
     return updates;
@@ -414,8 +476,31 @@ const refreshVehicleForm = () => {
     let vehicleMake = getServiceRequest('/vehiclemake/alldata');
     dataFilIntoSelect(selectVehicleMake, "Select Vehicle Make", vehicleMake, "name");
 
+    // current date validate and previous date restrict
+    currentdatevalidator('textVehicleInsuranceExpireDate')
+    // current date validate and previous date restrict
+    currentdatevalidator('textVehicleRevenuLicenseExpireDate')
+
     submitButton.style.display = "";
     updateButton.style.display = "none";
+
+    // default file format of uploading photo
+    photoPreviewVehicle.style.display = 'none';
+    uploadContainerVehiclePhoto.style.display = 'block';
+
+    photoPreviewCr.style.display = 'none';
+    uploadContainerCr.style.display = 'block';
+
+    photoPreviewRl.style.display = 'none';
+    uploadContainerRl.style.display = 'block';
+
+    photoPreviewInsuranceCard.style.display = 'none';
+    uploadContainerInsuranceCard.style.display = 'block';
+
+    photoPreviewInspectionReport.style.display = 'none';
+    uploadContainerInspectionReport.style.display = 'block';
+
+    additionalInformationSection.style.display = "none";
 };
 
 //Alert Box Call function

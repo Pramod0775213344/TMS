@@ -13,6 +13,7 @@ const loadEmployeeTable = () => {
     let employee = getServiceRequest('/employee/alldata');
 
     const propertyList = [
+        { propertyName: "emp_photo", dataType: "image-array" },
         { propertyName: getEmployeeNo, dataType: "function" },
         { propertyName: "fullname", dataType: "string" },
         { propertyName: getDesignation, dataType: "function" },
@@ -176,6 +177,15 @@ const employeeEdit = (dataOb, index) => {
         radioFemale.checked = true;
     }
 
+    if (dataOb.emp_photo != null){
+        previewImage.src = atob(dataOb.emp_photo);
+        photoPreview.style.display = 'block';
+        uploadContainer.style.display = 'none';
+
+    }else {
+        photoPreview.style.display = 'none';
+        uploadContainer.style.display = 'block';
+    }
     textEmployeeEmail.value = dataOb.email;
     dteDOB.value = dataOb.dateofbirth;
     textEmployeeMobileNo.value = dataOb.mobileno;
@@ -338,6 +348,9 @@ const checkFormUpdates = () => {
         }
         if (employee.employee_status_id.status != oldEmployee.employee_status_id.status) {
             updates = updates + "Status Changed..!";
+        }
+        if (employee.emp_photo != oldEmployee.emp_photo) {
+            updates = updates + "Employee Photo Changed..!";
         }
     }
 
@@ -579,6 +592,10 @@ const refreshForm = () => {
 
     // future date eka hide karana function eka methana call karala thiyenw
     futuredateHide();
+
+    // photo preview eka ayin karala uplod container eka load karanawa
+    photoPreview.style.display = 'none';
+    uploadContainer.style.display = 'block';
 
 }
 

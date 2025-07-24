@@ -52,13 +52,15 @@
  }
  .nav-link {
      color: #1f2937;
+     background-color: #4cd964;
+     box-shadow: 0 8px 0 #32b64a, 0 15px 20px rgba(0, 0, 0, 0.15);
  }
  .nav-link:focus, .nav-link:hover {
-     color: #0CAF60;
+     background-color: #4cd964;
  }
  .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
      color: var(--bs-nav-pills-link-active-color);
-     background-color: #0CAF60;
+     background-color: #4cd964;
  }
 
  /* ---------------------------------- */
@@ -73,5 +75,27 @@
      flex: auto;
  }
  /* ------------------------------------------------------------------- */
+ .print-view-container {
+     margin: 20px;
+     display: grid;
+     grid-template-columns: repeat(2, 1fr);
+     gap: 20px;
 
+ }
 
+ .print-view-tittle {
+
+     border-bottom: 1px dashed #000;
+     margin-top: 20px;
+ }
+
+ .print-view-container p i {
+     color: rgb(9, 175, 20);
+     font-size: 6px;
+
+ }
+
+ .print-view-container .tableBody {
+     color: darkgrey;
+
+ }

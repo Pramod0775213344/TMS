@@ -13,21 +13,13 @@
         <div th:replace="fragments/topbar :: topbarFragment"></div>
         <div class="container-fluid">
             <!-- head area  -->
-            <div class="row align-items-center justify-content-between mt-3 mb-4">
+            <div class="row align-items-center justify-content-between mb-2">
                 <div class="col-auto">
-                    <div class="title">Manage Supplier Agreement</div>
-                    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/dashboard"
-                                    style="text-decoration: none; color: #0CAF60;">Dashboard</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Supplier Agreement</li>
-                        </ol>
-                    </nav>
                 </div>
                 <div class="col-auto">
-                    <button class="btn btn-primary" type="button" data-bs-toggle="modal" id="addButton"
+                    <button class="btn-3d btn-3d-submit" type="button" data-bs-toggle="modal" id="addButton"
                         data-bs-target="#supplierAgreementFormModal" aria-controls="staticBackdrop"><i
-                            class="fa-solid fa-plus"></i>
+                            class="fa-solid fa-plus me-3"></i>
                         Add Supplier Agreement
                     </button>
                 </div>
@@ -122,8 +114,8 @@
                                                     <div class="col-md-6 mb-3">
                                                         <label for="selectVehicleNo" class="form-label">Vehicle
                                                             No<span class="text-danger">*</span></label>
-                                                        <select name="" id="selectVehicleNo" class="form-select"
-                                                            ></select>
+                                                        <select name="" id="selectVehicleNo"
+                                                            class="form-select"></select>
                                                     </div>
                                                     <!-- <div class="col-md-6 mb-3">
                                                         <label for="textStartMeterReading" class="form-label">Start Meter
@@ -158,14 +150,12 @@
                                                             class="form-label">Agreement Period (months)<span
                                                                 class="text-danger">*</span></label>
                                                         <select name="" id="textSupplierAgreementPeriod"
-                                                            class="form-select"
-                                                            onchange="selectElementValidator(this,'supplierAgreement','agreement_period')"
-                                                            required>
+                                                            class="form-select" required>
                                                             <option value="" selected disabled>Select Period</option>
-                                                            <option value="06 months">06 months</option>
-                                                            <option value="12 months">12 months</option>
-                                                            <option value="24 months">24 months</option>
-                                                            <option value="60 months">60 months</option>
+                                                            <option value="06">06 months</option>
+                                                            <option value="12">12 months</option>
+                                                            <option value="24">24 months</option>
+                                                            <option value="60">60 months</option>
                                                         </select>
                                                     </div>
                                                     <div class="col-md-6 mb-3">
@@ -173,9 +163,7 @@
                                                             class="form-label">Agreement End Date<span
                                                                 class="text-danger"></span></label>
                                                         <input type="date" name="" id="textSupplierAgreementEndDate"
-                                                            class="form-control"
-                                                            onchange="dateElementValidator(this,'supplierAgreement','agreement_end_date')"
-                                                            required>
+                                                            class="form-control" readonly>
                                                     </div>
                                                 </div>
                                             </div>
@@ -185,7 +173,7 @@
                                             <div class="mb-4">
                                                 <h4 class="section-title">Package Details</h4>
                                                 <div class="row">
-                                                
+
                                                     <div class="col-md-6 mb-3">
                                                         <label for="selectPackageType" class="form-label">Package
                                                             Type<span class="text-danger">*</span></label>
@@ -244,7 +232,8 @@
                                                             class="form-label">Special
                                                             Requirements or Notes</label>
                                                         <textarea name="" id="textSupplierAgreementNote"
-                                                            class="form-control" onkeyup="validator(this,'^([A-Za-z]{1,16})([ ]{0,1})([A-Za-z]{0,16})([ ]{0,1})([A-Za-z]{0,16})([ ]{0,1})([A-Za-z]{0,16})([ ]{0,1})([A-Za-z]{0,16})$','supplierAgreement','special_note')"></textarea>
+                                                            class="form-control"
+                                                            onkeyup="validator(this,'^([A-Za-z]{1,16})([ ]{0,1})([A-Za-z]{0,16})([ ]{0,1})([A-Za-z]{0,16})([ ]{0,1})([A-Za-z]{0,16})([ ]{0,1})([A-Za-z]{0,16})$','supplierAgreement','special_note')"></textarea>
                                                     </div>
                                                 </div>
 
@@ -258,27 +247,30 @@
                                                 </div>
                                             </div>
                                             <!-- buttons -->
-                                            <div  class="mb-4">
-                                                <div class="row" >
+                                            <div class="mb-4">
+                                                <div class="row">
                                                     <div class="col-6">
                                                     </div>
                                                     <div class="col-6">
                                                         <div class="row">
                                                             <div class="col-4"></div>
                                                             <div class="col-4 text-start">
-                                                                <button type="button" id="deleteButtonFrom" class="btn-3d btn-3d-cancel"
-                                                                        onclick="refreshCustomerForm()">
+                                                                <button type="button" id="deleteButtonFrom"
+                                                                    class="btn-3d btn-3d-cancel"
+                                                                    onclick="refreshCustomerForm()">
                                                                     <i class="fa-solid fa-xmark me-3"></i>
                                                                     Cancel</button>
                                                             </div>
                                                             <div class="col-4 text-start">
-                                                                <button type="button" class="btn-3d btn-3d-update" id="updateButton"
-                                                                        onclick="supplierAgreementFormUpdate()">
+                                                                <button type="button" class="btn-3d btn-3d-update"
+                                                                    id="updateButton"
+                                                                    onclick="supplierAgreementFormUpdate()">
                                                                     <i class="fa-solid fa-arrows-rotate me-3"></i>
                                                                     Update</button>
 
-                                                                <button type="submit" id="submitButton" class="btn-3d btn-3d-submit"
-                                                                        onclick="supplierAgreementFormSubmit()">
+                                                                <button type="submit" id="submitButton"
+                                                                    class="btn-3d btn-3d-submit"
+                                                                    onclick="supplierAgreementFormSubmit()">
                                                                     <i class="fa-solid fa-check me-3"></i>
                                                                     Submit</button>
                                                             </div>

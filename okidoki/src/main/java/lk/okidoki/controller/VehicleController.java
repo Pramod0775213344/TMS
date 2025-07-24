@@ -51,9 +51,13 @@ public class VehicleController {
     public ModelAndView loadVehicleUI() {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User logeduser = userRepository.getByUsername(auth.getName());
+
         ModelAndView vehicleUI = new ModelAndView();
         vehicleUI.setViewName("vehicle.html");
         vehicleUI.addObject("logedusername", auth.getName());
+        vehicleUI.addObject("loggeduserphoto", logeduser.getUser_photo());
+        vehicleUI.addObject("pageTitle", "Vehicle");
         return vehicleUI;
     }
 
@@ -107,6 +111,7 @@ public class VehicleController {
             // set audit data
             vehicle.setAdded_datetime(LocalDateTime.now());
             vehicle.setAdded_user_id(logeduser.getId());
+            vehicle.setVehicle_status_id(vehicleStatusRepository.getReferenceById(1)); // set vehicle status to active
 
             // save vehicle data
             vehicleRepository.save(vehicle);
@@ -216,6 +221,31 @@ public class VehicleController {
     }
 
     }
+
+    // Get mapping for get vehicle by supplier id (url -->/vehicle/vehiclebyselectedsupplier?supplierid=1)
+    @GetMapping(value = "/vehicle/vehiclebyselectedsupplier",params = {"supplierid"}, produces = "application/json")
+    public List<Vehicle> getVehicleBySupplierAgreementStatusId(@RequestParam("supplierid") Integer supplierid) {
+        return vehicleRepository.getVehicleBySupplierAgreementStatusId(supplierid);
+    }
+
+    // Get mapping for get vehicle by supplier id (url -->/vehicle/vehiclebyvehiclegroupandsupplieragreement?vehiclegroup_id=1)
+    @GetMapping(value = "/vehicle/vehiclebyvehiclegroupandsupplieragreement",params = {"vehiclegroup_id"}, produces = "application/json")
+    public List<Vehicle> getVehicleByVehicleGroupId(@RequestParam("vehiclegroup_id") Integer vehiclegroup_id) {
+        return vehicleRepository.getVehicleByVehicleGroupIdAndSupplierAgreement(vehiclegroup_id);
+    }
+
+    // Get mapping for get vehicle by supplier id (url -->/vehicle/vehiclebyvehiclegroup?vehiclegroup_id=1)
+    @GetMapping(value = "/vehicle/vehiclebyvehiclegroup",params = {"vehiclegroup_id"}, produces = "application/json")
+    public List<Vehicle> getVehicleByVehicleGroupIdForVehicleGroup(@RequestParam("vehiclegroup_id") Integer vehiclegroup_id) {
+        return vehicleRepository.getVehicleByVehicleGroupIdForVehicleGroup(vehiclegroup_id);
+    }
+
+    // Get mapping for get vehicle by supplier id (url -->/vehicle/vehiclebyvehiclegroupandvehicletype?customer_id=1&vehicletype_id=1)
+    @GetMapping(value = "/vehicle/vehiclebyvehiclegroupandvehicletype",params = {"customer_id","vehicletype_id"}, produces = "application/json")
+    public List<Vehicle> getVehicleByVehicleGroupIdForCustomerVehicleGroup(@RequestParam("customer_id") Integer customer_id,@RequestParam("vehicletype_id") Integer vehicletype_id) {
+        return vehicleRepository.getVehicleByVehicleGroupIdForCustomerVehicleGroup(customer_id,vehicletype_id);
+    }
+
 
 
 }

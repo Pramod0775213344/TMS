@@ -1,9 +1,12 @@
 /* Body */
 body {
-    background: linear-gradient(135deg, #f8fafc, #f1f5f9);
-    font-family: "Lato", sans-serif;
+    font-family: 'Inter', sans-serif;
     line-height: 1.6;
-    background: linear-gradient(141.55deg, rgba(240, 244, 243, 0) 3.46%, #f0f4f3 99.86%);
+    /*background: linear-gradient(141.55deg, rgba(240, 244, 243, 0) 3.46%, #f0f4f3 99.86%);*/
+    background:  #f4f6f8;
+}
+.main-content{
+    background:  #f4f6f8;
 }
 .header {
     background-color: #2c3e50;
@@ -14,8 +17,7 @@ body {
 }
 /* container */
 .container-fluid {
-    padding: 30px;
-
+    padding: 10px;
 }
 
 /* stats card of the heaer */
@@ -62,7 +64,7 @@ body {
 .main-card {
     background: white;
     border-radius: 5px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.09);
     overflow: hidden;
     padding: 20px;
 }
@@ -100,48 +102,69 @@ body {
     /*padding: 8px;*/
 }
 
-.table tbody tr:hover {
-    background: #f9fafb;
-    transition: opacity 0.3s ease;
-    border-left: 4px solid #0CAF60;
+.btn-icon {
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border: none;
+    margin-left: 6px;
+    padding: 10px 10px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.1s;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
+}
+
+.btn-icon:hover {
+    transform: translateY(2px);
+}
+
+.btn-icon:active {
+    transform: translateY(6px);
 }
 
 .table-button-view {
-    background-color: #ffa21d;
+    background-color: #ffaa2e;
     color: white;
-    padding: 9px;
-    margin: 0 8px 0 0;
+    box-shadow: 0 8px 0 #e78c18, 0 15px 20px rgba(0, 0, 0, 0.15);
 }
 
 .table-button-view:hover {
     background-color: #fe9e17;
     color: white;
+    box-shadow: 0 6px 0 #e78c18, 0 10px 15px rgba(0, 0, 0, 0.15);
 }
 
 .table-button-edit {
     background-color: #3ec6d6;
     color: white;
-    padding: 9px;
-    margin: 0 8px 0 0;
+    box-shadow: 0 8px 0 #36a6d8, 0 15px 20px rgba(0, 0, 0, 0.15);
 }
 
 .table-button-edit:hover {
     background-color: #3ec6d6;
     color: white;
+    box-shadow: 0 6px 0 #36a6d8, 0 10px 15px rgba(0, 0, 0, 0.15);
 }
 
 .table-button-delete {
-    background-color: #ff3a6e;
+    background-color: #ff4d7a;
     color: white;
-    padding: 9px;
-    margin: 0 8px 0 0;
+    box-shadow: 0 8px 0 #ff1352, 0 15px 20px rgba(0, 0, 0, 0.15);
 }
 
 .table-button-delete:hover {
-    background-color: #ff3a6e;
+    background-color: #ff4d7a;
     color: white;
+    box-shadow: 0 6px 0 #ff1352, 0 10px 15px rgba(0, 0, 0, 0.15);
 }
-
+/*table imge*/
+.table-img {
+    width: 40px;
+    height: 40px;
+}
 /* registration no color */
 .unique_no {
     border: 2px solid #0CAF60;
@@ -194,33 +217,6 @@ body {
 .status-reject {
     background: #9a0129;
     color: #fff;
-
-}
-
-
-/* add button and submit/update button */
-.btn-primary {
-    background: #0CAF60;
-    --bs-btn-active-bg: #0CAF60;
-    --bs-btn-active-border-color: #0CAF60;
-    border: none;
-    border-radius: 12px;
-    padding: 14px 24px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    box-shadow:
-        0 4px 6px rgba(79, 70, 229, 0.2),
-        0 1px 3px rgba(0, 0, 0, 0.08);
-    transition: all 0.4s ease;
-
-}
-
-.btn-primary:hover {
-    background: #0b9b55;
-    transform: translateY(-3px);
-    box-shadow:
-        0 6px 8px rgba(60, 255, 129, 0.3),
-        0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /*---------- modal--------------  */
@@ -417,11 +413,16 @@ body {
     border-radius: 5px;
 }
 
+.select2-container .select2-choice .select2-arrow {
+    padding: 14px 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+}
+
 .form-control.is-valid,
 .was-validated .form-control:valid {
     border-color: #5DC983;
     border-bottom: 4px solid #5DC983;
-
 }
 
 .form-control.is-invalid,
@@ -429,7 +430,6 @@ body {
     border-color: #EB5769;
     border-bottom: 4px solid #EB5769;
 }
-
 
 .form-select.is-valid,
 .was-validated .form-select:valid {
@@ -450,6 +450,7 @@ body {
 .invalid-feedback {
     color: #EB5769;
 }
+
 
 /* ---------------------form view--------------------------- */
 .profile-section-view {
@@ -518,6 +519,7 @@ table.dataTable thead>tr>th.dt-orderable-asc, table.dataTable thead>tr>th.dt-ord
     transition: transform 0.1s, box-shadow 0.1s;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
     min-width: 140px;
+    z-index: 1;
 }
 
 .btn-3d:hover {
@@ -610,6 +612,36 @@ table.dataTable thead>tr>th.dt-orderable-asc, table.dataTable thead>tr>th.dt-ord
     box-shadow: 0 2px 0 #9170a3, 0 5px 5px rgba(0, 0, 0, 0.15);
 }
 
+/*print button and export button*/
+.btn-print{
+    background-color: #444242;
+    color: white;
+    box-shadow: 0 8px 0 #000000, 0 15px 20px rgba(0, 0, 0, 0.15);
+
+}
+
+.btn-print:hover{
+    background-color: #444242;
+    box-shadow: 0 6px 0 #000000, 0 10px 15px rgba(0, 0, 0, 0.15);
+}
+.btn-print:active {
+    background-color: #1f1e1e;
+    box-shadow: 0 2px 0 #000000, 0 5px 5px rgba(0, 0, 0, 0.15);
+}
+
+.btn-export{
+    background-color: #5ac8fa;
+    box-shadow: 0 8px 0 #36a6d8, 0 15px 20px rgba(0, 0, 0, 0.15);
+}
+
+.btn-export:hover{
+    background-color: #48bcef;
+    box-shadow: 0 2px 0 #36a6d8, 0 10px 5px rgba(0, 0, 0, 0.15);
+}
+.btn-export:active {
+    background-color: #48bcef;
+    box-shadow: 0 2px 0 #36a6d8, 0 5px 5px rgba(0, 0, 0, 0.15);
+}
 
 @keyframes pulse {
     0% {
@@ -621,4 +653,99 @@ table.dataTable thead>tr>th.dt-orderable-asc, table.dataTable thead>tr>th.dt-ord
     100% {
         box-shadow: 0 0 0 0 rgba(232, 67, 147, 0);
     }
+}
+
+/*fille and phohto choose karana area eke css eka*/
+.photo-upload-container {
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    background: white;
+    transition: border-color 0.3s ease;
+}
+
+.photo-upload-container:hover {
+    border-color: #007bff;
+}
+
+.photo-upload-container.dragover {
+    border-color: #007bff;
+    background: #f0f8ff;
+}
+
+.upload-button {
+    background-color: #7f8c8d;
+    box-shadow: 0 8px 0 #5f6a6a, 0 15px 20px rgba(0, 0, 0, 0.2);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: transform 0.1s, box-shadow 0.1s;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
+    margin-bottom: 10px;
+}
+
+.upload-button:hover {
+    background-color: #8c9b9c;
+    box-shadow: 0 6px 0 #5f6a6a, 0 10px 15px rgba(0, 0, 0, 0.2);
+    transform: translateY(2px);
+}
+
+.upload-button:active {
+    transform: translateY(6px);
+}
+
+#filePhotoUser {
+    display: none;
+}
+
+.photo-preview {
+    margin-top: 15px;
+    display: none;
+}
+
+.photo-preview img {
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.remove-photo {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+
+/*------------------slect 2 css----------------------*/
+
+.select2-container--bootstrap-5 .select2-selection  {
+    padding:15px 25px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+    border-radius: 5px !important;
+
+}
+/*select 2 tag ekek height eka*/
+.select2-container--bootstrap-5 .select2-selection--single {
+    height: 60px !important;
+}
+
+/*dropdown icon eke postion eka */
+.select2-container--bootstrap-5 .select2-selection--single {
+    background-position: right 0.75rem center !important;
+}
+
+/*Green color icon eke position eka hadanawa*/
+.form-select.is-valid:not([multiple]):not([size]), .form-select.is-valid:not([multiple])[size="1"], .was-validated .form-select:valid:not([multiple]):not([size]), .was-validated .form-select:valid:not([multiple])[size="1"] {
+    padding-right: 4.125rem;
+    background-position: right 0.25rem center, center right 2.25rem !important;
+    background-size: 16px 12px, calc(.75em + .375rem) calc(.75em + .375rem);
 }

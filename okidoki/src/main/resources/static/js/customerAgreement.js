@@ -1,9 +1,17 @@
 window.addEventListener("load", () => {
 
+    // load the customer agreement table
     loadCustomerAgreementTable();
 
+    // refresh the customer agreement form
     refreshCustomerAgreementForm();
 
+//     enable type and search of the select element
+
+        $('#selectCompanyName').select2({
+            theme: 'bootstrap-5',
+            dropdownParent: $('#customerAgreementModal'),
+        });
 
 })
 
@@ -35,6 +43,7 @@ const getAgreementNo = (dataOb) => {
 
     return "<span class ='unique_no'>" + dataOb.cus_agreement_no + "</span >";
 }
+
 // get customer name
 const getCustomer = (dataOb) => {
     return dataOb.customer_id.company_name;
@@ -82,11 +91,72 @@ const getCustomerAgreementStatus = (dataOb) => {
     }
 }
 
-const customerAgreemnentView = (dataOb) => { };
+// customer agreement view
+const customerAgreemnentView = (dataOb) => {
+
+    dataCus_Reg_No.innerHTML = dataOb.customer_id.customer_reg_no;
+    dataCompanyname.innerHTML = dataOb.customer_id.company_name;
+    dataCompanyEmail.innerHTML = dataOb.customer_id.direct_email_no;
+    dataCompanyAddress.innerHTML = dataOb.customer_id.company_address;
+    dataContactPersonName.innerHTML = dataOb.customer_id.contact_person_fullname;
+    dataContactPersonEmail.innerHTML = dataOb.customer_id.contact_person_email;
+    dataContactPersonMobile.innerHTML = dataOb.customer_id.contact_person_mobileno;
+
+
+    dataPackageName.innerHTML = dataOb.package_id.name;
+    dataVehicleType.innerHTML = dataOb.package_id.vehicle_type_id.name;
+    dataCustomerRate.innerHTML = dataOb.package_id.package_charge_cus;
+    dataSupplierRate.innerHTML = dataOb.package_id.package_charge_sup;
+    dataDistance.innerHTML = dataOb.package_id.distance;
+    dataAdditionalKMChargeCustomer.innerHTML = dataOb.package_id.additinal_km_charge_cus;
+    dataAdditionalKMChargeSupplier.innerHTML = dataOb.package_id.additinal_km_charge_sup;
+
+
+    dataAgreementRegNo.innerHTML = dataOb.cus_agreement_no;
+    dataAgreementStartDate.innerHTML = dataOb.agreement_date;
+    dataAgreementPeriod.innerHTML = dataOb.agreement_period;
+    dataEndDate.innerHTML = dataOb.agreement_end_date;
+    if (dataOb.agreement_charge != null){
+        dataAgreementCharge.innerHTML = dataOb.agreement_charge;
+    }else {
+        dataAgreementCharge.innerText = "Not Include"
+    }
+    if (dataOb.agreement_charge != null){
+        dataAdditionalChargersCustomer.innerHTML = dataOb.additional_charge;
+    }else {
+        dataAdditionalChargersCustomer.innerHTML = "Not Include"
+    }
+
+
+    termesCompanyName.innerText = dataOb.customer_id.company_name;
+    termsAgreemantStartDate.innerText = dataOb.agreement_date;
+    termsVehicleType.innerText = dataOb.package_id.vehicle_type_id.name;
+    termsAgreementperiod.innerText = dataOb.agreement_period;
+    termsCustomerRate.innerText = dataOb.package_id.package_charge_cus;
+    termsPackagedistance.innerText = dataOb.package_id.distance;
+    termsadditionaKmCharge.innerText = dataOb.package_id.additinal_km_charge_cus;
+
+    $("#customerAgreementViewModal").modal('show');
+};
+
+const customerAgreementFromPrint = () => {
+    let newWindow = window.open();
+    let printView = "<head><title>TMS</title><link rel='stylesheet' href='/css/customerAgreement.css'><link rel='stylesheet' href='/bootstrap/bootstrap-5.2.3/css/bootstrap.min.css'></head><body>" +
+        "<div class='row'><div style='background-color: #2c3e50; color: white; padding: 20px; text-align: center; position: relative;'>" +
+        "<h1 class='document-title'>Customer Service Agreement</h1>" +
+        "<div class='document-subtitle'>Dedicated Vehicle Contract</div>" +
+        "</div>" + viewModal.outerHTML + "</div></body>";
+    newWindow.document.write(printView);
+
+    setTimeout(() => {
+        newWindow.stop();
+        newWindow.print();
+        newWindow.close();
+    },1500)
+}
 
 // agreement delete function
 const customerAgreemnentDelete = (dataOb) => {
-    console.log("Reject", dataOb);
 
     let userConfirm = Swal.fire({
         title: "Are you sure?",
@@ -142,6 +212,7 @@ const customerAgreemnentDelete = (dataOb) => {
     });
 };
 
+// agreement refill karana finction eka
 const customerAgreemnentEdit = (dataOb) => {
 
     // check the status of the agreementa and if it is approved can't edit the details
@@ -171,14 +242,6 @@ const customerAgreemnentEdit = (dataOb) => {
 
     selectPackageType.value = JSON.stringify(dataOb.package_id);
 
-    textCustomerAgreementCharge.value = dataOb.agreement_charge;
-
-    textCustomerAgreementAdditionalCharge.value = dataOb.additional_charge;
-
-    textCustomerAgreementDistance.value = dataOb.total_distance;
-
-    textCustomerAgreementTotalAmount.value = dataOb.total_amount;
-
     textCustomerAgreementNote.value = dataOb.special_note;
 
     textCustomerAgreementApprovalNote.value = dataOb.approval_note;
@@ -192,6 +255,10 @@ const customerAgreemnentEdit = (dataOb) => {
 
     customerAgreement = JSON.parse(JSON.stringify(dataOb));
     oldCustomerAgreement = JSON.parse(JSON.stringify(dataOb));
+
+    refreshChargersInnerForm();
+
+
 };
 
 // check form errors
@@ -228,13 +295,12 @@ const checkFormError = () => {
         errors += "Select the Package..........";
 
     }
-
     return errors;
 }
 
 // customer agreement form submit function
 const customerAgreementFormSubmit = () => {
-  
+
     // check form error for required element
     // check form error for required element
     let errors = checkFormError();
@@ -312,40 +378,34 @@ const checkFormUpdates = () => {
 
     if (customerAgreement != null && oldCustomerAgreement != null) {
         if (customerAgreement.customer_id.company_name != oldCustomerAgreement.customer_id.company_name) {
-            updates += "Please Select the company name..... ";
+            updates += "Changed the company name..... ";
         }
         if (customerAgreement.agreement_date != oldCustomerAgreement.agreement_date) {
-            updates += "Please Select the agreement date..... ";
+            updates += "Changed the agreement date..... ";
         }
         if (customerAgreement.agreement_period != oldCustomerAgreement.agreement_period) {
-            updates += "Please Select the agreement period..... ";
+            updates += "Changed the agreement period..... ";
         }
         if (customerAgreement.agreement_end_date != oldCustomerAgreement.agreement_end_date) {
-            updates += "Please Select the agreement end date..... ";
+            updates += "Changed the agreement end date..... ";
         }
         if (customerAgreement.delivery_frequency != oldCustomerAgreement.delivery_frequency) {
-            updates += "Please Select the delivery frequency..... ";
+            updates += "Changed the delivery frequency..... ";
         }
         if (customerAgreement.vehicle_type_id.name != oldCustomerAgreement.vehicle_type_id.name) {
-            updates += "Please Select the vehicle type..... ";
+            updates += "Changed the vehicle type..... ";
         }
         if (customerAgreement.package_id.name != oldCustomerAgreement.package_id.name) {
-            updates += "Please Select the package..... ";
-        }
-        if (customerAgreement.agreement_charge != oldCustomerAgreement.agreement_charge) {
-            updates += "Please Enter the agreement charge..... ";
-        }
-        if (customerAgreement.additional_charge != oldCustomerAgreement.additional_charge) {
-            updates += "Please Enter the additional charge..... ";
-        }
-        if (customerAgreement.total_distance != oldCustomerAgreement.total_distance) {
-            updates += "Please Enter the total distance..... ";
-        }
-        if (customerAgreement.total_amount != oldCustomerAgreement.total_amount) {
-            updates += "Please Enter the total amount..... ";
+            updates += "Changed the package..... ";
         }
         if (customerAgreement.special_note != oldCustomerAgreement.special_note) {
-            updates += "Please Enter the agreement note..... ";
+            updates += "Changed  agreement note..... ";
+        }
+        if (customerAgreement.customerAgreementHasAdditionalChargersList.length !== oldCustomerAgreement.customerAgreementHasAdditionalChargersList.length ||
+            !customerAgreement.customerAgreementHasAdditionalChargersList.every((elemnt, index) =>
+                JSON.stringify(elemnt) === JSON.stringify(oldCustomerAgreement.customerAgreementHasAdditionalChargersList[index]))
+        ) {
+            updates += "Change the additional chargers list..... ";
         }
     }
 
@@ -385,6 +445,7 @@ const customerAgreementFormUpdate = () => {
             }).then((userConfirm) => {
                 if (userConfirm.isConfirmed) {
                     //call putt service
+
                     let putResponse = httpServiceRequest("/customeragreement/update", "PUT", customerAgreement);
                     if (putResponse == "ok") {
                         Swal.fire({
@@ -438,13 +499,15 @@ const customerAgreementFormUpdate = () => {
 
 // refresh customer agreement form
 const refreshCustomerAgreementForm = () => {
-
+    // main onbject eka
     customerAgreement = new Object();
+    // main object ekata list ekak adda karanawa
+
 
     customerAgreementForm.reset();
 
     //form get intial color when refresh the form
-    setDefault([selectCompanyName, textCustomerAgreementDate, textCustomerAgreementPeriod, textCustomerAgreementEndDate, textCustomerDeliveryFrequency, selectVehicleType, selectPackageType, textCustomerAgreementCharge, textCustomerAgreementAdditionalCharge, textCustomerAgreementDistance, textCustomerAgreementTotalAmount, textCustomerAgreementNote]);
+    setDefault([selectCompanyName, textCustomerAgreementDate, textCustomerAgreementPeriod, textCustomerAgreementEndDate, textCustomerDeliveryFrequency, selectVehicleType, selectPackageType, textCustomerAgreementNote]);
 
 
     let compnayNames = getServiceRequest('/customer/bycustomerstatus');
@@ -459,9 +522,18 @@ const refreshCustomerAgreementForm = () => {
     selectPackageType.style.display = "none";
     submitButton.style.display = "";
     updateButton.style.display = "none";
+
+    //removing validation at refresh
+    if (selectCompanyName.parentNode.children[2] != undefined) {
+        selectCompanyName.parentNode.children[2].children[0].children[0].style.border = "1px solid #ced4da";
+        selectCompanyName.parentNode.children[2].children[0].children[0].classList.remove("is-valid");
+        selectCompanyName.parentNode.children[2].children[0].children[0].classList.remove("is-invalid");
+    }
+
 };
 
-// filetr function and validation function 
+
+// filetr function and validation function
 let vehicleTypeElement = document.querySelector("#selectVehicleType");
 vehicleTypeElement.addEventListener("change", () => {
 
@@ -477,6 +549,39 @@ vehicleTypeElement.addEventListener("change", () => {
     let packageByVehicleType = getServiceRequest('package/byvehicletype?vehicletypeid=' + vehicleType.id);
     dataFilIntoSelect(selectPackageType, "Select Package Type", packageByVehicleType, "name")
 })
+
+//calclate end date using given date and time period
+let agreementEndDate = (startDateStr, periodValue) => {
+    const startdate = new Date(startDateStr);
+    const enddate = new Date(startdate);
+    enddate.setMonth(startdate.getMonth() + Number(periodValue));
+
+    // input type ekata galapena widihata date input format ekata convert karanna
+    return `${enddate.getFullYear()}-${(enddate.getMonth() + 1).toString().padStart(2, '0')}-${enddate.getDate().toString().padStart(2, '0')}`;
+};
+
+document.getElementById('textCustomerAgreementPeriod').onchange = () => {
+    const agreementStartDate = document.getElementById('textCustomerAgreementDate').value;
+    const agreementPeriod = document.getElementById('textCustomerAgreementPeriod').value;
+
+    //object ekata bind karanawa
+    customerAgreement.agreement_period = agreementPeriod;
+    // validation
+    textCustomerAgreementPeriod.classList.remove("is-invalid");
+    textCustomerAgreementPeriod.classList.add("is-valid");
+
+    const endDate = agreementEndDate(agreementStartDate, agreementPeriod);
+    document.getElementById('textCustomerAgreementEndDate').value = endDate;
+
+    // object ekata bind karanawa
+    customerAgreement.agreement_end_date = endDate;
+    // validation
+    textCustomerAgreementEndDate.classList.remove("is-invalid");
+    textCustomerAgreementEndDate.classList.add("is-valid");
+    console.log(endDate); // "7/15/2024"
+};
+
+// ------------------------------------------------------------------------------------------------------------------------
 
 //Alert Box Call function
 Swal.isVisible();

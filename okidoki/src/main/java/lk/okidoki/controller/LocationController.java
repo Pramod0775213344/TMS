@@ -1,10 +1,12 @@
 package lk.okidoki.controller;
 
 import lk.okidoki.modal.Location;
+import lk.okidoki.modal.Module;
 import lk.okidoki.modal.Privilage;
 import lk.okidoki.modal.User;
 import lk.okidoki.modal.VehicleType;
 import lk.okidoki.repository.LocationRepository;
+import lk.okidoki.repository.ModuleRepository;
 import lk.okidoki.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -28,15 +30,22 @@ public class LocationController {
     @Autowired // auto generate instance
     private UserPrivilageController userPrivilageController;
 
+    @Autowired
+    private ModuleRepository moduleRepository;
+
     // get mapping for load package ui
     @GetMapping(value = "/location")
     public ModelAndView loadLocationUI() {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User logeduser = userRepository.getByUsername(auth.getName());
+
         // load package.html file
         ModelAndView locationUI = new ModelAndView();
         locationUI.setViewName("location.html");
         locationUI.addObject("logedusername", auth.getName());
+        locationUI.addObject("loggeduserphoto", logeduser.getUser_photo());
+        locationUI.addObject("pageTitle", "Location");
         return locationUI;
 
     }
@@ -62,11 +71,8 @@ public class LocationController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Privilage userPrivilage = userPrivilageController.getUserPrivilageByUserModule(auth.getName(), "Location");
 
-        if (userPrivilage.getPrivi_update()) {
             return locationRepository.getLocationsWithoutSelectLocations(bookingid);
-        } else {
-            return List.of(); // Return an empty list if the user lacks privileges
-        }
+
     }
 
     // request mapping for insert data into the database[]
@@ -107,4 +113,7 @@ public class LocationController {
     public List<Location> findByLocationByCustomer(@RequestParam("customer_id") Integer customer_id){
         return locationRepository.getLocationsBySelectedCustomer(customer_id);
     }
+
+
+
 }

@@ -23,16 +23,16 @@
         <div>
             <div class="menu-item mb-2">
                 <a href="/dashboard" class="dashboard-link" style="text-decoration: none; text-align: center;">
-                    <i class="fa-duotone fa-solid fa-house"></i>Dashboard
+                    <i class="fa-duotone fa-solid fa-house menu-icon"></i>Dashboard
                 </a>
             </div>
         </div>
 
         <!-- Booking Management with dropdown -->
-        <div>
+        <div class="Booking" >
             <div class="menu-item has-submenu mb-2" data-target="booking-submenu">
                 <i class="fa-solid fa-calendar-day menu-icon"></i>
-                Shipment
+                Booking Management
                 <i class="fa-solid fa-angle-right chevron"></i>
             </div>
             <ul class="submenu" id="booking-submenu">
@@ -49,25 +49,31 @@
         </div>
 
         <!-- Fleet Management with dropdown -->
-
-        <div>
-            <div class="menu-item has-submenu mb-2" data-target="fleet-submenu">
-                <i class="fa-solid fa-truck menu-icon"></i>
-                Vehicle Managment
-                <i class="fa-solid fa-angle-right chevron"></i>
+        <div class="Vehicle">
+            <div class="menu-item mb-2" >
+                <a href="/vehicledashboard" class="dashboard-link" style="text-decoration: none; text-align: center;" >
+                    <i class="fa-solid fa-truck menu-icon"></i>Fleet Management
+                </a>
             </div>
-            <ul class="submenu" id="fleet-submenu">
-                <a href="/vehicle" class="submenu-item">
-                    <i class="fa-solid fa-spinner fa-spin"></i> Vehicle
-                </a>
-                <a href="#" class="submenu-item">
-                    <i class="fa-solid fa-spinner fa-spin"></i> Revenue
-                </a>
-            </ul>
         </div>
+<!--        <div>-->
+<!--            <div class="menu-item has-submenu mb-2" data-target="fleet-submenu">-->
+<!--                <i class="fa-solid fa-truck menu-icon"></i>-->
+<!--                Vehicle Managment-->
+<!--                <i class="fa-solid fa-angle-right chevron"></i>-->
+<!--            </div>-->
+<!--            <ul class="submenu" id="fleet-submenu">-->
+<!--                <a href="/vehicle" class="submenu-item">-->
+<!--                    <i class="fa-solid fa-spinner fa-spin"></i> Vehicle-->
+<!--                </a>-->
+<!--                <a href="#" class="submenu-item">-->
+<!--                    <i class="fa-solid fa-spinner fa-spin"></i> Revenue-->
+<!--                </a>-->
+<!--            </ul>-->
+<!--        </div>-->
 
         <!-- Customer Management with dropdown -->
-        <div>
+        <div class="Customer">
             <div class="menu-item has-submenu mb-2" data-target="customer-submenu">
                 <i class="fa-solid fa-user menu-icon"></i>
                 Client Management
@@ -87,7 +93,7 @@
         </div>
 
         <!-- Supplier Management with dropdown -->
-        <div>
+        <div class="Supplier">
             <div class="menu-item has-submenu mb-2" data-target="supplier-submenu">
                 <i class="fa-solid fa-users menu-icon"></i>
                 Supplier Management
@@ -97,14 +103,14 @@
                 <a href="/supplier" class="submenu-item">
                     <i class="fa-solid fa-spinner fa-spin"></i> Supplier
                 </a>
-                <a href="/supplieragreement" class="submenu-item">
+                <a href="/supplieragreement" class="submenu-item SupplierAgreement">
                     <i class="fa-solid fa-spinner fa-spin"></i> Agreement
                 </a>
             </ul>
         </div>
 
         <!-- Customer Management with dropdown -->
-        <div>
+        <div class="CustomerAgreementApproval">
             <div class="menu-item has-submenu mb-2" data-target="approval-submenu">
                 <i class="fa-solid fa-user menu-icon"></i>
                 Approval
@@ -119,48 +125,48 @@
                 </a>
             </ul>
         </div>
-        <!-- drver  -->
-        <a href="/driver" class="menu-item mb-2">
-            <i class="fa-solid fa-user menu-icon"></i>
-            Driver Management
-        </a>
 
-        <!-- Payment Management with dropdown -->
-        <div>
-            <div class="menu-item has-submenu mb-2" data-target="invoice-submenu">
-                <i class="fa-solid fa-credit-card menu-icon"></i>
-                Billing
-                <i class="fa-solid fa-angle-right chevron"></i>
+        <!-- drver  -->
+        <div class="Driver">
+            <div class="menu-item mb-2" >
+            <a href="/driver"class="dashboard-link" style="text-decoration: none; text-align: center;">
+                <i class="fa-solid fa-user menu-icon"></i>
+                Driver Management
+            </a>
             </div>
-            <ul class="submenu" id="invoice-submenu">
-                <a href="/customerpayment" class="submenu-item">
-                    <i class="fa-solid fa-spinner fa-spin"></i> Customer Payment
-                </a>
-                <a href="#" class="submenu-item">
-                    <i class="fa-solid fa-spinner fa-spin"></i> Supplier Payment
-                </a>
-            </ul>
         </div>
 
+
+        <!-- Invoice  -->
+        <div class="CustomerPayment">
+            <div class="menu-item mb-2" >
+            <a href="/invoice" class="dashboard-link" style="text-decoration: none; text-align: center;">
+                <i class="fa-solid fa-credit-card menu-icon"></i>
+                Invoice
+            </a>
+            </div>
+        </div>
+
+
         <!-- Payment Management with dropdown -->
-        <div>
+        <div class="CustomerPayment">
             <div class="menu-item has-submenu mb-2" data-target="payment-submenu">
                 <i class="fa-solid fa-credit-card menu-icon"></i>
                 Payment
                 <i class="fa-solid fa-angle-right chevron"></i>
             </div>
             <ul class="submenu" id="payment-submenu">
-                <a href="#" class="submenu-item">
+                <a href="/customerpayment" class="submenu-item">
                     <i class="fa-solid fa-spinner fa-spin"></i> Customer Payment
                 </a>
-                <a href="#" class="submenu-item">
+                <a href="/supplierpayment" class="submenu-item">
                     <i class="fa-solid fa-spinner fa-spin"></i> Supplier Payment
                 </a>
             </ul>
         </div>
 
         <!-- Administration with dropdown -->
-        <div>
+        <div class="Employee">
             <div class="menu-item has-submenu mb-2" data-target="administration-submenu">
                 <i class="fa-sharp fa-solid fa-gear menu-icon"></i>
                 Administration
@@ -178,21 +184,28 @@
                 </a>
             </ul>
         </div>
+      <!--Reports-->
+            <div class="menu-item mb-2">
+                <a href="/report" class="dashboard-link" style="text-decoration: none; text-align: center;">
+                    <i class="fa-sharp fa-solid fa-folder menu-icon"></i>Reports
+                </a>
+            </div>
+
 
         <!-- Reports  with dropdown -->
-        <div>
-            <div class="menu-item has-submenu" data-target="report-submenu">
-                <i class="fa-sharp fa-solid fa-folder menu-icon"></i>
-                Reports
-                <i class="fa-solid fa-angle-right chevron"></i>
-            </div>
-            <ul class="submenu" id="report-submenu">
-                <a href="#" class="submenu-item">
-                    <i class="fa-solid fa-spinner fa-spin"></i> All Repoerts
-                </a>
+<!--        <div>-->
+<!--            <div class="menu-item has-submenu" data-target="report-submenu">-->
+<!--                <i class="fa-sharp fa-solid fa-folder menu-icon"></i>-->
+<!--                Reports-->
+<!--                <i class="fa-solid fa-angle-right chevron"></i>-->
+<!--            </div>-->
+<!--            <ul class="submenu" id="report-submenu">-->
+<!--                <a href="#" class="submenu-item">-->
+<!--                    <i class="fa-solid fa-spinner fa-spin"></i> All Repoerts-->
+<!--                </a>-->
 
-            </ul>
-        </div>
+<!--            </ul>-->
+<!--        </div>-->
 
 <!--        <div>-->
 <!--            <div class="menu-item mt-4 mb-3">-->

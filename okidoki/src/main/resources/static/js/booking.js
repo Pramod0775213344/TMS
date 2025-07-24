@@ -13,14 +13,14 @@ window.addEventListener("load", () => {
 const loadBookingTable = () => {
   // Booking Array
 
-  let bookings = getServiceRequest('/booking/bystatus');
+  bookings = getServiceRequest('/booking/bystatus');
 
   // Property List
   let propertyList = [
     { propertyName: "booking_no", dataType: "string" },
     { propertyName: getCustomer, dataType: "function" },
-    { propertyName: getPickupLoaction, dataType: "function" },
-    { propertyName: getDeliveryLoaction, dataType: "function" },
+    { propertyName: getPickupLocation, dataType: "function" },
+    { propertyName: getDeliveryLocation, dataType: "function" },
     { propertyName: "distance", dataType: "string" },
     { propertyName: getStatus, dataType: "function" }
   ];
@@ -32,41 +32,25 @@ const loadBookingTable = () => {
 
 };
 
+// get customer name
 const getCustomer = (dataOb) => {
   return dataOb.customer_id.company_name;
 }
 
-const getPickupLoaction = (dataOb) => {
+// get pickup location
+const getPickupLocation = (dataOb) => {
   return dataOb.pickup_locations_id.name;
 }
 
-const getDeliveryLoaction = (dataOb) => {
+// get via locations if available
+const getDeliveryLocation = (dataOb) => {
   return dataOb.delivery_locations_id.name;
 }
 
-// Status of The booking Table 
+// Status of The booking Table
 let getStatus = (dataOb) => {
   if (dataOb.booking_status_id.status == "Inproccess") {
-    return "<p class = ' p-2 text-center  text-danger rounded-5'>" + dataOb.booking_status_id.status + "</p>"
-  }
-  if (dataOb.booking_status_id.status == "Attend") {
-    return "<p class = 'p-2 text-center  rounded-5' style = 'Color:blue; '> " + dataOb.booking_status_id.status + "</p>"
-  }
-  if (dataOb.booking_status_id.status == "Arrived At Pickup") {
-    return "<p class = ' p-2 text-center rounded-5' style = 'Color:yellow;'>" + dataOb.booking_status_id.status + "</p>"
-  }
-  if (dataOb.booking_status_id.status == "Departed From Pickup") {
-    return "<p class = 'p-2 text-center  rounded-5' style = 'Color:rgb(237, 206, 29);'>" + dataOb.booking_status_id.status + "</p>"
-  }
-  if (dataOb.booking_status_id.status == "Arrived At Delivery") {
-    return "<p class = ' p-2 text-center rounded-5' style = 'Color:rgb(55, 242, 55);'>" + dataOb.booking_status_id.status + "</p>"
-  }
-  if (dataOb.booking_status_id.status == "Departed From Delivery") {
-    return "<p class = 'p-2 text-center rounded-5' style = 'Color:rgb(6, 177, 4);'>" + dataOb.booking_status_id.status + "</p>"
-  }
-
-  if (dataOb.booking_status_id.status == "Cancelled") {
-    return "<p class = 'p-2 text-center rounded-5' style = 'Color:rgb(6, 177, 4);'>" + dataOb.booking_status_id.status + "</p>"
+    return "<span class='status-badge status-inactive mt-2'>" + dataOb.booking_status_id.status + "</span>"
   }
 }
 
@@ -106,7 +90,7 @@ const bookingDelete = (dataOb, index) => {
       } else {
         Swal.fire({
           title: "Failed to Submit....?",
-          text: postResponse,
+          text: deleteresponse,
           icon: "question",
           allowOutsideClick: false,
           customClass :{
@@ -132,11 +116,12 @@ const bookingDelete = (dataOb, index) => {
 const bookingView = (dataOb, index) => {
 
   dataCompanyName.innerText = dataOb.customer_id.company_name;
+  dataBookingNo.innerText = dataOb.booking_no;
   dataContactPersonName.innerText = dataOb.booking_contact_person_name;
   dataContactPersonMobileNo.innerText = dataOb.booking_contact_person_mobileno;
-  dataPickupLocation.innerText = dataOb.pickup_location;
+  dataPickupLocation.innerText = dataOb.pickup_locations_id.name;
   dataPickupDateAndTime.innerText = dataOb.pickup_date_time;
-  dataDeliveryLocation.innerText = dataOb.delivery_location;
+  dataDeliveryLocation.innerText = dataOb.delivery_locations_id.name;
   dataDeliveryDateAndTime.innerText = dataOb.delivery_date_time;
   dataVehicleType.innerText = dataOb.vehicle_type_id.name;
   dataDistance.innerText = dataOb.distance;
@@ -150,18 +135,8 @@ const bookingView = (dataOb, index) => {
 //Print Button  Of the Table
 const buttonPrintRow = () => {
   let newWindow = window.open();
-  let printView = "<head><title>Print Preview</title>" + "<link rel='stylesheet' href='booking.css'>" + `<link rel="stylesheet" href="../resources/bootstrap-5.2.3/css/bootstrap.min.css"></link>` + "</head><body><h2 class='text-center fw-bold' align='center'>Ceylon Transport</h2><div class='card'><table><tbody class='fw-bold'>" +
-    "<tr><td >Company Name :</td> <td class='text-muted'>" + selectCompanyName.outerHTML + "</td></tr>" +
-    "<tr><td >contact Person Name :</td> <td class='text-muted'>" + dataContactPersonName.outerHTML + "</td></tr>" +
-    "<tr><td >contact Person Mobile No :</td> <td class='text-muted'>" + dataContactPersonMobileNo.outerHTML + "</td></tr>" +
-    "<tr><td >Pickup Location :</td> <td class='text-muted'>" + dataPickupLocation.outerHTML + "</td></tr>" +
-    "<tr><td >Date & Time :</td> <td class='text-muted'>" + dataPickupDateAndTime.outerHTML + "</td></tr>" +
-    "<tr><td >Delivery Location :</td> <td class='text-muted'>" + dataDeliveryLocation.outerHTML + "</td></tr>" +
-    "<tr><td >Date & Time :</td> <td class='text-muted'>" + dataDeliveryDateAndTime.outerHTML + "</td></tr>" +
-    "<tr><td >Vehicle Type :</td> <td class='text-muted'>" + dataVehicleType.outerHTML + "</td></tr>" +
-    "<tr><td > Distance :</td> <td class='text-muted'>" + dataDistance.outerHTML + "</td></tr>" +
-    "<tr><td >Rate Per KM :</td> <td class='text-muted'>" + dataRate.outerHTML + "</td></tr>" +
-    "</tbody></table></div></body>";
+  let printView = "<head><title>TMS</title><link rel='stylesheet' href='/css/common.css'><link rel='stylesheet' href='/css/booking.css'><link rel='stylesheet' href='bootstrap/bootstrap-5.2.3/css/bootstrap.min.css'></head><body>"
+      + bookingPrintPreview.outerHTML +"</body>";
   newWindow.document.write(printView);
 
   setTimeout(() => {
@@ -220,6 +195,7 @@ const bookingEdit = (dataOb, index) => {
 
   updateButton.style.display = "";
   submitButton.style.display = "none";
+  shipmentdetails.style.display = "";
 
   booking = JSON.parse(JSON.stringify(dataOb));
   oldBooking = JSON.parse(JSON.stringify(dataOb));
@@ -435,7 +411,7 @@ const bookingFormSubmit = () => {
 
 }
 
-//Need to check all the fields are fill 
+//Need to check all the fields are fill
 const checkFormUpdates = () => {
   let updates = "";
 
@@ -557,6 +533,7 @@ const bookingFormUpdate = () => {
 const refreshForm = () => {
   booking = new Object();
   booking.locations = new Array();
+  booking.additionalChargersList = new Array();
 
   initMap();
 
@@ -581,6 +558,10 @@ const refreshForm = () => {
   let deliveryLocation = getServiceRequest('/deliverylocation/alldata');;
   dataFilIntoSelect(textDeliveryLocation, "Select Delivery Location", deliveryLocation, "name")
 
+
+  // current date validate and previous date restrict
+  currentdatetimevalidator('textPickupDateAndTime')
+
   submitButton.style.display = "";
   updateButton.style.display = "none";
   addButton.style.display = "none";
@@ -593,6 +574,11 @@ const refreshForm = () => {
 
   // table eka hidde karala thiyanaw
   tempeoryBookingListView.style.display = "none";
+
+  shipmentdetails.style.display = "none";
+
+  // for generate booking no
+  bookingList = getServiceRequest('booking/alldata')
 
 }
 
@@ -651,7 +637,7 @@ selectCompanyNameElement.addEventListener("change", () => {
 
 //   -----------------------------------------------------------------------------------
 //   cutomer anuwa vehicle type eka select karanawa
-  let companyname = JSON.parse(selectCompanyNameElement.value);
+   companyname = JSON.parse(selectCompanyNameElement.value);
   booking.customer_id = JSON.parse(selectCompanyNameElement.value);
 
   let vehicleTypes = getServiceRequest('vehicletype/bycustomeragreementsandcustomerid?customer_id=' + companyname.id);
@@ -666,6 +652,15 @@ selectCompanyNameElement.addEventListener("change", () => {
 
   let deliveryLocation = getServiceRequest('/deliverylocation/bycustomerid?customer_id=' + companyname.id);;
   dataFilIntoSelect(textDeliveryLocation, "Select Delivery Location", deliveryLocation, "name")
+
+  shipmentdetails.style.display = "";
+  // customer change weddi add karala thiyena wayapoint ayin wenna oni
+  waypointslist.innerHTML = '';
+
+// customer change karaddi  validation clean wenna oni
+  setDefault([textContactPerson, textContactPersonMobileNo, textPickupLocation, textDeliveryLocation, selectVehicleType])
+
+  generateBookingNo();
 
 });
 
@@ -864,11 +859,9 @@ const addWaypoint = () => {
     viaLocations.splice(extIndex, 1);
   }
   dataFilIntoSelect(selectViaLocation, "Select Via Location", viaLocations, "name")
-
-  waypointDateTime.value = "";
 }
 
-//custome Data fill in to the dynamic select elements for select waya locations
+//customer Data fill in to the dynamic select elements for select waya locations
 const customeDataFilIntoSelect = (parentId, massage, dataList, displayProperties) => {
   parentId.innerHTML = "";
   if (massage != "") {
@@ -891,6 +884,7 @@ const customeDataFilIntoSelect = (parentId, massage, dataList, displayProperties
     option.innerText = dataOb[displayProperties];
     // wayalocation map eke set karanna oni
     option.dataset.location = JSON.stringify(dataOb);
+
 
     let divcolnext = document.createElement("div");
     divcolnext.className = "col-2";
@@ -944,4 +938,42 @@ vialocationchkbox.addEventListener('click', () => {
   // auto calculate the route
   calculateRoute();
 })
+
+// create booking no using customer name and previous booking no
+const generateBookingNo = () => {
+
+  // get customer name first three chracters if it has only one word.but if customer have more than one word we get words first chracter
+  let customerName = JSON.parse(selectCompanyNameElement.value);
+  let customerNameParts = customerName.company_name.split(" ");
+  console.log(customerNameParts);
+  let customerInitials = "";
+
+  if (customerNameParts.length === 1) {
+    // Only one word: use first three characters (pad with 'X' if less than 3)
+    customerInitials = customerNameParts[0].substring(0, 3).toUpperCase().padEnd(3, "X");
+    console.log(customerInitials);
+  } else {
+    // More than one word: use first character of each word, up to 3 characters
+    customerInitials = customerNameParts.map(part => part.charAt(0).toUpperCase()).join("").substring(0, 3);
+    console.log(customerInitials);
+  }
+
+  // after that we ger the year last two characters
+    let currentYear = new Date().getFullYear().toString().slice(-2); // Get last two digits of the current year
+    customerInitials += currentYear;
+
+  // Get the last booking number and increment it
+  const lastBooking = bookingList[0];
+  let lastBookingNo = lastBooking.booking_no;
+
+  // last booking no eken numbers tika witharak gannawa
+  let numberPart = parseInt(lastBookingNo.slice(5));
+  console.log(numberPart)
+
+  let newBookingNo = customerInitials + String(numberPart + 1).padStart(8, "0");
+  booking.booking_no = newBookingNo;
+  console.log(newBookingNo);
+}
+
+
 

@@ -20,20 +20,13 @@
 
 
             <!-- Title  and add button-->
-            <div class="row align-items-center justify-content-between mt-3 mb-4">
+            <div class="row align-items-center justify-content-between mb-2">
                 <div class="col-auto">
-                    <div class="title">Manage Suppliers</div>
-                    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/dashboard"
-                                    style="text-decoration: none; color: #0CAF60;">Dashboard</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Supplier</li>
-                        </ol>
-                    </nav>
                 </div>
                 <div class="col-auto">
-                    <button class="btn btn-primary" type="button" data-bs-toggle="modal" id="addButton"
-                        data-bs-target="#supplierForm" aria-controls="staticBackdrop"><i class="fa-solid fa-plus"></i>
+                    <button class="btn-3d btn-3d-submit" type="button" data-bs-toggle="modal" id="addButton"
+                        data-bs-target="#supplierForm" aria-controls="staticBackdrop"><i
+                            class="fa-solid fa-plus me-3"></i>
                         Add Supplier
                     </button>
                 </div>
@@ -63,8 +56,10 @@
                         </div>
                     </div>
                     <div class="col-1 mt-4">
-                        <button class="btn btn-search mt-3" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Search"><i class="fas fa-search"></i></button>
-                        <button class="btn btn-reset mt-3" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Reset"><i class="fa-solid fa-rotate-right"></i></button>
+                        <button class="btn btn-search mt-3" data-bs-toggle="tooltip" data-bs-placement="top"
+                            data-bs-title="Search"><i class="fas fa-search"></i></button>
+                        <button class="btn btn-reset mt-3" data-bs-toggle="tooltip" data-bs-placement="top"
+                            data-bs-title="Reset"><i class="fa-solid fa-rotate-right"></i></button>
                     </div>
                 </div>
             </div>
@@ -127,7 +122,7 @@
                                                             required>
                                                     </div>
                                                     <div class="col-md-6 mb-3">
-                                                        <label  class="form-label ">
+                                                        <label class="form-label ">
                                                             Calling
                                                             Name
                                                             <span class="text-danger">*</span></label>
@@ -158,8 +153,7 @@
                                                             No</label>
                                                         <input type="text" id="textSupplierDrivingLicenseNo"
                                                             class="form-control " placeholder="Enter Driving License No"
-                                                            onkeyup="validator(this,'^([A-Z][0-9]{7})$','supplier','driving_licence_no')"
-                                                            >
+                                                            onkeyup="validator(this,'^([A-Z][0-9]{7})$','supplier','driving_licence_no')">
                                                     </div>
                                                     <div class="col-md-4 mb-3">
                                                         <label for="textSupplierDrivingLicenseExpireDate"
@@ -167,8 +161,7 @@
                                                             License Expire Date</label>
                                                         <input type="date" id="textSupplierDrivingLicenseExpireDate"
                                                             class="form-control"
-                                                            onchange="dateElementValidator(this,'supplier','driving_licencen_expiredate')"
-                                                            >
+                                                            onchange="dateElementValidator(this,'supplier','driving_licencen_expiredate')">
                                                     </div>
                                                     <div class="col-md-6 mb-3">
                                                         <label for="textSupplierEmail" class="form-label"> Email
@@ -248,15 +241,16 @@
                                                     <div class="col-md-12 mb-3">
                                                         <label for="textTransportName" class="form-label">Transport Name
                                                             <span class="text-danger">*</span></label>
-                                                        <input type="text" class="form-control"
-                                                            id="textTransportName" placeholder="Enter Transport Name"
+                                                        <input type="text" class="form-control" id="textTransportName"
+                                                            placeholder="Enter Transport Name"
                                                             onkeyup="validator(this,'^([A-Z][a-z]{1,20}[\\s])+([A-Z][a-z]{2,20})$','supplier','transportname')"
                                                             required>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-6 mb-3">
-                                                        <label class="form-label">Status<span class="text-danger">*</span></label>
+                                                        <label class="form-label">Status<span
+                                                                class="text-danger">*</span></label>
                                                         <select id="textSupplierStatus" class="form-select"
                                                             onchange="selectDynamicElementValidator(this,'supplier','supplier_status_id')">
                                                         </select>
@@ -264,7 +258,8 @@
                                                     <div class="col-md-6 mb-3">
                                                         <div class="row mt-5">
                                                             <div class="col-md-3 mb-3">
-                                                                <label class="form-label">Driving Status<span class="text-danger">*</span></label>
+                                                                <label class="form-label">Driving Status<span
+                                                                        class="text-danger">*</span></label>
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <div id="drivingStatus">
@@ -279,37 +274,40 @@
                                                                         labelDrivingStatus.innerText = 'No';
                                                                     }">
                                                                         <label class="form-check-label"
-                                                                            for="drivingStatusChkbox" id="labelDrivingStatus">
+                                                                            for="drivingStatusChkbox"
+                                                                            id="labelDrivingStatus">
                                                                             Yes</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    
+
                                                 </div>
                                                 <!-- buttons -->
-                                                <div  class="mb-4">
-                                                    <div class="row" >
+                                                <div class="mb-4">
+                                                    <div class="row">
                                                         <div class="col-6">
                                                         </div>
                                                         <div class="col-6">
                                                             <div class="row">
                                                                 <div class="col-4"></div>
                                                                 <div class="col-4 text-start">
-                                                                    <button type="button" id="deleteButtonFrom" class="btn-3d btn-3d-cancel"
-                                                                      >
+                                                                    <button type="button" id="deleteButtonFrom"
+                                                                        class="btn-3d btn-3d-cancel">
                                                                         <i class="fa-solid fa-xmark me-3"></i>
                                                                         Cancel</button>
                                                                 </div>
                                                                 <div class="col-4 text-start">
-                                                                    <button type="button" class="btn-3d btn-3d-update" id="updateButton"
-                                                                            onclick="supplierFormUpdate()">
+                                                                    <button type="button" class="btn-3d btn-3d-update"
+                                                                        id="updateButton"
+                                                                        onclick="supplierFormUpdate()">
                                                                         <i class="fa-solid fa-arrows-rotate me-3"></i>
                                                                         Update</button>
 
-                                                                    <button type="submit" id="submitButton" class="btn-3d btn-3d-submit"
-                                                                            onclick="supplierFormSubmit()">
+                                                                    <button type="submit" id="submitButton"
+                                                                        class="btn-3d btn-3d-submit"
+                                                                        onclick="supplierFormSubmit()">
                                                                         <i class="fa-solid fa-check me-3"></i>
                                                                         Submit</button>
                                                                 </div>

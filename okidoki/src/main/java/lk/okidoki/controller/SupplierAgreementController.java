@@ -46,10 +46,13 @@ public class SupplierAgreementController {
     @RequestMapping("/supplieragreement")
     public ModelAndView loadSupplierAgreementUI() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User logeduser = userRepository.getByUsername(auth.getName());
 
         ModelAndView supplierAgreementUI = new ModelAndView();
         supplierAgreementUI.setViewName("supplieragreement.html");
         supplierAgreementUI.addObject("logedusername", auth.getName());
+        supplierAgreementUI.addObject("loggeduserphoto", logeduser.getUser_photo());
+        supplierAgreementUI.addObject("pageTitle", "Supplier Agreement");
         return supplierAgreementUI;
 
     }

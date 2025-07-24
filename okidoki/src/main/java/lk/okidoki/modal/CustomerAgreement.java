@@ -1,18 +1,12 @@
 package lk.okidoki.modal;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
+import jakarta.persistence.*;
 import org.hibernate.validator.constraints.Length;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -66,14 +60,6 @@ public class CustomerAgreement {
 
     private Integer deleted_user_id;
 
-    private BigDecimal agreement_charge;
-
-    private BigDecimal additional_charge;
-
-    private BigDecimal total_amount;
-
-    private BigDecimal total_distance;
-
     private String special_note;
 
     private String approval_note;
@@ -93,4 +79,5 @@ public class CustomerAgreement {
     @ManyToOne()
     @JoinColumn(name = "package_id", referencedColumnName = "id")
     private Package package_id;
+
 }

@@ -1,7 +1,9 @@
 <html lang="en">
 
+<head th:replace="fragments/head :: headFragment"></head>
+
 <head>
-    <head th:replace="fragments/head :: headFragment"></head>
+    <link rel="stylesheet" href="css/vehicle.css">
 </head>
 
 <body>
@@ -13,21 +15,13 @@
 
         <div class="container-fluid">
             <!-- head area  -->
-            <div class="row align-items-center justify-content-between mt-3 mb-4">
+            <div class="row align-items-center justify-content-between mb-2">
                 <div class="col-auto">
-                    <div class="title">Manage Vehicles</div>
-                    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/dashboard"
-                                    style="text-decoration: none; color: #0CAF60;">Dashboard</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Vehicle</li>
-                        </ol>
-                    </nav>
                 </div>
                 <div class="col-auto">
-                    <button class="btn btn-primary" type="button" data-bs-toggle="modal" id="addButton"
+                    <button class="btn-3d btn-3d-submit" type="button" data-bs-toggle="modal" id="addButton"
                         data-bs-target="#vehicleFormModal" aria-controls="staticBackdrop"><i
-                            class="fa-solid fa-plus"></i>
+                            class="fa-solid fa-plus me-3"></i>
                         Add Vehicle
                     </button>
                 </div>
@@ -77,6 +71,7 @@
                         <thead>
                             <tr>
                                 <th>#</th>
+                                <th>Photo</th>
                                 <th>Transport Name</th>
                                 <th>Vehicle No</th>
                                 <th>Vehicle Type</th>
@@ -114,7 +109,7 @@
                                             <div class="mb-4">
                                                 <h4 class="section-title">Transport Information</h4>
                                                 <div class="row">
-                                                    <div class="col-md-12 mb-3">
+                                                    <div class="col-md-6 mb-3">
                                                         <label for="textVehicleTransportName"
                                                             class="form-label ">Transport
                                                             Name</label>
@@ -122,6 +117,33 @@
                                                             class="form-select"
                                                             onchange="selectDynamicElementValidator(this,'vehicle','supplier_id')"
                                                             required></select>
+                                                    </div>
+
+                                                    <div class="col-md-6 mb-3">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Vehicle Photo :</label>
+                                                            <div class="photo-upload-container"
+                                                                id="uploadContainerVehiclePhoto">
+                                                                <input
+                                                                    onchange="fileValidator(this,'vehicle','vehicle_photo',previewImageVehicle,photoPreviewVehicle,uploadContainerVehiclePhoto)"
+                                                                    type="file" id="filePhotoVehicle" name="photo"
+                                                                    accept="image/*">
+                                                                <button type="button" class="upload-button mb-4"
+                                                                    onclick="filePhotoVehicle.click()">
+                                                                    Choose Photo
+                                                                </button>
+
+                                                                <div class="file-info">Supported formats: JPG, PNG, GIF
+                                                                    (Max 5MB)</div>
+                                                            </div>
+
+                                                            <div class="photo-preview" id="photoPreviewVehicle">
+                                                                <img id="previewImageVehicle" src="" alt="Preview">
+                                                                <br>
+                                                                <button type="button" class="remove-photo"
+                                                                    onclick="removePhoto()">Remove Photo</button>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -160,7 +182,7 @@
                                                                 class="text-danger">*</span></label>
                                                         <input type="text" class="form-control" id="textVehicleModel"
                                                             placeholder="Enter Vehicle Model"
-                                                            onkeyup="validator(this,'^[A-Za-z]{1,30}$','vehicle','model')"
+                                                            onkeyup="validator(this,'^[A-Za-z0-9]+(?:[\\s\\-\\.\\/][A-Za-z0-9]+)*$','vehicle','model')"
                                                             required>
                                                     </div>
                                                     <div class="col-md-4 mb-3">
@@ -196,7 +218,7 @@
                                                             Meter
                                                             Reading<span class="text-danger">*</span></label>
                                                         <input type="text" class="form-control"
-                                                            id="textVehicleStartMeterReading" required
+                                                            id="textVehicleStartMeterReading"
                                                             placeholder="Enter Start Meter Reading"
                                                             onkeyup="validator(this,'^[0-9]{1,30}$','vehicle','startup_meter_reading')">
                                                     </div>
@@ -229,8 +251,126 @@
                                                 </div>
                                             </div>
 
-                                            <!-- Additional Information -->
+                                            <!--                                            document deatils-->
                                             <div class="mb-4">
+                                                <h4 class="section-title">Documents</h4>
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-3">
+                                                        <div class="form-group">
+                                                            <label class="form-label">CR :</label>
+                                                            <div class="photo-upload-container" id="uploadContainerCr">
+                                                                <input
+                                                                    onchange="fileValidator(this,'vehicle','cr_photo',previewImageCr,photoPreviewCr,uploadContainerCr)"
+                                                                    type="file" id="filePhotoCr" name="photo"
+                                                                    accept="image/*">
+                                                                <button type="button" class="upload-button mb-4"
+                                                                    onclick="filePhotoCr.click()">
+                                                                    Choose Photo
+                                                                </button>
+
+                                                                <div class="file-info">Supported formats: JPG, PNG, GIF
+                                                                    (Max 5MB)</div>
+                                                            </div>
+
+                                                            <div class="photo-preview" id="photoPreviewCr">
+                                                                <img id="previewImageCr" src="" alt="Preview">
+                                                                <br>
+                                                                <button type="button" class="remove-photo"
+                                                                    onclick="removePhoto()">Remove Photo</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Revenue License :</label>
+                                                            <div class="photo-upload-container" id="uploadContainerRl">
+                                                                <input
+                                                                    onchange="fileValidator(this,'vehicle','revenue_license_photo',previewImageRl,photoPreviewRl,uploadContainerRl)"
+                                                                    type="file" id="filePhotoRl" name="photo"
+                                                                    accept="image/*">
+                                                                <button type="button" class="upload-button mb-4"
+                                                                    onclick="filePhotoRl.click()">
+                                                                    Choose Photo
+                                                                </button>
+
+                                                                <div class="file-info">Supported formats: JPG, PNG, GIF
+                                                                    (Max 5MB)</div>
+                                                            </div>
+
+                                                            <div class="photo-preview" id="photoPreviewRl">
+                                                                <img id="previewImageRl" src="" alt="Preview">
+                                                                <br>
+                                                                <button type="button" class="remove-photo"
+                                                                    onclick="removePhoto()">Remove Photo</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Insurance Card :</label>
+                                                            <div class="photo-upload-container"
+                                                                id="uploadContainerInsuranceCard">
+                                                                <input
+                                                                    onchange="fileValidator(this,'vehicle','insurance_card_photo',previewImageInsuranceCard,photoPreviewInsuranceCard,uploadContainerInsuranceCard)"
+                                                                    type="file" id="filePhotoInsuranceCard" name="photo"
+                                                                    accept="image/*">
+                                                                <button type="button" class="upload-button mb-4"
+                                                                    onclick="filePhotoInsuranceCard.click()">
+                                                                    Choose Photo
+                                                                </button>
+
+                                                                <div class="file-info">Supported formats: JPG, PNG, GIF
+                                                                    (Max 5MB)</div>
+                                                            </div>
+
+                                                            <div class="photo-preview" id="photoPreviewInsuranceCard">
+                                                                <img id="previewImageInsuranceCard" src=""
+                                                                    alt="Preview">
+                                                                <br>
+                                                                <button type="button" class="remove-photo"
+                                                                    onclick="removePhoto()">Remove Photo</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Inspection Report :</label>
+                                                            <div class="photo-upload-container"
+                                                                id="uploadContainerInspectionReport">
+                                                                <input
+                                                                    onchange="fileValidator(this,'vehicle','inspection_report_photo',previewImageInspectionReport,photoPreviewInspectionReport,uploadContainerInspectionReport)"
+                                                                    type="file" id="filePhotoInspectionReport"
+                                                                    name="photo" accept="image/*">
+                                                                <button type="button" class="upload-button mb-4"
+                                                                    onclick="filePhotoInspectionReport.click()">
+                                                                    Choose Photo
+                                                                </button>
+
+                                                                <div class="file-info">Supported formats: JPG, PNG, GIF
+                                                                    (Max 5MB)</div>
+                                                            </div>
+
+                                                            <div class="photo-preview"
+                                                                id="photoPreviewInspectionReport">
+                                                                <img id="previewImageInspectionReport" src=""
+                                                                    alt="Preview">
+                                                                <br>
+                                                                <button type="button" class="remove-photo"
+                                                                    onclick="removePhoto()">Remove Photo</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- The Modal for image eka view karanna -->
+                                                <div id="myModal" class="modal1">
+                                                    <span class="close">&times;</span>
+                                                    <img class="modal1-content" id="img01">
+                                                </div>
+                                            </div>
+
+                                            <!-- Additional Information -->
+                                            <div class="mb-4" id="additionalInformationSection" style="display: none;">
                                                 <h4 class="section-title">Additional Information</h4>
                                                 <div class="row">
                                                     <div class="col-md-6 mb-3">
@@ -242,27 +382,30 @@
                                                 </div>
                                             </div>
                                             <!-- buttons -->
-                                            <div  class="mb-4">
-                                                <div class="row" >
+                                            <div class="mb-4">
+                                                <div class="row">
                                                     <div class="col-6">
                                                     </div>
                                                     <div class="col-6">
                                                         <div class="row">
                                                             <div class="col-4"></div>
                                                             <div class="col-4 ">
-                                                                <button type="button" id="deleteButtonFrom" class="btn-3d btn-3d-cancel text-end"
-                                                                        onclick="refreshVehicleForm()">
+                                                                <button type="button" id="deleteButtonFrom"
+                                                                    class="btn-3d btn-3d-cancel text-end"
+                                                                    onclick="refreshVehicleForm()">
                                                                     <i class="fa-solid fa-xmark me-3"></i>
                                                                     Cancel</button>
                                                             </div>
                                                             <div class="col-4 text-end">
-                                                                <button type="button" class="btn-3d btn-3d-update text-end" id="updateButton"
-                                                                        onclick="vehicleFormUpdate()">
+                                                                <button type="button"
+                                                                    class="btn-3d btn-3d-update text-end"
+                                                                    id="updateButton" onclick="vehicleFormUpdate()">
                                                                     <i class="fa-solid fa-arrows-rotate me-3"></i>
                                                                     Update</button>
 
-                                                                <button type="submit" id="submitButton" class="btn-3d btn-3d-submit text-end"
-                                                                        onclick="vehicleFormSubmit()">
+                                                                <button type="submit" id="submitButton"
+                                                                    class="btn-3d btn-3d-submit text-end"
+                                                                    onclick="vehicleFormSubmit()">
                                                                     <i class="fa-solid fa-check me-3"></i>
                                                                     Submit</button>
                                                             </div>
@@ -286,6 +429,42 @@
     </div>
     <div th:replace="fragments/loading :: overlayFragment"></div>
 
+    <!--    image eka uda click karama view wela penawa-->
+    <script>
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the image and insert it inside the modal - use its "alt" text as a caption
+        var previewImageCr = document.getElementById("previewImageCr");
+        var previewImageRl = document.getElementById("previewImageRl");
+        var previewImageInsuranceCard = document.getElementById("previewImageInsuranceCard");
+        var previewImageInspectionReport = document.getElementById("previewImageInspectionReport");
+        var modalImg = document.getElementById("img01");
+        previewImageCr.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+        }
+        previewImageRl.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+        }
+        previewImageInsuranceCard.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+        }
+        previewImageInspectionReport.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+        }
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+    </script>
     <script src="/commenjs/reusabal.js"></script>
     <script src="/commenjs/commanValidation.js"></script>
     <script src="/commenjs/commonTable.js"></script>

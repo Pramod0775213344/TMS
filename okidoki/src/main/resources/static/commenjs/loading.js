@@ -4,7 +4,9 @@ window.addEventListener('load',  ()=> {
     document.querySelector('.overlay').style.display = 'flex';
 });
 
-setInterval(() => {
+setTimeout(() => {
     document.querySelector('.overlay').style.display = 'none';
-}, 500);
+}, 1000); // hides after 1 second
 
+// loading overlay eka load wunata passe call karanawa
+colorActiveSideBarMenuItem();

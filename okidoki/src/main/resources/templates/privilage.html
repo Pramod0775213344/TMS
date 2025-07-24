@@ -19,28 +19,21 @@
         <div class="container-fluid">
 
             <!-- Title  and add button-->
-            <div class="row align-items-center justify-content-between mt-3 mb-4">
+            <div class="row align-items-center justify-content-between mb-2">
                 <div class="col-auto">
-                    <div class="title">Manage Privilege</div>
-                    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li  class="breadcrumb-item"><a href="/dashboard" style="text-decoration: none; color: #0CAF60;">Dashboard</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Privilege</li>
-                        </ol>
-                    </nav>
                 </div>
                 <div class="col-auto">
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                    data-bs-target="#privilageForm">
-                    <i class="fa-solid fa-plus"></i> Add Privilege
-                </button>
+                    <button type="button" class="btn-3d btn-3d-submit" data-bs-toggle="modal"
+                        data-bs-target="#privilageForm">
+                        <i class="fa-solid fa-plus me-3"></i> Add Privilege
+                    </button>
                 </div>
             </div>
 
             <!-- Table head area -->
             <div class="main-card">
-                
+
                 <!-- Table -->
                 <div class="table-responsive">
                     <table id="privilageTable" class="table table-hover">
@@ -196,27 +189,28 @@
                                         </div>
 
                                         <!-- buttons -->
-                                        <div  class="mb-4">
-                                            <div class="row" >
+                                        <div class="mb-4">
+                                            <div class="row">
                                                 <div class="col-6">
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="row">
                                                         <div class="col-4"></div>
                                                         <div class="col-4 text-start">
-                                                            <button type="button" id="deleteButtonFrom" class="btn-3d btn-3d-cancel"
-                                                                    onclick="refreshForm()">
+                                                            <button type="button" id="deleteButtonFrom"
+                                                                class="btn-3d btn-3d-cancel" onclick="refreshForm()">
                                                                 <i class="fa-solid fa-xmark me-3"></i>
                                                                 Cancel</button>
                                                         </div>
                                                         <div class="col-4 text-start">
-                                                            <button type="button" class="btn-3d btn-3d-update" id="updateButton"
-                                                                    onclick="privilageFormUpdate()">
+                                                            <button type="button" class="btn-3d btn-3d-update"
+                                                                id="updateButton" onclick="privilageFormUpdate()">
                                                                 <i class="fa-solid fa-arrows-rotate me-3"></i>
                                                                 Update</button>
 
-                                                            <button type="submit" id="submitButton" class="btn-3d btn-3d-submit"
-                                                                    onclick="privilageFormSubmit()">
+                                                            <button type="submit" id="submitButton"
+                                                                class="btn-3d btn-3d-submit"
+                                                                onclick="privilageFormSubmit()">
                                                                 <i class="fa-solid fa-check me-3"></i>
                                                                 Submit</button>
                                                         </div>
@@ -240,7 +234,8 @@
     <div th:replace="fragments/loading :: overlayFragment"></div>
 
     <!-- Modal -->
-    <div class="modal fade" id="privilageView" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal fade" id="privilageView" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">

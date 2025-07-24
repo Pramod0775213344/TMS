@@ -70,6 +70,8 @@ public class Employee {
     @NotNull
     private LocalDate join_date;
 
+    private byte[] emp_photo;
+
     @NotNull
     private LocalDateTime added_datetime;
 

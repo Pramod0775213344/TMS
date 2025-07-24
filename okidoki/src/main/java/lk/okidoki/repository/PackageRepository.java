@@ -22,4 +22,6 @@ public interface PackageRepository extends JpaRepository<Package, Integer> {
     @Query(value = "SELECT * FROM tms.package as p where p.vehicle_type_id in (SELECT v.vehicle_type_id FROM tms.vehicle as v where v.id =?1) and p.package_status_id = 1;", nativeQuery = true)
     public List<Package> getPackageByVehicle(Integer vehicleid);
 
+    @Query(value = "SELECT * FROM tms.package as p where p.id in (SELECT ca.package_id FROM tms.customer_agreement as ca where ca.customer_id =?1 and ca.vehicle_type_id=?2)", nativeQuery = true)
+    public List<Package> getPackageTypeByCustomerAndVehicleType(Integer customerId, Integer vehicleTypeId);
 }

@@ -22,7 +22,6 @@ public class OkidokiApplication {
 	// Request mapping for load index ui (url -->/index)
 	@RequestMapping(value = "/index")
 	public ModelAndView indexPage() {
-
 		ModelAndView indexUi = new ModelAndView();
 		indexUi.setViewName("index.html");
 		return indexUi;

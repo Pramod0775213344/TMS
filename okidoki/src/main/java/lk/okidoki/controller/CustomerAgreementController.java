@@ -1,7 +1,7 @@
 package lk.okidoki.controller;
 
 import lk.okidoki.modal.Privilage;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import lk.okidoki.modal.CustomerAgreement;
@@ -18,11 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 public class CustomerAgreementController {
@@ -43,22 +38,23 @@ public class CustomerAgreementController {
     @RequestMapping(value = "/customeragreement")
     public ModelAndView loadCustomerAgreementUI() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User logeduser = userRepository.getByUsername(auth.getName());
 
         ModelAndView customerAgreementUI = new ModelAndView();
         customerAgreementUI.setViewName("customerAgreement.html");
         customerAgreementUI.addObject("logedusername", auth.getName());
+        customerAgreementUI.addObject("loggeduserphoto", logeduser.getUser_photo());
+        customerAgreementUI.addObject("pageTitle", "Customer Agreement");
         return customerAgreementUI;
     }
 
-    
-   
 
     // Request mapping for get all customeragreement data (url
     // -->/customeragreement/alldata)
     @RequestMapping(value = "/customeragreement/alldata", produces = "application/json")
     public List<CustomerAgreement> getCustomerAgreementAllData() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Privilage userPrivilage = userPrivilageController.getUserPrivilageByUserModule(auth.getName(), "Customer Agreement");
+        Privilage userPrivilage = userPrivilageController.getUserPrivilageByUserModule(auth.getName(), "CustomerAgreement");
 
         if (userPrivilage.getPrivi_select()) {
         return customerAgreementRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
@@ -75,7 +71,7 @@ public class CustomerAgreementController {
 
         // check authentication and authorization
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Privilage userPrivilage = userPrivilageController.getUserPrivilageByUserModule(auth.getName(), "Customer Agreement");
+        Privilage userPrivilage = userPrivilageController.getUserPrivilageByUserModule(auth.getName(), "CustomerAgreement");
         User logeduser = userRepository.getByUsername(auth.getName());
 
 
@@ -105,7 +101,6 @@ public class CustomerAgreementController {
             // set status to pending
             customerAgreement.setCustomer_agreement_status_id(customerAgreementStatusRepository.getReferenceById(1));
 
-            // save data
             customerAgreementRepository.save(customerAgreement);
 
             // return success message
@@ -127,7 +122,7 @@ public class CustomerAgreementController {
 
         // Check authentication and authorization
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Privilage userPrivilage = userPrivilageController.getUserPrivilageByUserModule(auth.getName(), "Customer Agreement");
+        Privilage userPrivilage = userPrivilageController.getUserPrivilageByUserModule(auth.getName(), "CustomerAgreement");
         User logedUser = userRepository.getByUsername(auth.getName());
         if (userPrivilage.getPrivi_update()) {
         // check duplicate
@@ -147,7 +142,6 @@ public class CustomerAgreementController {
             // set status to pending
             customerAgreement.setCustomer_agreement_status_id(customerAgreementStatusRepository.getReferenceById(1));
 
-            // save data
             customerAgreementRepository.save(customerAgreement);
 
             // return success message
@@ -171,7 +165,7 @@ public class CustomerAgreementController {
 
         // check authentication and authorization
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Privilage userPrivilage = userPrivilageController.getUserPrivilageByUserModule(auth.getName(), "Customer Agreement");
+        Privilage userPrivilage = userPrivilageController.getUserPrivilageByUserModule(auth.getName(), "CustomerAgreement");
         User logedUser = userRepository.getByUsername(auth.getName());
         if (userPrivilage.getPrivi_delete()) {
         // check existing
@@ -193,7 +187,6 @@ public class CustomerAgreementController {
             // set status to deleted
             customerAgreement.setCustomer_agreement_status_id(customerAgreementStatusRepository.getReferenceById(4));
 
-            // save data
             customerAgreementRepository.save(customerAgreement);
 
             // return success message
@@ -207,6 +200,11 @@ public class CustomerAgreementController {
     }
     }
 
-
-  
+    // Get mapping for get customer agreement  using cutomer id and vehicle type (url
+    // -->/customeragreement/bycutomerandvehicletype?customerId=1&vehicleTypeId=)
+    @GetMapping(value = "/customeragreement/bycutomerandvehicletype", params = { "customerId" ,"vehicleTypeId"})
+    // param method eka haraha thama data ganne
+    public CustomerAgreement getCustomerAgreementByCustomerAndVehicleType(@RequestParam("customerId") Integer customerId, @RequestParam("vehicleTypeId") Integer vehicleTypeId) {
+        return customerAgreementRepository.findByVehicleTypeIdAndCustomerId(customerId,vehicleTypeId);
+    }
 }

@@ -56,7 +56,23 @@ const getDriverStatus = (dataOb) => {
 };
 
 // define  driver details view
-const driverView = (dataOb) => { }
+const driverView = (dataOb) => {
+    viewDriverCallingName.innerText = dataOb.callingname;
+    viewDriverRegNo.innerText = dataOb.driver_reg_no;
+    viewDriverFullName.innerText = dataOb.fullname;
+    viewTransportName.innerText = dataOb.supplier_id.transportname;
+    viewNic.innerText = dataOb.nic;
+    viewMobileNo.innerText = dataOb.mobileno;
+    viewStatus.innerText = dataOb.driver_status_id.status;
+    viewDrivingLicenseNo.innerText = dataOb.driving_license_no;
+    viewExpireDate.innerText = dataOb.driving_license_expire_date;
+
+    viewSupplierName.innerText = dataOb.supplier_id.fullname;
+    viewSupplierAddress.innerText = dataOb.supplier_id.address;
+    viewSupplierMobileNo.innerText = dataOb.supplier_id.mobileno;
+    viewSupplierEmail.innerText = dataOb.supplier_id.email;
+    $("#driverViewModal").modal('show');
+}
 
 // define driver edit function
 const driverEdit = (dataOb) => {
@@ -464,6 +480,10 @@ const refreshDriverForm = () => {
 
     let driverStatus = getServiceRequest('/driverstatus/alldata');;
     dataFilIntoSelect(textDriverStatus, "Select Status", driverStatus, "status");
+
+
+    // current date validate and previous date restrict
+    currentdatevalidator('textDrivingLicenseExpireDate')
 
     submitButton.style.display = "";
     updateButton.style.display = "none";

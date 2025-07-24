@@ -33,10 +33,13 @@ public class VehicleAssigningController {
     @GetMapping(value = "/vehicleassigning")
     public ModelAndView loadVehicleAssigningUi() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User logeduser = userRepository.getByUsername(auth.getName());
 
         ModelAndView VehicleAssigningUi = new ModelAndView();
         VehicleAssigningUi.setViewName("vehicleAssigning.html");
         VehicleAssigningUi.addObject("logedusername", auth.getName());
+        VehicleAssigningUi.addObject("loggeduserphoto", logeduser.getUser_photo());
+        VehicleAssigningUi.addObject("pageTitle", "Vehicle Assigning");
         return VehicleAssigningUi;
 
     }

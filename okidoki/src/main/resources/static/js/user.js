@@ -13,6 +13,7 @@ const loadUserTable = () => {
     let users = getServiceRequest("/user/alldata");
 
     const propertyList = [
+        { propertyName: "user_photo", dataType: "image-array" },
         { propertyName: getEmployee, dataType: "function" },
         { propertyName: "username", dataType: "string" },
         { propertyName: "email", dataType: "string" },
@@ -218,6 +219,7 @@ const retypePasswordValidator = () => {
         textUserRetypePassword.classList.add("is-invalid");
     }
 }
+
 // user form error check function
 const checkFormError = () => {
 

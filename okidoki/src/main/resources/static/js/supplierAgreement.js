@@ -504,3 +504,35 @@ vehicleElement.addEventListener("change", () => {
 
 //Alert Box Call function
 Swal.isVisible();
+
+//calclate end date using given date and time period
+
+let agreementEndDate = (startDateStr, periodValue) => {
+    const startdate = new Date(startDateStr);
+    const enddate = new Date(startdate);
+    enddate.setMonth(startdate.getMonth() + Number(periodValue));
+
+    // input type ekata galapena widihata date input format ekata convert karanna
+    return `${enddate.getFullYear()}-${(enddate.getMonth() + 1).toString().padStart(2, '0')}-${enddate.getDate().toString().padStart(2, '0')}`;
+};
+
+document.getElementById('textSupplierAgreementPeriod').onchange = () => {
+    const agreementStartDate = document.getElementById('textSupplierAgreementDate').value;
+    const agreementPeriod = document.getElementById('textSupplierAgreementPeriod').value;
+
+    //object ekata bind karanawa
+    supplierAgreement.agreement_period = agreementPeriod;
+    // validation
+    textSupplierAgreementPeriod.classList.remove("is-invalid");
+    textSupplierAgreementPeriod.classList.add("is-valid");
+
+    const endDate = agreementEndDate(agreementStartDate, agreementPeriod);
+    document.getElementById('textSupplierAgreementEndDate').value = endDate;
+
+    // object ekata bind karanawa
+    supplierAgreement.agreement_end_date = endDate;
+    // validation
+    textSupplierAgreementEndDate.classList.remove("is-invalid");
+    textSupplierAgreementEndDate.classList.add("is-valid");
+    console.log(endDate); // "7/15/2024"
+};

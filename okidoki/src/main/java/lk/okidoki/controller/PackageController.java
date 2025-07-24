@@ -1,5 +1,6 @@
 package lk.okidoki.controller;
 
+import lk.okidoki.modal.Booking;
 import lk.okidoki.modal.Privilage;
 import lk.okidoki.modal.User;
 import lk.okidoki.repository.PackageStatusRepository;
@@ -39,11 +40,14 @@ public class PackageController {
     public ModelAndView loadPackAgeUI() {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User logeduser = userRepository.getByUsername(auth.getName());
 
         // load package.html file
         ModelAndView packageUI = new ModelAndView();
         packageUI.setViewName("package.html");
         packageUI.addObject("logedusername", auth.getName());
+        packageUI.addObject("loggeduserphoto", logeduser.getUser_photo());
+        packageUI.addObject("pageTitle", "Package");
         return packageUI;
 
     }
@@ -190,5 +194,11 @@ public class PackageController {
         return packageRepository.getPackageByVehicle(vehicleid);
     }
 
-
+    // Get mapping for get package type using cutomer id and vehicle type (url
+    // -->/package/bycutomerandvehicletype?customerid=1&packageType=packageType)
+    @GetMapping(value = "/package/bycutomerandvehicletype", params = { "customerId" ,"vehicleTypeId"}, produces = "application/json")
+    // param method eka haraha thama data ganne
+    public List<Package> getPackageByVehicleType(@RequestParam("customerId") Integer customerId, @RequestParam("vehicleTypeId") Integer vehicleTypeId) {
+        return packageRepository.getPackageTypeByCustomerAndVehicleType(customerId,vehicleTypeId);
+    }
 }

@@ -15,21 +15,13 @@
         <div class="container-fluid">
 
             <!-- Title  and add button-->
-            <div class="row align-items-center justify-content-between mt-3 mb-4">
+            <div class="row align-items-center justify-content-between mb-2">
                 <div class="col-auto">
-                    <div class="title">Manage Employees</div>
-                    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/dashboard"
-                                    style="text-decoration: none; color: #0CAF60;">Dashboard</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Employee</li>
-                        </ol>
-                    </nav>
                 </div>
                 <div class="col-auto">
-                    <button class="btn btn-primary" type="button" data-bs-toggle="modal" id="addButton"
+                    <button class="btn-3d btn-3d-submit" type="button" data-bs-toggle="modal" id="addButton"
                         data-bs-target="#employee" aria-controls="staticBackdrop"><i
-                            class="fa-solid fa-user-plus me-2"></i>
+                            class="fa-solid fa-user-plus me-3"></i>
                         Add Employee
                     </button>
                 </div>
@@ -84,8 +76,10 @@
                         </div>
                     </div>
                     <div class="col-1 mt-4">
-                        <button class="btn btn-search mt-3" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Search"><i class="fas fa-search"></i></button>
-                        <button class="btn btn-reset mt-3" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Reset"><i class="fa-solid fa-rotate-right"></i></button>
+                        <button class="btn btn-search mt-3" data-bs-toggle="tooltip" data-bs-placement="top"
+                            data-bs-title="Search"><i class="fas fa-search"></i></button>
+                        <button class="btn btn-reset mt-3" data-bs-toggle="tooltip" data-bs-placement="top"
+                            data-bs-title="Reset"><i class="fa-solid fa-rotate-right"></i></button>
                     </div>
                 </div>
             </div>
@@ -98,6 +92,7 @@
                     <table id="employeeTable" class="table table-hover">
                         <thead>
                             <th>No</th>
+                            <th>Photo</th>
                             <th>Employee No</th>
                             <th>Employee</th>
                             <th>Designation</th>
@@ -127,220 +122,242 @@
                             <form id="employeeRegistrationForm" onsubmit="return false">
                                 <div class="row">
 
-                                        <div class="p-4">
-                                            <!-- Personal Information -->
-                                            <div class="mb-4">
-                                                <h4 class="section-title">Personal Information</h4>
-                                                <div class="row">
-                                                    <div class="col-md-6 mb-3">
-                                                        <label class="form-label">Full Name<span
-                                                                class="text-danger">*</span></label>
-                                                        <input type="text" class="form-control"
-                                                            id="textEmployeeFullName" placeholder="Enter Full Name"
-                                                            required>
-                                                        <div class="valid-feedback ">
-                                                            Valid Full Name....
-                                                        </div>
-                                                        <div class="invalid-feedback ">
-                                                            Invalid Full Name...!
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6 mb-3">
-                                                        <label class="form-label">Calling Name<span
-                                                                class="text-danger">*</span></label>
-                                                        <div id="divParentRadio">
+                                    <div class="p-4">
+                                        <!-- Personal Information -->
+                                        <div class="mb-4">
+                                            <h4 class="section-title">Personal Information</h4>
+                                            <div class="row">
+                                                <!--                                                    profile photo-->
+                                                <div class="col-md-12 mb-3">
+                                                    <div class="form-group">
+                                                        <label>Profile Photo:</label>
+                                                        <div class="photo-upload-container" id="uploadContainer">
+                                                            <input
+                                                                onchange="fileValidator(this,'employee','emp_photo',previewImage,photoPreview,uploadContainer)"
+                                                                type="file" id="filePhotoEmployee" name="photo"
+                                                                accept="image/*">
+                                                            <button type="button" class="upload-button mb-4"
+                                                                onclick="filePhotoEmployee.click()">
+                                                                Choose Photo
+                                                            </button>
 
+                                                            <div class="file-info">Supported formats: JPG, PNG, GIF (Max
+                                                                5MB)</div>
                                                         </div>
-                                                        <div class="valid-feedback ">
-                                                            Valid Calling Name....
-                                                        </div>
-                                                        <div class="invalid-feedback ">
-                                                            Invalid Calling Name...!
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12 mb-3">
-                                                        <label class="form-label">Address<span
-                                                                class="text-danger">*</span></label>
-                                                        <input type="text" class="form-control" id="textEmployeeAddress"
-                                                            required placeholder="Enter Address"
-                                                            onkeyup="validator(this,'^([A-Za-z0-9/]{0,20}[\\s])+([A-Za-z0-9]{2,20})$','employee','address')">
-                                                        <div class="valid-feedback ">
-                                                            Valid Address....
-                                                        </div>
-                                                        <div class="invalid-feedback ">
-                                                            Invalid Address...!
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6 mb-3">
-                                                        <label class="form-label">Nic<span
-                                                                class="text-danger">*</span></label>
-                                                        <input type="text" class="form-control" id="textEmployeeNic"
-                                                            required placeholder="Enter NIC"
-                                                            onkeyup="validator(this,'^([6789][0-9]{8}[Vv])|([12][0-9]{11})$','employee','nic')">
 
-                                                        <div class="valid-feedback ">
-                                                            Valid Nic....
-                                                        </div>
-                                                        <div class="invalid-feedback ">
-                                                            Invalid Nic...!
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6 mb-3">
-                                                        <label class="form-label">Civil Status<span
-                                                                class="text-danger">*</span></label>
-                                                        <select id="selectCivilStatus" class="form-select" required
-                                                            onchange="selectElementValidator(this,'employee','civil_status')">
-                                                            <option selected disabled>Select Civil Status</option>
-                                                            <option value="single">Single</option>
-                                                            <option value="married">Married</option>
-                                                        </select>
-                                                        <div class="valid-feedback ">
-                                                            Valid Civil Status....
-                                                        </div>
-                                                        <div class="invalid-feedback ">
-                                                            Invalid Civil Status...!
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6 mb-3">
-                                                        <label class="form-label">Date of Birth<span
-                                                                class="text-danger">*</span></label>
-                                                        <input type="date" id="dteDOB" class="form-control" required
-                                                            onchange="dateElementValidator(this,'employee','dateofbirth')">
-                                                        <div class="valid-feedback ">
-                                                            Valid Date of Birth....
-                                                        </div>
-                                                        <div class="invalid-feedback ">
-                                                            Invalid Date of Birth...!
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6 mt-5">
-                                                        <label class="form-label me-3">Gender <span
-                                                                class="text-danger">*</span></label>
-                                                        <div class="form-check form-check-inline">
-                                                            <input type="radio" value="Male" name="gender" required
-                                                                class="form-check-input" id="radioMale"
-                                                                onchange="employee.gender =this.value">
-                                                            <label for="radioMale"
-                                                                class="form-check-label ">Male</label>
-                                                        </div>
-                                                        <div class="form-check form-check-inline">
-                                                            <input type="radio" value="Female" name="gender" required
-                                                                class="form-check-input" id="radioFemale"
-                                                                onchange="employee.gender =this.value">
-                                                            <label for="radioFemale"
-                                                                class="form-check-label">Female</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6 mb-3">
-                                                        <label class="form-label">Email<span
-                                                                class="text-danger">*</span></label>
-                                                        <input type="email" class="form-control" id="textEmployeeEmail"
-                                                            placeholder="Enter Email" required
-                                                            onkeyup="validator(this,'^([A-Za-z0-9]{0,20})[@]([a-z]{3,8})[.]([a-z]{2,9})$','employee','email')">
-                                                        <div class="valid-feedback ">
-                                                            Valid Email....
-                                                        </div>
-                                                        <div class="invalid-feedback ">
-                                                            Invalid Email...!
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6 mb-3">
-                                                        <label class="form-label">Mobile No<span
-                                                                class="text-danger">*</span></label>
-                                                        <input type="text" class="form-control"
-                                                            id="textEmployeeMobileNo" placeholder="Enter Mobile No"
-                                                            required
-                                                            onkeyup="validator(this,'^([0][7][01245678][0-9]{7})$','employee','mobileno')">
-                                                        <div class="valid-feedback ">
-                                                            Valid Full Name....
-                                                        </div>
-                                                        <div class="invalid-feedback ">
-                                                            Invalid Full Name...!
+                                                        <div class="photo-preview" id="photoPreview">
+                                                            <img id="previewImage" src="" alt="Preview">
+                                                            <br>
+                                                            <button type="button" class="remove-photo"
+                                                                onclick="removePhoto()">Remove Photo</button>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Full Name<span
+                                                            class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control" id="textEmployeeFullName"
+                                                        placeholder="Enter Full Name" required>
+                                                    <div class="valid-feedback ">
+                                                        Valid Full Name....
+                                                    </div>
+                                                    <div class="invalid-feedback ">
+                                                        Invalid Full Name...!
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Calling Name<span
+                                                            class="text-danger">*</span></label>
+                                                    <div id="divParentRadio">
 
-                                            <!-- Professional Details -->
-                                            <div class="tab mb-4" id="professionalDeails">
-                                                <h4 class="section-title">Professional Details</h4>
-                                                <div class="row">
-                                                    <div class="col-md-6 mb-3">
-                                                        <label class="form-label">Department<span
-                                                                class="text-danger">*</span></label>
-                                                        <select id="textEmployeeDepartment" class="form-select"
-                                                            onchange="selectDynamicElementValidator(this,'employee','department_id')">
-                                                        </select>
                                                     </div>
-                                                    <div class="col-md-6 mb-3">
-                                                        <label class="form-label">Designation<span
-                                                                class="text-danger">*</span></label>
-                                                        <select id="textEmployeeDesignation" class="form-select"
-                                                            onchange="selectDynamicElementValidator(this,'employee','designation_id')">
-                                                        </select>
+                                                    <div class="valid-feedback ">
+                                                        Valid Calling Name....
                                                     </div>
-                                                    <div class="col-md-6 mb-3">
-                                                        <label class="form-label">Join Date<span
-                                                                class="text-danger">*</span></label>
-                                                        <input type="date" class="form-control" id="textJoinDate"
-                                                            required
-                                                            onchange="dateElementValidator(this,'employee','join_date')">
+                                                    <div class="invalid-feedback ">
+                                                        Invalid Calling Name...!
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 mb-3">
+                                                    <label class="form-label">Address<span
+                                                            class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control" id="textEmployeeAddress"
+                                                        required placeholder="Enter Address"
+                                                        onkeyup="validator(this,'^([A-Za-z0-9/]{0,20}[\\s])+([A-Za-z0-9]{2,20})$','employee','address')">
+                                                    <div class="valid-feedback ">
+                                                        Valid Address....
+                                                    </div>
+                                                    <div class="invalid-feedback ">
+                                                        Invalid Address...!
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Nic<span
+                                                            class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control" id="textEmployeeNic"
+                                                        required placeholder="Enter NIC"
+                                                        onkeyup="validator(this,'^([6789][0-9]{8}[Vv])|([12][0-9]{11})$','employee','nic')">
+
+                                                    <div class="valid-feedback ">
+                                                        Valid Nic....
+                                                    </div>
+                                                    <div class="invalid-feedback ">
+                                                        Invalid Nic...!
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Civil Status<span
+                                                            class="text-danger">*</span></label>
+                                                    <select id="selectCivilStatus" class="form-select" required
+                                                        onchange="selectElementValidator(this,'employee','civil_status')">
+                                                        <option selected disabled>Select Civil Status</option>
+                                                        <option value="single">Single</option>
+                                                        <option value="married">Married</option>
+                                                    </select>
+                                                    <div class="valid-feedback ">
+                                                        Valid Civil Status....
+                                                    </div>
+                                                    <div class="invalid-feedback ">
+                                                        Invalid Civil Status...!
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Date of Birth<span
+                                                            class="text-danger">*</span></label>
+                                                    <input type="date" id="dteDOB" class="form-control" required
+                                                        onchange="dateElementValidator(this,'employee','dateofbirth')">
+                                                    <div class="valid-feedback ">
+                                                        Valid Date of Birth....
+                                                    </div>
+                                                    <div class="invalid-feedback ">
+                                                        Invalid Date of Birth...!
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 mt-5">
+                                                    <label class="form-label me-3">Gender <span
+                                                            class="text-danger">*</span></label>
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="radio" value="Male" name="gender" required
+                                                            class="form-check-input" id="radioMale"
+                                                            onchange="employee.gender =this.value">
+                                                        <label for="radioMale" class="form-check-label ">Male</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="radio" value="Female" name="gender" required
+                                                            class="form-check-input" id="radioFemale"
+                                                            onchange="employee.gender =this.value">
+                                                        <label for="radioFemale" class="form-check-label">Female</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Email<span
+                                                            class="text-danger">*</span></label>
+                                                    <input type="email" class="form-control" id="textEmployeeEmail"
+                                                        placeholder="Enter Email" required
+                                                        onkeyup="validator(this,'^([A-Za-z0-9]{0,20})[@]([a-z]{3,8})[.]([a-z]{2,9})$','employee','email')">
+                                                    <div class="valid-feedback ">
+                                                        Valid Email....
+                                                    </div>
+                                                    <div class="invalid-feedback ">
+                                                        Invalid Email...!
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Mobile No<span
+                                                            class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control" id="textEmployeeMobileNo"
+                                                        placeholder="Enter Mobile No" required
+                                                        onkeyup="validator(this,'^([0][7][01245678][0-9]{7})$','employee','mobileno')">
+                                                    <div class="valid-feedback ">
+                                                        Valid Full Name....
+                                                    </div>
+                                                    <div class="invalid-feedback ">
+                                                        Invalid Full Name...!
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            <!-- Additional Information -->
-                                            <div id="additionalInformation">
-                                                <h4 class="section-title">Additional Information</h4>
-                                                <div class="row">
-                                                    <div class="col-md-6 mb-3">
-                                                        <label class="form-label">Work Status<span
-                                                                class="text-danger">*</span></label>
-                                                        <select id="textEmployeeStatus" class="form-select"
-                                                            onchange="selectDynamicElementValidator(this,'employee','employee_status_id')">
-                                                        </select>
-                                                        <div class="valid-feedback ">
-
-                                                        </div>
-                                                        <div class="invalid-feedback ">
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- buttons -->
-                                            <div  class="mb-4">
-                                                <div class="row" >
-                                                    <div class="col-6">
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <div class="row">
-                                                            <div class="col-4"></div>
-                                                            <div class="col-4 text-start">
-                                                                <button type="button" id="deleteButtonFrom" class="btn-3d btn-3d-cancel"
-                                                                        onclick="refreshForm()">
-                                                                    <i class="fa-solid fa-xmark me-3"></i>
-                                                                    Cancel</button>
-                                                            </div>
-                                                            <div class="col-4 text-start">
-                                                                <button type="button" class="btn-3d btn-3d-update" id="updateButton"
-                                                                        onclick="employeeFormUpdate()">
-                                                                    <i class="fa-solid fa-arrows-rotate me-3"></i>
-                                                                    Update</button>
-
-                                                                <button type="submit" id="submitButton" class="btn-3d btn-3d-submit"
-                                                                        onclick="employeeFormSubmit()">
-                                                                    <i class="fa-solid fa-check me-3"></i>
-                                                                    Submit</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                            <!-- buttons -->
-
                                         </div>
+
+                                        <!-- Professional Details -->
+                                        <div class="tab mb-4" id="professionalDeails">
+                                            <h4 class="section-title">Professional Details</h4>
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Department<span
+                                                            class="text-danger">*</span></label>
+                                                    <select id="textEmployeeDepartment" class="form-select"
+                                                        onchange="selectDynamicElementValidator(this,'employee','department_id')">
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Designation<span
+                                                            class="text-danger">*</span></label>
+                                                    <select id="textEmployeeDesignation" class="form-select"
+                                                        onchange="selectDynamicElementValidator(this,'employee','designation_id')">
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Join Date<span
+                                                            class="text-danger">*</span></label>
+                                                    <input type="date" class="form-control" id="textJoinDate" required
+                                                        onchange="dateElementValidator(this,'employee','join_date')">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Additional Information -->
+                                        <div id="additionalInformation">
+                                            <h4 class="section-title">Additional Information</h4>
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Work Status<span
+                                                            class="text-danger">*</span></label>
+                                                    <select id="textEmployeeStatus" class="form-select"
+                                                        onchange="selectDynamicElementValidator(this,'employee','employee_status_id')">
+                                                    </select>
+                                                    <div class="valid-feedback ">
+
+                                                    </div>
+                                                    <div class="invalid-feedback ">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- buttons -->
+                                        <div class="mb-4">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="row">
+                                                        <div class="col-4"></div>
+                                                        <div class="col-4 text-start">
+                                                            <button type="button" id="deleteButtonFrom"
+                                                                class="btn-3d btn-3d-cancel" onclick="refreshForm()">
+                                                                <i class="fa-solid fa-xmark me-3"></i>
+                                                                Cancel</button>
+                                                        </div>
+                                                        <div class="col-4 text-start">
+                                                            <button type="button" class="btn-3d btn-3d-update"
+                                                                id="updateButton" onclick="employeeFormUpdate()">
+                                                                <i class="fa-solid fa-arrows-rotate me-3"></i>
+                                                                Update</button>
+
+                                                            <button type="submit" id="submitButton"
+                                                                class="btn-3d btn-3d-submit"
+                                                                onclick="employeeFormSubmit()">
+                                                                <i class="fa-solid fa-check me-3"></i>
+                                                                Submit</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <!-- buttons -->
+
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -369,26 +386,26 @@
                         <div class="row p-4" id="printPreivew">
                             <div class="col-md-3 text-center">
                                 <img src="/css/WhatsApp Image 2024-10-12 at 14.52.27_a6b58bff.jpg"
-                                    class="profile-avatar mb-3">
+                                    class="profile-avatar-view-form mb-3">
                                 <h5 id="picName"></h5>
                             </div>
                             <div class="col-md-9">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <div class="profile-stat-card">
+                                        <div class="profile-stat-card-form">
                                             <h6 class="text-muted">Department</h6>
                                             <h5 id="cardDepartment"></h5>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <div class="profile-stat-card">
+                                        <div class="profile-stat-card-form">
                                             <h6 class="text-muted">Position</h6>
                                             <h5 id="cardDesignation">
                                                 </p>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <div class="profile-stat-card">
+                                        <div class="profile-stat-card-form">
                                             <h6 class="text-muted">Join Date</h6>
                                             <h5 id="cardJoinDate"></h5>
                                         </div>

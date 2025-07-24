@@ -44,10 +44,13 @@ public class CustomerController {
     public ModelAndView loadCustomerUI() {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User logeduser = userRepository.getByUsername(auth.getName());
+
         ModelAndView customerUI = new ModelAndView();
         customerUI.setViewName("customer.html");
         customerUI.addObject("logedusername", auth.getName());
-
+        customerUI.addObject("loggeduserphoto", logeduser.getUser_photo());
+        customerUI.addObject("pageTitle", "Customer");
         return customerUI;
     }
 

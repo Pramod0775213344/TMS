@@ -13,7 +13,7 @@
 }
 
 .document-subtitle {
-    font-size: 16px;
+    font-size: 20px;
     opacity: 0.9;
 }
 
@@ -48,13 +48,13 @@
 }
 
 .label {
-    font-size: 12px;
+    font-size: 16px;
     color: #6c757d;
     margin-bottom: 3px;
 }
 
 .value {
-    font-size: 15px;
+    font-size: 18px;
     font-weight: 600;
 }
 
@@ -87,21 +87,8 @@
     line-height: 1.6;
 }
 
-.terms-content p {
-    margin-bottom: 10px;
-}
 
-.terms-content ol {
-    padding-left: 20px;
-    margin-bottom: 15px;
-}
-
-.terms-content li {
-    margin-bottom: 5px;
-}
-
-.highlight {
-    background-color: #fff3cd;
-    padding: 2px 4px;
-    border-radius: 3px;
+.table-card{
+    background-color: #f3f3f3;
+    border-radius: 10px;
 }

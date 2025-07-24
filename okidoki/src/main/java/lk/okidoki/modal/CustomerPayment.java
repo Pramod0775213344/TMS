@@ -7,7 +7,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 // mema class eka entity ekak widihata hasirila Table eka ekka mapping eka hadanne entity anotation eka dammoth witharai
@@ -27,6 +30,7 @@ public class CustomerPayment {
 
     @NotNull
    private BigDecimal total_amount;
+
     @NotNull
     private BigDecimal due_amount ;
 
@@ -35,14 +39,25 @@ public class CustomerPayment {
     private String method ;
 
     @NotNull
+    private LocalDate bill_date ;
+
+    private BigDecimal balance_amount ;
+
+    @NotNull
     private LocalDateTime added_datetime;
 
     @NotNull
     private Integer added_user_id ;
 
-    private BigDecimal balance_amount ;
+    @ManyToMany(cascade = CascadeType.MERGE)
+    // assosiaction table ekal nam me anotation eka use karanna oni
+    @JoinTable(name = "customer_payment_has_booking", joinColumns = @JoinColumn(name = "customer_payment_id"), inverseJoinColumns = @JoinColumn(name = "booking_id"))
+    private Set<Booking> bookings;
+    //    (orphanRemoval = true) karanne inner side eke thiyena data remove karanna puluwan nisa
+    @OneToMany(mappedBy = "customer_payment_id", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ChequePayment> chequePaymentList;
 
-    @ManyToOne()
-    @JoinColumn(name = "customer_agreement_id",referencedColumnName = "id")
-    private CustomerAgreement customer_agreement_id;
+    //    (orphanRemoval = true) karanne inner side eke thiyena data remove karanna puluwan nisa
+    @OneToMany(mappedBy = "customer_payment_id", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<InterBankTransferPayment> interBankTransferPaymentList;
 }

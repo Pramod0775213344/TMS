@@ -1,10 +1,12 @@
-<!DOCTYPE html>
+
 <html lang="en">
 
 <head th:replace="fragments/head :: headFragment"></head>
 
 <head>
     <link rel="stylesheet" href="/css/dashboard.css">
+    <script src="bootstrap/bootstrap-5.2.3/js/bootstrap.bundle.min.js"></script>
+    <script src="chart/chart.min.js"></script>
 </head>
 
 <body>
@@ -15,54 +17,78 @@
     <div class="main-content">
         <div th:replace="fragments/topbar :: topbarFragment"></div>
         <div class="container-fluid">
-            <div class="row align-items-center justify-content-between mt-3 mb-4">
-                <div class="col-auto">
-                    <div class="title">Dashborad</div>
-                    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item active">Dashboard</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
+
             <!--  status card -->
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="row mb-5 mt-3">
+                        <div class="col-6">
+                            <div class="stat-card " style="height: 180px;background-color: #0CAF60;">
+                                <div class="bg-white rounded-5 d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; margin: 0 ;">
+                                    <i class="fa-solid fa-calendar-days fa-2x" style="color: #000000;"></i>
+                                </div>
+                                <span class="state-value text-white mb-3 fs-2" id="totalVehicle">2,000</span>
+                                <h1 class="state-title text-white fs-5">Total Bookings</h1>
 
-            <div class="row mb-3">
-                <div class="col-3">
-                    <div class="stat-card ">
-                        <h1 class="state-title">Total Bookings</h1>
-                        <span class="state-value">2,000</span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="stat-card " style="height: 180px;background-color: #000000;">
+                                <div class="bg-white rounded-5 d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; margin: 0 ;">
+                                    <i class="fa-solid fa-building fa-2x" style="color: #000000;"></i>
+                                </div>
+                                <span class="state-value text-white fs-2 " id="totalActiveVehicle">500</span>
+                                <h1 class="state-title text-white fs-5">Total Customers</h1>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col-6">
+                            <div class="stat-card " style="height: 180px;background-color: #000000;">
+                                <div class="bg-white rounded-5 d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; margin: 0 ;">
+                                    <i class="fa-solid fa-user fa-2x" style="color: #000000;"></i>
+                                </div>
+                                <span class="state-value text-white fs-2" id="totalRevenueLicenseExpireVehicle">1,000</span>
+                                <h1 class="state-title text-white fs-5">Total Drivers</h1>
+
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="stat-card" style="height: 180px;background-color: #000000;">
+                                <div class="bg-white rounded-5 d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; margin: 0 ;">
+                                    <i class="fa-solid fa-truck fa-2x" style="color: #000000;"></i>
+                                </div>
+                                <span class="state-value text-white fs-2" id="totalInsuranceExpireVehicle">4,500</span>
+                                <h1 class="state-title text-white fs-5">Total Vehicles</h1>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-3">
-                    <div class="stat-card ">
-                        <h1 class="state-title">Total Customers</h1>
-                        <span class="state-value ">400</span>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="stat-card ">
-                        <h1 class="state-title ">Total Drivers</h1>
-                        <span class="state-value ">500</span>
+                <div class="col-md-6">
+                    <div class="main-card">
+                        <div class="card-header ps-2" style="border-left: 3px solid #66bb6a;">
+                            <h5>Total Distance Of Months</h5>
+                            <p>Monthly wise distance</p>
+                        </div>
+                        <canvas id="myChart3"></canvas>
                     </div>
                 </div>
 
-                <div class="col-3">
-                    <div class="stat-card">
-                        <h1 class="state-title ">Total Vehicles</h1>
-                        <span class="state-value ">800</span>
-                    </div>
-                </div>
             </div>
-
-
 
             <!-- recent booking and google map -->
             <div class="row mt-1">
                 <div class="col-8">
                     <div class="main-card">
-                        <div class="card-header" style="border-left: 3px solid #66bb6a;">
-                            <h5>Recent Bookings</h5>
+                        <div class="row align-items-center justify-content-between" style="border-left: 3px solid #66bb6a;">
+                            <div class="col-md-10">
+                                <h5>Recent Bookings</h5>
+                            </div>
+                            <div class="col-md-2 text-end">
+                                <button class="btn btn-dark">View</button>
+                            </div>
                         </div>
                         <!-- Table Area -->
                         <div class="table-responsive">
@@ -70,80 +96,28 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
+                                        <th>BookingN o</th>
                                         <th>Customer</th>
                                         <th>Vehicle No</th>
-                                        <th>Start</th>
-                                        <th>End</th>
-                                        <th>Start Time</th>
-                                        <th>End Time</th>
+                                        <th>Pickup Date & Time</th>
+                                        <th>Delivery Date & Time</th>
                                     </tr>
                                 </thead>
-                                <tbody id="recentBookingsTable">
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Cargils</td>
-                                        <td>WP-LG-2719</td>
-                                        <td>2021-10-01</td>
-                                        <td>2021-10-02</td>
-                                        <td>10:00 AM</td>
-                                        <td>10:00 AM</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Cargils</td>
-                                        <td>WP-LA-5142</td>
-                                        <td>2021-10-01</td>
-                                        <td>2021-10-02</td>
-                                        <td>10:00 AM</td>
-                                        <td>10:00 AM</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Sitrek</td>
-                                        <td>WP-DAB-4652</td>
-                                        <td>2021-10-01</td>
-                                        <td>2021-10-02</td>
-                                        <td>10:00 AM</td>
-                                        <td>10:00 AM</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>Soso</td>
-                                        <td>NC-DAG-0125</td>
-                                        <td>2021-10-01</td>
-                                        <td>2021-10-02</td>
-                                        <td>10:00 AM</td>
-                                        <td>10:00 AM</td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td>I M L Dilevery</td>
-                                        <td>SG-PC-4052</td>
-                                        <td>2021-10-01</td>
-                                        <td>2021-10-02</td>
-                                        <td>10:00 AM</td>
-                                        <td>10:00 AM</td>
-                                    </tr>
+                                <tbody id="recentBookingsTableBody">
                                 </tbody>
                             </table>
-
                         </div>
                         <!-- Table Area End -->
                     </div>
                 </div>
-                <!-- google map -->
+
                 <div class="col-4">
                     <div class="main-card">
-                        <iframe src="https://www.google.com/maps/embed?pb
-                        =!1m18!1m12!1m3!1d4291.745453141256!2d
-                        77.39914006293347!3d28.504393188935435!
-                        2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1
-                        !3m3!1m2!1s0x390ce626851f7009%3A0x62118
-                        5133cfd1ad1!2sGeeksforGeeks%20%7C%20
-                        Coding%20Classes%20%7C%20Noida!5e0!3m2!1
-                        sen!2sin!4v1725395799894!5m2!1sen!2sin" width="500" height="360" style="border: 0"
-                            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-                        </iframe>
+                        <div class="card-header ps-2" style="border-left: 3px solid #66bb6a;">
+                            <h5>Booking Status</h5>
+                            <p>Total Bookings of the Current Month</p>
+                        </div>
+                        <canvas id="myChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -151,26 +125,32 @@
             <div class="row mt-3">
                 <div class="col-5">
                     <div class="main-card">
-                        <div class="card-header" style="border-left: 3px solid #66bb6a;">
-                            <h5>Booking Status</h5>
-                            <p>Total Bookings of the last Month</p>
+                        <div class="card-header ps-2" style="border-left: 3px solid #66bb6a;">
+                            <h5>Customers Bookings</h5>
+                            <p>Total Bookings of the Current Month</p>
                         </div>
+                        <canvas id="myChart2"></canvas>
                     </div>
                 </div>
                 <div class="col-7">
-                    <div class="main-card">
-                        <div class="card-header" style="border-left: 3px solid #66bb6a;">
-                            <h5>Vehicle Avalability</h5>
-                            <p>Avalability of the Current Day</p>
-                        </div>
-                    </div>
+<!--                    <div class="main-card">-->
+<!--                        <div class="card-header ps-2" style="border-left: 3px solid #66bb6a;">-->
+<!--                            <h5>Total Distance Of Months</h5>-->
+<!--                            <p>Monthly wise distance</p>-->
+<!--                        </div>-->
+<!--                        <canvas id="myChart3"></canvas>-->
+<!--                    </div>-->
                 </div>
-            </div>
 
+            </div>
         </div>
+
     </div>
     <div th:replace="fragments/loading :: overlayFragment"></div>
 
+    <script src="/commenjs/reusabal.js"></script>
+    <script src="/commenjs/commanValidation.js"></script>
+    <script src="/commenjs/commonTable.js"></script>
     <script src="commenjs/dashboard.js"></script>
     <script src="js/sidebar.js"></script>
 

@@ -31,4 +31,8 @@ public interface SupplierRepository extends JpaRepository<Supplier, Integer> {
 
     @Query(value = "select s from Supplier s where s.supplier_status_id.id = 1")
     List<Supplier> getAllActiveSupplier();
+
+//    supplier agreement ekak thiyena saha supplier agreement staus eka acpprove thiyena active suppliers ganna query eka
+    @Query(value = "SELECT * FROM tms.supplier as s where s.id in(SELECT sg.supplier_id FROM tms.supplier_agreement as sg where sg.supplier_agreement_status_id = 2) and s.supplier_status_id=1", nativeQuery = true)
+    List<Supplier> getAllActiveSupplierWithAgreementApproved();
 }

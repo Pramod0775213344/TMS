@@ -2,20 +2,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TMS</title>
+    <link rel="icon" href="images/tab-logo.png">
     <link rel="stylesheet" href="bootstrap/bootstrap-5.2.3/css/bootstrap.min.css">
     <link rel=stylesheet href="/fontawesome-free-6.7.2-web/css/all.css">
     <link rel="stylesheet" href="/dataTable/datatables.min.css">
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="css/sidebar.css">
     <link rel="stylesheet" href="/css/loading.css">
+    <link rel="stylesheet" href="/select2/select2.min.css">
+    <link rel="stylesheet" href="/select2/select2-bootstrap-5-theme.min.css">
+    <link rel="stylesheet" href="/select2/select2-bootstrap-5-theme.rtl.min.css">
+
 
     <script src="bootstrap/bootstrap-5.2.3/js/bootstrap.bundle.min.js"></script>
+    <script src="bootstrap/bootstrap-5.2.3/js/bootstrap.min.js"></script>
 
-    <script src="/commenjs/loading.js"></script>
+    <script defer src="/commenjs/loading.js" ></script>
     <script src="jquery/jquery-3.7.1.min.js"></script>
-   
+    <script src="/select2/select2.min.js"></script>
 
     <script src="/sweetalert2/dist/sweetalert2.all.min.js"></script>
     <script src="/dataTable/datatables.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js" integrity="sha512-rMGGF4wg1R73ehtnxXBt5mbUfN9JUJwbk21KMlnLZDJh7BkPmeovBuddZCENJddHYYMkCh9hPFnPmS9sspki8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="/js/changeUserProfile.js"></script>
+
+    <script th:inline = "javascript" >
+        window.addEventListener("load",()=>{
+            let logedUserPhoto =/*[[${loggeduserphoto}]]*/ 'loggeduserphoto'
+            if (logedUserPhoto != null){
+                imgLogUserPhoto.src = atob(logedUserPhoto);
+            }
+        })
+    </script>
 </head>

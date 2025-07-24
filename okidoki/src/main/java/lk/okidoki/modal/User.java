@@ -48,6 +48,8 @@ public class User {
     @NotNull
     private Boolean status;
 
+    private byte[] user_photo;
+
     @NotNull
     private LocalDateTime added_datetime;
 

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+<head th:replace="fragments/head :: headFragment"></head>
+
+<head>
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <script src="chart/chart.min.js"></script>
+</head>
+
+<body>
+    <div class="sidebar">
+        <div th:replace="fragments/sidebar :: sidebarFragment"></div>
+    </div>
+
+    <div class="main-content">
+        <div th:replace="fragments/topbar :: topbarFragment"></div>
+        <div class="container-fluid">
+            <div class="row align-items-center justify-content-between mb-2">
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-6 d-flex justify-content-end">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <a href="/vehicle" style="text-decoration: none"> <button class="btn-3d btn-3d-submit"
+                                    type="button" data-bs-toggle="modal" data-bs-target="#vehicleFormModal"
+                                    aria-controls="staticBackdrop"><i class="fa-solid fa-plus me-3"></i>
+                                    Vehicle
+                                </button></a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="/vehiclegroup" style="text-decoration: none"> <button class="btn-3d btn-3d-submit" type="button" data-bs-toggle="modal" data-bs-target="#vehicleFormModal" aria-controls="staticBackdrop"><i class="fa-solid fa-plus me-3"></i>
+                                 Groups
+                            </button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--  status card -->
+
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="row mb-5 mt-3">
+                        <div class="col-6">
+                            <div class="stat-card " style="height: 180px;background-color: #0CAF60;">
+                                <div class="bg-white rounded-5 d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; margin: 0 ;">
+                                    <i class="fa-solid fa-truck fa-2x" style="color: #000000;"></i>
+                                </div>
+                                <span class="state-value text-white mb-3 fs-2" id="totalVehicle"></span>
+                                <h1 class="state-title text-white fs-5">Total Vehicle</h1>
+
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="stat-card " style="height: 180px;background-color: #000000;">
+                                <div class="bg-white rounded-5 d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; margin: 0 ;">
+                                    <i class="fa-solid fa-truck fa-2x" style="color: #000000;"></i>
+                                </div>
+                                <span class="state-value text-white fs-2 " id="totalActiveVehicle"></span>
+                                <h1 class="state-title text-white fs-5">Active Vehicles</h1>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col-6">
+                            <div class="stat-card " style="height: 180px;background-color: #000000;">
+                                <div class="bg-white rounded-5 d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; margin: 0 ;">
+                                    <i class="fa-solid fa-truck fa-2x" style="color: #000000;"></i>
+                                </div>
+                                <span class="state-value text-white fs-2" id="totalRevenueLicenseExpireVehicle"></span>
+                                <h1 class="state-title text-white fs-5">Revenue License Expired Vehicles</h1>
+
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="stat-card" style="height: 180px;background-color: #000000;">
+                                <div class="bg-white rounded-5 d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; margin: 0 ;">
+                                    <i class="fa-solid fa-truck fa-2x" style="color: #000000;"></i>
+                                </div>
+                                <span class="state-value text-white fs-2" id="totalInsuranceExpireVehicle"></span>
+                                <h1 class="state-title text-white fs-5">Insurance Expired Vehicles</h1>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="main-card">
+                        <div class="card-header" style="border-left: 3px solid #66bb6a;">
+                            <h5>Total Vehicles</h5>
+                        </div>
+                        <canvas id="myChart"></canvas>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!--    Insurance Expired vehicle list and Revenue Licenese Expired Vehicles-->
+            <div class="row mt-1">
+                <div class="col-6">
+                    <div class="main-card">
+                        <div class="card-header" style="border-left: 3px solid #66bb6a;">
+                            <h5>Revenue License Expire Vehicle List</h5>
+                        </div>
+                        <!-- Table Area -->
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="revenueLicenseExpireVehicleTable">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Supplier Name</th>
+                                        <th>Vehicle No</th>
+                                        <th>Vehicle Type</th>
+                                        <th>Expire Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="revenueLicenseExpireVehicleTableBody">
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Nuwan Transport</td>
+                                        <td>WP-LG-2719</td>
+                                        <td>18.5ft</td>
+                                        <td>2021-03-24</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Samith Transport</td>
+                                        <td>WP-LG-2719</td>
+                                        <td>18.5ft</td>
+                                        <td>2021-03-24</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>Deshan Transport</td>
+                                        <td>WP-LG-2719</td>
+                                        <td>18.5ft</td>
+                                        <td>2021-03-24</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>Kaveen Transport</td>
+                                        <td>WP-LG-2719</td>
+                                        <td>18.5ft</td>
+                                        <td>2021-03-24</td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td>Amith Transport</td>
+                                        <td>WP-LG-2719</td>
+                                        <td>18.5ft</td>
+                                        <td>2021-03-24</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <!-- Table Area End -->
+                    </div>
+                </div>
+                <!-- google map -->
+                <div class="col-6">
+                    <div class="main-card">
+                        <div class="card-header" style="border-left: 3px solid #66bb6a;">
+                            <h5>Insurance Expire Vehicle List</h5>
+                        </div>
+                        <!-- Table Area -->
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="insuranceExpireVehicleTable">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Supplier Name</th>
+                                        <th>Vehicle No</th>
+                                        <th>Vehicle Type</th>
+                                        <th>Expire Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="insuranceExpireVehicleTableBody">
+                                    <td>1</td>
+                                    <td>Nuwan Transport</td>
+                                    <td>WP-LG-2719</td>
+                                    <td>18.5ft</td>
+                                    <td>2021-03-24</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Samith Transport</td>
+                                        <td>WP-LG-2719</td>
+                                        <td>18.5ft</td>
+                                        <td>2021-03-24</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>Deshan Transport</td>
+                                        <td>WP-LG-2719</td>
+                                        <td>18.5ft</td>
+                                        <td>2021-03-24</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>Kaveen Transport</td>
+                                        <td>WP-LG-2719</td>
+                                        <td>18.5ft</td>
+                                        <td>2021-03-24</td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td>Amith Transport</td>
+                                        <td>WP-LG-2719</td>
+                                        <td>18.5ft</td>
+                                        <td>2021-03-24</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <!-- Table Area End -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-5">
+
+                </div>
+                <div class="col-7">
+                    <div class="main-card">
+                        <div class="card-header" style="border-left: 3px solid #66bb6a;">
+                            <h5>Vehicle Avalability</h5>
+                            <p>Avalability of the Current Day</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div th:replace="fragments/loading :: overlayFragment"></div>
+
+    <script src="/commenjs/reusabal.js"></script>
+    <script src="/commenjs/commanValidation.js"></script>
+    <script src="/commenjs/commonTable.js"></script>
+    <script src="js/vehicleDashboard.js"></script>
+    <script src="js/sidebar.js"></script>
+
+</body>
+
+</html>

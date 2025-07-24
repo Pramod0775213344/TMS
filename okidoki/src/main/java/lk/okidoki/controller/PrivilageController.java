@@ -1,5 +1,7 @@
 package lk.okidoki.controller;
 
+import lk.okidoki.modal.User;
+import lk.okidoki.repository.UserRepository;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -31,6 +33,8 @@ public class PrivilageController {
     @Autowired
     private UserPrivilageController userPrivilageController;
 
+    @Autowired
+    private UserRepository userRepository;
     
     // Request mapping for load privilage Ui (url -->/privilage)
     @RequestMapping("/privilage")
@@ -38,10 +42,13 @@ public class PrivilageController {
 
         // log wechcha kena balaganna authentication object thiyaganna oni
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User logeduser = userRepository.getByUsername(auth.getName());
 
         ModelAndView privilgeUi = new ModelAndView();
         privilgeUi.setViewName("privilage.html");
         privilgeUi.addObject("logedusername", auth.getName());
+        privilgeUi.addObject("loggeduserphoto", logeduser.getUser_photo());
+        privilgeUi.addObject("pageTitle", "Privilage");
         return privilgeUi;
     }
 

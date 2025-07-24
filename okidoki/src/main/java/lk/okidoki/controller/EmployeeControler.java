@@ -56,9 +56,13 @@ public class EmployeeControler {
     public ModelAndView loadEmployeeUI() {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User logeduser = userRepository.getByUsername(auth.getName());
+
         ModelAndView emploueeUI = new ModelAndView();
         emploueeUI.setViewName("employee.html");
         emploueeUI.addObject("logedusername", auth.getName());
+        emploueeUI.addObject("loggeduserphoto", logeduser.getUser_photo());
+        emploueeUI.addObject("pageTitle", "Employee");
 
         return emploueeUI;
     }
@@ -122,6 +126,9 @@ public class EmployeeControler {
                 User user = new User();
                 user.setUsername(employee.getEmail());
                 user.setEmail(employee.getEmail());
+                if (employee.getEmp_photo() != null){
+                    user.setUser_photo(employee.getEmp_photo());
+                }
                 user.setStatus(true);
                 user.setAdded_datetime(LocalDateTime.now());
                 user.setPassword(bCryptPasswordEncoder.encode(employee.getNic()));

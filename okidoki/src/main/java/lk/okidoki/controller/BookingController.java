@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -45,10 +46,13 @@ public class BookingController {
     @GetMapping(value = "/booking")
     public ModelAndView loadBookingUi() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User logeduser = userRepository.getByUsername(auth.getName());
 
         ModelAndView bookinUI = new ModelAndView();
         bookinUI.setViewName("booking.html");
         bookinUI.addObject("logedusername", auth.getName());
+        bookinUI.addObject("loggeduserphoto", logeduser.getUser_photo());
+        bookinUI.addObject("pageTitle", "Booking");
         return bookinUI;
 
     }
@@ -82,7 +86,6 @@ public class BookingController {
                 // auto updated date and time
                 booking.setAdded_datetime(LocalDateTime.now());
                 booking.setAdded_user_id(logeduser.getId());
-                booking.setBooking_no("CFC2500014");
 
 
 //                booking eka daddi customer agreement eka auto select wenna oni vehic type ekata saha customert adala
@@ -212,12 +215,43 @@ public class BookingController {
     }
 
 
-
     // Get mapping for get all booking data by given customer id (url
-    // -->/booking/bycustomerid?customerid=1)
-    @GetMapping(value = "/booking/bycustomerid", params = { "customerid" }, produces = "application/json")
+    // -->/booking/bycustomerid?customerid=1&packagesType=2&vehicleTypeid=3)
+    @GetMapping(value = "/booking/bycustomerid", params = { "customerid" ,"packagesType","vehicleTypeid"}, produces = "application/json")
     // param method eka haraha thama data ganne
-    public List<Booking> getPackageByVehicleType(@RequestParam("customerid") Integer customerid) {
-        return bookingRepository.getBookingByCustomer(customerid);
+    public List<Booking> getPackageByVehicleType(@RequestParam("customerid") Integer customerid, @RequestParam("packagesType") String packagesType,@RequestParam("vehicleTypeid") Integer vehicleTypeid) {
+        return bookingRepository.getBookingByCustomer(customerid,packagesType,vehicleTypeid);
+    }
+
+    // get mapping for get recent 5 booking data (url -->/booking/recentbooking)
+    @GetMapping(value = "/booking/recentbooking")
+    public List<Booking> getRecentFiveBookings() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Privilage userPrivilage = userPrivilageController.getUserPrivilageByUserModule(auth.getName(), "Booking");
+
+        if (userPrivilage.getPrivi_select()) {
+            return bookingRepository.getRecentFiveBookings();
+        }else {
+            return new ArrayList<>();
+        }
+
+    }
+
+
+    // Get mapping for get all booking data by given vehicle id (url
+    // -->/booking/byvehicleid?vehicleid=1)
+    @GetMapping(value = "/booking/byvehicleid", params = { "vehicleid" }, produces = "application/json")
+    // param method eka haraha thama data ganne
+    public List<Booking> getBookingByGivenVehicleNo(@RequestParam("vehicleid") Integer vehicleid) {
+        return bookingRepository.getBookingByGivenVehicleNo(vehicleid);
+    }
+
+
+    // Get mapping for get all booking data by given customer id and given date range(url
+    // -->/booking/bydaterangeandcustomerid?startdate=1&enddate=2&customerid=3)
+    @GetMapping(value = "/booking/bydaterangeandcustomerid", params = {"startdate","enddate", "customerid" }, produces = "application/json")
+    // param method eka haraha thama data ganne
+    public List<Booking> getBookingByDateRangeAndCustomer( @RequestParam("startdate") String startdate, @RequestParam("enddate") String enddate, @RequestParam("customerid") Integer customerid) {
+        return bookingRepository.getBookingByDateRangeAndCustomer(startdate, enddate, customerid);
     }
 }

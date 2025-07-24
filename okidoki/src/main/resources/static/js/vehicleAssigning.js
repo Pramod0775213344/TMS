@@ -1,16 +1,27 @@
 window.addEventListener("load", () => {
 
-    loadVehicleAssigningTable();
 
+    let customer = getServiceRequest('/customer/alldata');
+    dataFilIntoSelect(selectCustomerSearch, "Select Customer ", customer, "company_name")
+
+    $('#vehicleAssigningTable').DataTable();
     refreshVehicleAssigningForm();
-
-
+    $(document).ready(function() {
+        $('.selectCustomerSearch').select2();
+    });
 });
 
-// load booking deatils
-const loadVehicleAssigningTable = () => {
+// customer change karaddi data table eka clear karanawa
+selectCustomerSearch.addEventListener("change", function () {
+    $('#vehicleAssigningTable').DataTable().clear().destroy();
 
-    bookingList = getServiceRequest('/booking/alldata');
+    loadVehicleAssigningTable();
+});
+// load booking deatils
+let customerElement = document.querySelector("#selectCustomerSearch");
+const loadVehicleAssigningTable = () => {
+ let selectCustomerId = JSON.parse(customerElement.value);
+    bookingList = getServiceRequest('/booking/bydaterangeandcustomerid?startdate='+ dateFrom.value +'&enddate='+ dateTo.value +'&customerid=' + selectCustomerId.id);
 
     let propertyList = [
         { propertyName: "booking_no", dataType: "string" },
@@ -38,10 +49,7 @@ const loadVehicleAssigningTable = () => {
     ];
 
     fillDataIntoApprovalTable(vehicleAssigningTableBody, bookingList, propertyList, vehicleAssigningForm, datetimeFunctionForm);
-    $('#vehicleAssigningTable').DataTable({
-        scrollY: false,
-        autoWidth: true,
-    });
+    $('#vehicleAssigningTable').DataTable();
 }
 
 // get customer name
@@ -192,7 +200,7 @@ const vehicleAssigningForm = (dataOb) => {
     }
 
     if (dataOb.booking_status_id.status == "Inproccess" || dataOb.booking_status_id.status == "Attend") {
-        let vehicleList = getServiceRequest("/vehicle/byvehicletype?vehicletypeid="+dataOb.vehicle_type_id.id);
+        let vehicleList = getServiceRequest("vehicle/vehiclebyvehiclegroupandvehicletype?customer_id="+dataOb.customer_id.id +"&vehicletype_id="+dataOb.vehicle_type_id.id);
         dataFilIntoSelect(selectVehicleNo, "Select Vehicle ", vehicleList, "vehicle_no")
 
         // vehicle details null neme nam refill wenna oni
@@ -217,6 +225,48 @@ const vehicleAssigningForm = (dataOb) => {
 
     booking = JSON.parse(JSON.stringify(dataOb));
     oldBooking = JSON.parse(JSON.stringify(dataOb));
+
+//     -------------------------revenue----------------------------
+
+    // select month eka filter karala gnnw
+    let selectDateMonth = new Date(dateFrom.value).getMonth()
+    // current month eka filter karala gnnw
+    let currentMonth = new Date().getMonth();
+
+    // current month ekai select karana month ekai samana nam table eka load wenawa
+    if (selectDateMonth === currentMonth ){
+        revenueTable.style.display =""
+
+        let datalist = getServiceRequest('report/vehicleRevenueByVehicleType?customerId='+dataOb.customer_id.id +'&vehicleTypeId=' +dataOb.vehicle_type_id.id );
+
+        let reportDatalist = new Array();
+
+
+        for (const index in datalist) {
+            let object = new Object();
+            object.vehicle_no = datalist[index][0];
+            object.distance = datalist[index][1].toFixed(2)+" KM";
+            reportDatalist.push(object);
+
+        }
+        // Sort by distance descending(distance eka wadiya thiyena eka first)
+        reportDatalist.sort((a, b) => b.distance - a.distance);
+
+
+        let propertyList = [
+            {propertyName: "vehicle_no", dataType: "string"},
+            {propertyName: "distance", dataType: "string"}
+        ]
+
+        dataFillIntoTheReportTable(revenueTableBody, reportDatalist, propertyList);
+
+    }else{
+
+        revenueTable.style.display ="none"
+        revenueViewTableBody.innerHTML ="";
+    }
+
+//     -------------------------revenue----------------------------
 
 }
 
@@ -284,9 +334,10 @@ const datetimeFunctionForm = (dataOb) => {
     }
 
     //floating rate nam meter reading area eka hide wenawa
-    if (dataOb.customer_agreement_id.package_id.name == "Floating rate") {
+    if (dataOb.customer_agreement_id.package_id.package_type == "Floating Rate") {
         meterReadingDiv.style.display = "none"
-    } else {
+    }
+    if(dataOb.customer_agreement_id.package_id.package_type == "Fix Rate")  {
         meterReadingDiv.style.display = ""
     }
 
@@ -436,6 +487,7 @@ const vehicleAssigningFormSubmitButton = () => {
                         }                    });
                     loadVehicleAssigningTable();
                     refreshVehicleAssigningForm();
+                    $("#vehicleAssigning").modal("hide");
                 } else {
                     Swal.fire({
                         title: "Failed to Submit....? ",
@@ -531,9 +583,9 @@ const vehicleAssigningFormUpdate = () => {
                                 confirmButton :'btn-3d btn-3d-other'
                             }
                         });
-                        loadEmployeeTable();
-                        refreshForm();
-                        $("#employee").modal("hide");
+                        loadVehicleAssigningTable();
+                        refreshVehicleAssigningForm();
+                        $("#vehicleAssigning").modal("hide");
 
                     } else {
                         Swal.fire({
@@ -596,6 +648,8 @@ const dateAddingButton = () => {
             });
             loadVehicleAssigningTable();
             refreshVehicleAssigningForm();
+            $("#datetimeAddingFormModal").modal("hide");
+
         } else {
             Swal.fire({
                 title: "Failed to Submit....?",
@@ -699,7 +753,7 @@ const dateUpadteButton = () => {
                         });
                         loadVehicleAssigningTable();
                         refreshVehicleAssigningForm();
-                        $("#employee").modal("hide");
+                        $("#datetimeAddingFormModal").modal("hide");
 
                     } else {
                         Swal.fire({
@@ -765,6 +819,13 @@ const refreshVehicleAssigningForm = () => {
     arrivedDeliveryDateAndTime.disabled = false;
 
     setDefault([selectVehicleNo,selectdriver,pickupDateAndTime,departedPickupDateAndTime,arrivedDeliveryDateAndTime,departedDeliveryDateAndTime,textStartMeterReading,textEndtMeterReading]);
+
+    //removing validation at refresh
+    if (selectCustomerSearch.parentNode.children[2] != undefined) {
+        selectCustomerSearch.parentNode.children[2].children[0].children[0].style.border = "1px solid #ced4da";
+        selectCustomerSearch.parentNode.children[2].children[0].children[0].classList.remove("is-valid");
+        selectCustomerSearch.parentNode.children[2].children[0].children[0].classList.remove("is-invalid");
+    }
 }
 
 // select vehicle no with supplier transport name
@@ -872,8 +933,15 @@ textEndtMeterReading.addEventListener("keyup", () => {
 })
 
 
+const bookingLists = getServiceRequest('/booking/alldata');
 
+const fromDate = new Date("2024-03-24T01:03");
+const toDate = new Date("2024-05-24T01:03");
 
+const daterange = bookingLists.filter(booking => {
+    const pickupDate = new Date(booking.pickup_date_time);
+    const deliveryDate = new Date(booking.delivery_date_time);
 
-
+    return pickupDate >= fromDate && deliveryDate <= toDate;
+});
 

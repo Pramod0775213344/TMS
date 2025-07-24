@@ -2,9 +2,11 @@
 <html lang="en">
 
 <head th:replace="fragments/head :: headFragment"></head>
-<head >
+
+<head>
     <link rel="stylesheet" href="/css/customerAgreementApproval.css">
 </head>
+
 <body>
     <div class="sidebar">
         <div th:replace="fragments/sidebar :: sidebarFragment"></div>
@@ -15,16 +17,9 @@
 
 
             <!-- header -->
-            <div class="row align-items-center justify-content-between mt-3 mb-4">
+            <div class="row align-items-center justify-content-between mb-2">
                 <div class="col-auto">
-                    <div class="title">Customer Agreemnet Approval</div>
-                    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/dashboard"
-                                    style="text-decoration: none; color: #0CAF60;">Dashboard</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Approval</li>
-                        </ol>
-                    </nav>
+
                 </div>
                 <div class="col-auto">
 
@@ -112,7 +107,7 @@
                                                 <div id="dataCus_Reg_No" class="value"></div>
                                             </div>
                                             <div class="info-data">
-                                                <label for=""  class="label">Company Name</label>
+                                                <label for="" class="label">Company Name</label>
                                                 <div id="dataCompanyname" class="value"></div>
                                             </div>
                                             <div class="info-data">
@@ -132,7 +127,7 @@
                                                 <div id="dataContactPersonEmail" class="value"></div>
                                             </div>
                                             <div class="info-data">
-                                                <label for="" class="label">Contact Person Mobile</label>
+                                                <label for="dataContactPersonMobile" class="label">Contact Person Mobile</label>
                                                 <div id="dataContactPersonMobile" class="value"></div>
                                             </div>
                                         </div>
@@ -180,35 +175,31 @@
                                         </div>
                                     </div>
 
-                                    <!-- trems and condition -->
+                                    <!-- Additional Chargers-->
                                     <div class="terms-container">
-                                        <h2 class="data-title">Terms and Conditions</h2>
+                                        <h2 class="data-title">Additional Chargers</h2>
                                         <div class="terms-content">
-                                            <p>This Customer Agreement is entered into between <span class="highlight" id="termesCompanyName">............</span>and OKI-DOKI Company as of <span class="highlight" id="termsAgreemantStartDate">...............</span>.</p>
-
-                                            <ol>
-                                                <li><strong>Service Description:</strong> Provider agrees to provide dedicated transportation services using a <span class="highlight" id="termsVehicleType">7.5ft vehicle</span> according to the package details outlined above.</li>
-
-                                                <li><strong>Term:</strong> This Agreement shall remain in effect for <span class="highlight" id="termsAgreementperiod">60 months</span> from the Start Date, unless terminated earlier as provided herein.</li>
-
-                                                <li><strong>Payment Terms:</strong>
-                                                    <ol type="a">
-                                                        <li>Customer agrees to pay at the rate of Rs.<span class="highlight" id="termsCustomerRate">Rs. 150</span> per kilometer up to <span class="highlight" id="termsPackagedistance">5000 kilometers</span>kilometers .</li>
-                                                        <li>Additional kilometers beyond the allocated distance will be charged at Rs.<span class="highlight" id="termsadditionaKmCharge">Rs. 80</span> per kilometer.</li>
-                                                        <li>Invoices will be issued monthly and payment is due within 15 days of receipt.</li>
-                                                    </ol>
-                                                </li>
-
-                                                <li><strong>Service Obligations:</strong> OKI-DOKI Company shall maintain the vehicle in good operating condition, provide qualified drivers, and ensure timely delivery of goods.</li>
-
-                                                <li><strong>Termination:</strong> Either party may terminate this Agreement with 30 days written notice. Early termination may result in applicable fees as outlined in the complete terms and conditions.</li>
-
-                                                <li><strong>Insurance:</strong> OKI-DOKI Company shall maintain adequate insurance coverage for the vehicle, cargo, and liability.</li>
-
-                                                <li><strong>Dispute Resolution:</strong> Any disputes arising from this Agreement shall be resolved through arbitration according to the laws of Sri Lanka.</li>
-                                            </ol>
-
-                                            <p>The both parties acknowledge that they have read, understood, and agree to be bound by the terms and conditions of this Agreement.</p>
+                                            <div class="card table-card">
+                                                <div class="card-body">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-hover table-bordered"
+                                                               id="customerAgreementAdditionalChargersViewTable">
+                                                            <thead>
+                                                            <tr class="table">
+                                                                <th>No</th>
+                                                                <th>Charge Type</th>
+                                                                <th>Rate Type</th>
+                                                                <th>Price</th>
+                                                                <th>Unit</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody
+                                                                    id="customerAgreementAdditionalChargersViewTableBody">
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -216,31 +207,32 @@
 
                                 <div class="row mt-5">
                                     <div class="col">
-                                        <label  class="form-label">Approve Note</label>
-                                        <textarea name="" id="customerAgreementApprovalNote"
-                                            class="form-control"   onkeyup="editOb.approval_note = this.value"></textarea>
+                                        <label class="form-label">Approve Note</label>
+                                        <textarea name="" id="customerAgreementApprovalNote" class="form-control"
+                                            onkeyup="editOb.approval_note = this.value"></textarea>
                                     </div>
                                 </div>
 
                                 <!-- buttons -->
-                                <div  class="mb-4">
-                                    <div class="row" >
+                                <div class="mb-4 mt-3" >
+                                    <div class="row">
                                         <div class="col-6">
-                                            <button type="button" class="btn-3d btn-3d-cancel" data-bs-dismiss="modal" aria-label="Close"
-                                                    >Close</button>
+                                            <button type="button" class="btn-3d btn-3d-cancel" data-bs-dismiss="modal"
+                                                aria-label="Close">Close</button>
                                         </div>
                                         <div class="col-6">
                                             <div class="row">
                                                 <div class="col-4"></div>
                                                 <div class="col-4 text-start">
-                                                    <button type="button" id="deleteButtonFrom" class="btn-3d btn-3d-cancel"
-                                                            onclick="customerAgreementRejectButton()">
+                                                    <button type="button" id="deleteButtonFrom"
+                                                        class="btn-3d btn-3d-cancel"
+                                                        onclick="customerAgreementRejectButton()">
                                                         <i class="fa-solid fa-xmark me-3"></i>
                                                         Reject</button>
                                                 </div>
                                                 <div class="col-4 text-start">
                                                     <button type="submit" id="submitButton" class="btn-3d btn-3d-submit"
-                                                            onclick="customerAgreementAprrovalButton()">
+                                                        onclick="customerAgreementAprrovalButton()">
                                                         <i class="fa-solid fa-check me-3"></i>
                                                         Approve</button>
                                                 </div>

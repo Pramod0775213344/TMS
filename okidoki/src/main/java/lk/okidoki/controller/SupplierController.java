@@ -53,10 +53,12 @@ public class SupplierController {
     @RequestMapping(value = "/supplier")
     public ModelAndView loadSupplierUi() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User logeduser = userRepository.getByUsername(auth.getName());
 
         ModelAndView supplierUi = new ModelAndView();
         supplierUi.setViewName("supplier.html");
         supplierUi.addObject("logedusername", auth.getName());
+        supplierUi.addObject("loggeduserphoto", logeduser.getUser_photo());
         return supplierUi;
 
     }
@@ -293,4 +295,10 @@ public class SupplierController {
         return supplierRepository.getAllActiveSupplier();
     }
 
+    // Request mapping for load activesupplier with agreement approved all data (url-->/supplier/alldatawithagreementapproved)
+    @GetMapping(value = "/supplier/alldatabystatuswithagreementapproved", produces = "application/json")
+    public List<Supplier> getActiveSupplierWithAgreementApprovedAllData() {
+
+        return supplierRepository.getAllActiveSupplierWithAgreementApproved();
+    }
 }

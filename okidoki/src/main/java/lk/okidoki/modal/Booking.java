@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -60,8 +61,6 @@ public class    Booking {
 
     private String additional_km;
 
-    private LocalDateTime acutual_end_time;
-
     @NotNull
     private String booking_contact_person_name;
 
@@ -105,7 +104,6 @@ public class    Booking {
     @JoinTable(name = "booking_has_location", joinColumns = @JoinColumn(name = "booking_id"), inverseJoinColumns = @JoinColumn(name = "location_id"))
     private Set<Location> locations;
 
-
     private LocalDateTime arrived_at_pickup_datetime;
 
     private LocalDateTime departed_from_pickup_datetime;
@@ -113,4 +111,11 @@ public class    Booking {
     private LocalDateTime arrived_at_delivery_datetime;
 
     private LocalDateTime departed_from_delivery_datetime;
+
+    public Booking(String booking_no, Vehicle vehicle_id, String distance) {
+        this.booking_no = booking_no;
+        this.vehicle_id = vehicle_id;
+        this.distance = distance;
+    }
 }
+

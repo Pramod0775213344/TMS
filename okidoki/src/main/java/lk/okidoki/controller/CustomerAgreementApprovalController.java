@@ -1,8 +1,10 @@
 package lk.okidoki.controller;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
+import lk.okidoki.modal.Privilage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,15 +33,21 @@ public class CustomerAgreementApprovalController {
     @Autowired
     private CustomerAgreementStatusRepository customerAgreementStatusRepository;
 
+    @Autowired
+    private UserPrivilageController userPrivilageController;
+
     // Request mapping for load customeragreement Ui (url
     // -->/customeragreement/approve)
     @RequestMapping(value = "/customeragreementapprove")
     public ModelAndView loadCustomerAgreementApprovalUI() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User logeduser = userRepository.getByUsername(auth.getName());
 
         ModelAndView customerAgreementApprovalUI = new ModelAndView();
         customerAgreementApprovalUI.setViewName("customerAgreementApproval.html");
         customerAgreementApprovalUI.addObject("logedusername", auth.getName());
+        customerAgreementApprovalUI.addObject("loggeduserphoto", logeduser.getUser_photo());
+        customerAgreementApprovalUI.addObject("pageTitle", "Customer Agreement Approval");
         return customerAgreementApprovalUI;
     }
 
@@ -49,7 +57,17 @@ public class CustomerAgreementApprovalController {
     // -->/customeragreementapprove/bycustomeragreementstatusid?customeragreementstatusid=1)
     @RequestMapping(value="/customeragreementapprove/bycustomeragreementstatusid",produces = "application/json")
     public List<CustomerAgreement> getCustomerAgreementByStatus() {
-        return customerAgreementRepository.getCustomerAgreementByStatus();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User logedUser = userRepository.getByUsername(auth.getName());
+        Privilage userPrivilage = userPrivilageController.getUserPrivilageByUserModule(auth.getName(), "CustomerAgreementApproval");
+
+        // check user privilage
+        if (userPrivilage.getPrivi_select()) {
+            return customerAgreementRepository.getCustomerAgreementByStatus();
+        }else {
+            return new ArrayList<>();
+        }
+
     }
     
 
@@ -61,8 +79,10 @@ public class CustomerAgreementApprovalController {
     public String aprroveCustomerAgreement(@RequestBody CustomerAgreement customerAgreement) {
         // check authentication and authorization
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Privilage userPrivilage = userPrivilageController.getUserPrivilageByUserModule(auth.getName(), "CustomerAgreementApproval");
         User logedUser = userRepository.getByUsername(auth.getName());
 
+        if (userPrivilage.getPrivi_insert()) {
         // check existing
         if (customerAgreement.getId() == null) {
             return "Approval Not Completed : Agreement No Found";
@@ -83,6 +103,7 @@ public class CustomerAgreementApprovalController {
             customerAgreement.setCustomer_agreement_status_id(customerAgreementStatusRepository.getReferenceById(2));
 
             // save data
+
             customerAgreementRepository.save(customerAgreement);
 
             // return success message
@@ -91,6 +112,9 @@ public class CustomerAgreementApprovalController {
             return "Approval Not Completed :" + e.getMessage();
         }
 
+        } else {
+            return "You don't have permission to approve customer agreement";
+        }
     }
 
 
@@ -102,8 +126,10 @@ public class CustomerAgreementApprovalController {
     public String rejectCustomerAgreement(@RequestBody CustomerAgreement customerAgreement) {
         // check authentication and authorization
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Privilage userPrivilage = userPrivilageController.getUserPrivilageByUserModule(auth.getName(), "CustomerAgreementApproval");
         User logedUser = userRepository.getByUsername(auth.getName());
 
+        if (userPrivilage.getPrivi_update()) {
         // check existing
         if (customerAgreement.getId() == null) {
             return "Reject Not Completed : Agreement No Found";
@@ -124,6 +150,7 @@ public class CustomerAgreementApprovalController {
             customerAgreement.setCustomer_agreement_status_id(customerAgreementStatusRepository.getReferenceById(5));
 
             // save data
+
             customerAgreementRepository.save(customerAgreement);
 
             // return success message
@@ -132,6 +159,9 @@ public class CustomerAgreementApprovalController {
         } catch (Exception e) {
 
             return "Reject Not Completed :" + e.getMessage();
+        }
+        } else {
+            return "You don't have permission to reject customer agreement";
         }
 
     }

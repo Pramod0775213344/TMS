@@ -2,6 +2,10 @@
 <html lang="en">
 
 <head th:replace="fragments/head :: headFragment"></head>
+<head>
+    <link rel="stylesheet" href="css/customerAgreement.css">
+
+</head>
 
 <body>
     <!-- sidebar -->
@@ -17,29 +21,15 @@
 
 
             <!-- header -->
-            <div class="row align-items-center justify-content-between mt-3 mb-4">
+            <div class="row align-items-center justify-content-between mb-2">
                 <div class="col-auto">
-                    <div class="title">Manage Customer Agreemnet</div>
-                    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/dashboard"
-                                    style="text-decoration: none; color: #0CAF60;">Dashboard</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Customer Agreement</li>
-                        </ol>
-                    </nav>
                 </div>
                 <div class="col-auto">
-                    <button class="btn btn-primary" type="button" data-bs-toggle="modal" id="addButton"
+                    <button class="btn-3d btn-3d-submit" type="button" data-bs-toggle="modal" id="addButton"
                         data-bs-target="#customerAgreementModal" aria-controls="staticBackdrop"><i
                             class="fa-solid fa-plus"></i>
                         Add Agreement
                     </button>
-                    <!-- approval button for login aprroval ui -->
-                    <a href="/customeragreementapprove" style="text-decoration: none; color: white;">
-                        <button class="btn btn-primary" type="button" id="addButton"><i class="fa-solid fa-check"></i>
-                            Approval
-                        </button>
-                    </a>
                 </div>
             </div>
             <!-- header -->
@@ -80,7 +70,6 @@
 
             <!-- Main Table Card -->
             <div class="main-card">
-                <!-- Table Area -->
                 <div class="table-responsive">
                     <table class="table table-hover " id="customerAgreementTable">
                         <thead>
@@ -100,7 +89,6 @@
                         </tbody>
                     </table>
                 </div>
-                <!-- Table Area End -->
             </div>
             <!-- Mani Table Card end -->
 
@@ -130,7 +118,7 @@
                                                                 class="text-danger">*</span></label>
                                                         <select name="" id="selectCompanyName" class="form-select"
                                                             required
-                                                            onchange="selectDynamicElementValidator(this,'customerAgreement','customer_id')">
+                                                            onchange="select2Validator(this,'customerAgreement','customer_id')">
                                                         </select>
                                                     </div>
                                                 </div>
@@ -152,13 +140,12 @@
                                                             class="form-label">Agreement Period (months)<span
                                                                 class="text-danger">*</span></label>
                                                         <select name="" id="textCustomerAgreementPeriod"
-                                                            class="form-select" required
-                                                            onchange="selectElementValidator(this,'customerAgreement','agreement_period')">
+                                                            class="form-select" required>
                                                             <option value="" selected disabled>Select Period</option>
-                                                            <option value="06 months">06 months</option>
-                                                            <option value="12 months">12 months</option>
-                                                            <option value="24 months">24 months</option>
-                                                            <option value="60 months">60 months</option>
+                                                            <option value="06">06 months</option>
+                                                            <option value="12">12 months</option>
+                                                            <option value="24">24 months</option>
+                                                            <option value="60">60 months</option>
                                                         </select>
                                                     </div>
                                                     <div class="col-md-6 mb-3">
@@ -166,8 +153,7 @@
                                                             class="form-label">Agreement End Date<span
                                                                 class="text-danger"></span></label>
                                                         <input type="date" name="" id="textCustomerAgreementEndDate"
-                                                            class="form-control" required
-                                                            onchange="dateElementValidator(this,'customerAgreement','agreement_end_date')">
+                                                            class="form-control" required readonly>
                                                     </div>
                                                     <div class="col-md-6 mb-3">
                                                         <label for="textCustomerDeliveryFrequency"
@@ -212,45 +198,6 @@
                                             </div>
                                             <!-- Vehicle and Package Details -->
 
-                                            <!-- Route and Charges Details -->
-                                            <div class="mb-4">
-                                                <h4 class="section-title">Agreement Details</h4>
-                                                <div class="row">
-                                                    <div class="col-md-6 mb-3">
-                                                        <label for="textCustomerAgreementCharge" class="form-label">
-                                                            Agreement Charge (RS.)</label>
-                                                        <input type="text" name="" id="textCustomerAgreementCharge"
-                                                            class="form-control"
-                                                            onkeyup="validator(this,'^([0-9]{1,11})$','customerAgreement','agreement_charge')">
-                                                    </div>
-                                                    <div class="col-md-6 mb-3">
-                                                        <label for="textCustomerAgreementAdditionalCharge"
-                                                            class="form-label">Additiona Charges (RS.)</label>
-                                                        <input type="text" name=""
-                                                            id="textCustomerAgreementAdditionalCharge"
-                                                            class="form-control"
-                                                            onkeyup="validator(this,'^([0-9]{1,11})$','customerAgreement','additional_charge')">
-                                                    </div>
-                                                    <div class="col-md-6 mb-3">
-                                                        <label for="textCustomerAgreementDistance"
-                                                            class="form-label">Total
-                                                            Distance</label>
-                                                        <input type="text" name="" id="textCustomerAgreementDistance"
-                                                            class="form-control"
-                                                            onkeyup="validator(this,'^([0-9]{1,11})$','customerAgreement','total_distance')">
-                                                    </div>
-                                                    <div class="col-md-6 mb-3">
-                                                        <label for="textCustomerAgreementTotalAmount"
-                                                            class="form-label">Total
-                                                            Amount</label>
-                                                        <input type="text" name="" id="textCustomerAgreementTotalAmount"
-                                                            class="form-control"
-                                                            onkeyup="validator(this,'^([0-9]{1,11})$','customerAgreement','total_amount')">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- Route and Charges Details -->
-
                                             <!-- Other Details -->
                                             <div class="mb-4">
                                                 <h4 class="section-title">Other Details</h4>
@@ -260,13 +207,14 @@
                                                             class="form-label">Special
                                                             Requirements or Notes</label>
                                                         <textarea name="" id="textCustomerAgreementNote"
-                                                            class="form-control" onkeyup="validator(this,'^([A-Za-z]{1,16})([ ]{0,1})([A-Za-z]{0,16})([ ]{0,1})([A-Za-z]{0,16})([ ]{0,1})([A-Za-z]{0,16})([ ]{0,1})([A-Za-z]{0,16})$','customerAgreement','special_note')"></textarea>
+                                                            class="form-control"
+                                                            onkeyup="validator(this,'^([A-Za-z]{1,16})([ ]{0,1})([A-Za-z]{0,16})([ ]{0,1})([A-Za-z]{0,16})([ ]{0,1})([A-Za-z]{0,16})([ ]{0,1})([A-Za-z]{0,16})$','customerAgreement','special_note')"></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-12 mb-3">
-                                                        <label for="textCustomerAgreementNote"
-                                                            class="form-label"> Approval Note</label>
+                                                        <label for="textCustomerAgreementNote" class="form-label">
+                                                            Approval Note</label>
                                                         <textarea name="" id="textCustomerAgreementApprovalNote"
                                                             class="form-control" disabled readonly></textarea>
                                                     </div>
@@ -275,33 +223,38 @@
                                         </div>
                                         <!-- Other Details -->
                                         <!-- buttons -->
-                                        <div  class="mb-4">
-                                            <div class="row" >
+                                        <div class="mb-4">
+                                            <div class="row">
                                                 <div class="col-6">
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="row">
                                                         <div class="col-4"></div>
                                                         <div class="col-4 text-start">
-                                                            <button type="button" id="deleteButtonFrom" class="btn-3d btn-3d-cancel"
-                                                                    onclick="refreshCustomerAgreementForm()">
+                                                            <button type="button" id="deleteButtonFrom"
+                                                                class="btn-3d btn-3d-cancel"
+                                                                onclick="refreshCustomerAgreementForm()">
                                                                 <i class="fa-solid fa-xmark me-3"></i>
-                                                                Cancel</button>
+                                                                Cancel
+                                                            </button>
                                                         </div>
                                                         <div class="col-4 text-start">
-                                                            <button type="button" class="btn-3d btn-3d-update" id="updateButton"
-                                                                    onclick="customerAgreementFormUpdate()">
+                                                            <button type="button" class="btn-3d btn-3d-update"
+                                                                id="updateButton"
+                                                                onclick="customerAgreementFormUpdate()">
                                                                 <i class="fa-solid fa-arrows-rotate me-3"></i>
-                                                                Update</button>
+                                                                Update
+                                                            </button>
 
-                                                            <button type="submit" id="submitButton" class="btn-3d btn-3d-submit"
-                                                                    onclick="customerAgreementFormSubmit()">
+                                                            <button type="submit" id="submitButton"
+                                                                class="btn-3d btn-3d-submit"
+                                                                onclick="customerAgreementFormSubmit()">
                                                                 <i class="fa-solid fa-check me-3"></i>
-                                                                Submit</button>
+                                                                Submit
+                                                            </button>
                                                         </div>
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </div>
                                         <!-- buttons -->
@@ -314,6 +267,195 @@
                 </div>
             </div>
             <!-- Modal -->
+
+            <!--View  Modal -->
+            <div class="modal fade" id="customerAgreementViewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content" >
+                        <div class="header">
+                            <h1 class="document-title ">Customer Service Agreement</h1>
+                            <div class="document-subtitle">Dedicated Vehicle Contract</div>
+                        </div>
+                        <div class="modal-body">
+                                <div id="viewModal">
+<!--                                    agreement details-->
+                                    <div class="agreement-details">
+                                        <div class="agreement-container">
+                                            <div class="info-data">
+                                                <label for="" class="label">Agreement No</label>
+                                                <div class="value" id="dataAgreementRegNo"></div>
+                                            </div>
+                                            <div class="info-data">
+                                                <label for="" class="label">Agreement Period</label>
+                                                <div class="value" id="dataAgreementPeriod"></div>
+                                            </div>
+                                            <div class="info-data">
+                                                <label for="" class="label">Start Date</label>
+                                                <div class="value" id="dataAgreementStartDate"></div>
+                                            </div>
+                                            <div class="info-data">
+                                                <label for="" class="label">End Date</label>
+                                                <div class="value" id="dataEndDate"></div>
+                                            </div>
+                                            <div class="info-data">
+                                                <label for="" class="label">Agreement Charge</label>
+                                                <div class="value" id="dataAgreementCharge"></div>
+                                            </div>
+                                            <div class="info-data">
+                                                <label for="" class="label">Additional Charge</label>
+                                                <div class="value" id="dataAdditionalChargersCustomer"></div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+<!--                                    agreement deatils end-->
+
+                                    <!-- -------------------customer details------------------------- -->
+                                    <div class="details-container">
+                                        <div class="data-title">Customer Details</div>
+                                        <div class="data">
+                                            <div class="info-data">
+                                                <label for="" class="label">Registration No</label>
+                                                <div id="dataCus_Reg_No" class="value"></div>
+                                            </div>
+                                            <div class="info-data">
+                                                <label for="" class="label">Company Name</label>
+                                                <div id="dataCompanyname" class="value"></div>
+                                            </div>
+                                            <div class="info-data">
+                                                <label for="" class="label">Email</label>
+                                                <div id="dataCompanyEmail" class="value"></div>
+                                            </div>
+                                            <div class="info-data">
+                                                <label for="" class="label">Company Address</label>
+                                                <div id="dataCompanyAddress" class="value"></div>
+                                            </div>
+                                            <div class="info-data">
+                                                <label for="" class="label">Contact Person Name</label>
+                                                <div id="dataContactPersonName" class="value"></div>
+                                            </div>
+                                            <div class="info-data">
+                                                <label for="" class="label">Contact Person Email</label>
+                                                <div id="dataContactPersonEmail" class="value"></div>
+                                            </div>
+                                            <div class="info-data">
+                                                <label for="" class="label">Contact Person Mobile</label>
+                                                <div id="dataContactPersonMobile" class="value"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- -------------------customer details------------------------- -->
+
+                                    <!-- --------------------Package details------------------------ -->
+                                    <div class="details-container">
+                                        <div class="data-title">Package Details</div>
+                                        <div class="data">
+                                            <div class="info-data">
+                                                <label for="" class="label">Package Name</label>
+                                                <div id="dataPackageName" class="value"></div>
+                                            </div>
+                                            <div class="info-data">
+                                                <label for="" class="label">Vehicle Type</label>
+                                                <div id="dataVehicleType" class="value"></div>
+                                            </div>
+                                            <div class="info-data">
+                                                <label for="" class="label">Distance</label>
+                                                <div id="dataDistance" class="value"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- --------------------Package details------------------------ -->
+
+                                    <!-- ---------------------Rate information----------------------- -->
+                                    <div class="details-container">
+                                        <div class="data-title">Rate Infromation</div>
+                                        <div class="data">
+                                            <div class="info-data">
+                                                <label for="" class="label">Customer Rate</label>
+                                                <div id="dataCustomerRate" class="value"></div>
+                                            </div>
+                                            <div class="info-data">
+                                                <label for="" class="label">Supplier Rate</label>
+                                                <div id="dataSupplierRate" class="value"></div>
+                                            </div>
+                                            <div class="info-data">
+                                                <label for="" class="label">Additional Km Charge (Customer)</label>
+                                                <div id="dataAdditionalKMChargeCustomer" class="value"></div>
+                                            </div>
+                                            <div class="info-data">
+                                                <label for="" class="label">Additional Km Charge (Supplier)</label>
+                                                <div id="dataAdditionalKMChargeSupplier" class="value"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- ---------------------Rate information----------------------- -->
+
+                                    <!------------ terms and condition ------------------>
+                                    <div class="terms-container">
+                                        <h2 class="data-title">Terms and Conditions</h2>
+                                        <div class="terms-content">
+                                            <p>This Customer Agreement is entered into between <span class="highlight" id="termesCompanyName">............</span>and OKI-DOKI Company as of
+                                                <span class="highlight"
+                                                      id="termsAgreemantStartDate">...............</span>.</p>
+
+                                            <ol>
+                                                <li><strong>Service Description:</strong> Provider agrees to provide
+                                                    dedicated transportation services using a <span class="highlight" id="termsVehicleType">7.5ft vehicle</span> according to the
+                                                    package details outlined above.</li>
+
+                                                <li><strong>Term:</strong> This Agreement shall remain in effect for
+                                                    <span class="highlight" id="termsAgreementperiod">60 months</span>
+                                                    from the Start Date, unless terminated earlier as provided herein.
+                                                </li>
+
+                                                <li><strong>Payment Terms:</strong>
+                                                    <ol type="a">
+                                                        <li>Customer agrees to pay at the rate of Rs.<span
+                                                                class="highlight" id="termsCustomerRate">Rs. 150</span>
+                                                            per kilometer up to <span class="highlight"
+                                                                                      id="termsPackagedistance">5000
+                                                                kilometers</span>kilometers .</li>
+                                                        <li>Additional kilometers beyond the allocated distance will be
+                                                            charged at Rs.<span class="highlight"
+                                                                                id="termsadditionaKmCharge">Rs. 80</span> per kilometer.
+                                                        </li>
+                                                        <li>Invoices will be issued monthly and payment is due within 15
+                                                            days of receipt.</li>
+                                                    </ol>
+                                                </li>
+
+                                                <li><strong>Service Obligations:</strong> OKI-DOKI Company shall
+                                                    maintain the vehicle in good operating condition, provide qualified
+                                                    drivers, and ensure timely delivery of goods.</li>
+
+                                                <li><strong>Termination:</strong> Either party may terminate this
+                                                    Agreement with 30 days written notice. Early termination may result
+                                                    in applicable fees as outlined in the complete terms and conditions.
+                                                </li>
+
+                                                <li><strong>Insurance:</strong> OKI-DOKI Company shall maintain adequate
+                                                    insurance coverage for the vehicle, cargo, and liability.</li>
+
+                                                <li><strong>Dispute Resolution:</strong> Any disputes arising from this
+                                                    Agreement shall be resolved through arbitration according to the
+                                                    laws of Sri Lanka.</li>
+                                            </ol>
+
+                                            <p>The both parties acknowledge that they have read, understood, and agree
+                                                to be bound by the terms and conditions of this Agreement.</p>
+                                        </div>
+                                    </div>
+                                    <!------------ terms and condition ------------------>
+
+                                </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark btn-lg" onclick="customerAgreementFromPrint()">Print</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--View  Modal -->
         </div>
     </div>
 

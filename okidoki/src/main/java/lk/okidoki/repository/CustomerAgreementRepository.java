@@ -28,6 +28,8 @@ public interface CustomerAgreementRepository extends JpaRepository<CustomerAgree
     @Query(value = "SELECT * FROM tms.customer_agreement as ca where ca.customer_id = ?1 and ca.vehicle_type_id = ?2",nativeQuery = true)
     public CustomerAgreement findByVehicleTypeIdAndCustomerId(Integer customer_id, Integer VejicleType_id);
 
+
+
 //    @Query(value = "SELECT * FROM tms.customer_agreement as ca where ca.vehicle_type_id = ?1 and ca.",nativeQuery = true)
 //    CustomerAgreement getByVehicleType(Integer vehicleTypeId);
 }

@@ -83,25 +83,7 @@ const customerAgreemnentView = (dataOb) => {
     dataAgreementStartDate.innerHTML = dataOb.agreement_date;
     dataAgreementPeriod.innerHTML = dataOb.agreement_period;
     dataEndDate.innerHTML = dataOb.agreement_end_date;
-    if (dataOb.agreement_charge != null){
-        dataAgreementCharge.innerHTML = dataOb.agreement_charge;
-    }else {
-        dataAgreementCharge.innerText = "Not Include"
-    }
-    if (dataOb.agreement_charge != null){
-        dataAdditionalChargersCustomer.innerHTML = dataOb.additional_charge;
-    }else {
-        dataAdditionalChargersCustomer.innerHTML = "Not Include"
-    }
 
-
-    termesCompanyName.innerText = dataOb.customer_id.company_name;
-    termsAgreemantStartDate.innerText = dataOb.agreement_date;
-    termsVehicleType.innerText = dataOb.package_id.vehicle_type_id.name;
-    termsAgreementperiod.innerText = dataOb.agreement_period;
-    termsCustomerRate.innerText = dataOb.package_id.package_charge_cus;
-    termsPackagedistance.innerText = dataOb.package_id.distance;
-    termsadditionaKmCharge.innerText = dataOb.package_id.additinal_km_charge_cus;
 
     customerAgreementApprovalNote.value = dataOb.approval_note;
 
@@ -111,7 +93,8 @@ const customerAgreemnentView = (dataOb) => {
         customerAgreementAprrovalButton();
     }
 }
-// 4th option
+
+// data fill table function  without button
 const fillDataIntoApprovalTable = (tableBodyId, dataList, propertyList, editFunction, buttonVisibility = false) => {
 
     tableBodyId.innerHTML = "";
@@ -134,8 +117,6 @@ const fillDataIntoApprovalTable = (tableBodyId, dataList, propertyList, editFunc
             }
             tr.appendChild(td);
         }
-
-
 
         // if you click the tr edita function call
         tr.onclick = () => {

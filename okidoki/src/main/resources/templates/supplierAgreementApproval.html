@@ -12,16 +12,8 @@
         <div class="container-fluid">
 
             <!-- header -->
-            <div class="row align-items-center justify-content-between mt-3 mb-4">
+            <div class="row align-items-center justify-content-between mb-2">
                 <div class="col-auto">
-                    <div class="title">Supplier Agreemnet Approval</div>
-                    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/dashboard"
-                                    style="text-decoration: none; color: #0CAF60;">Dashboard</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Approval</li>
-                        </ol>
-                    </nav>
                 </div>
                 <div class="col-auto">
 
@@ -77,8 +69,8 @@
 
                                     <li class="nav-item" role="presentation">
                                         <button class="nav-link" id="vehicle-tab" data-bs-toggle="tab"
-                                                data-bs-target="#vehicle-tab-pane" type="button" role="tab"
-                                                aria-controls="vehicle-tab-pane" aria-selected="false">Vehicle
+                                            data-bs-target="#vehicle-tab-pane" type="button" role="tab"
+                                            aria-controls="vehicle-tab-pane" aria-selected="false">Vehicle
                                             Deatils</button>
                                     </li>
 
@@ -138,34 +130,34 @@
 
                                     <!-- Vehicle Details -->
                                     <div class="tab-pane fade show " id="vehicle-tab-pane" role="tabpanel"
-                                         aria-labelledby="vehicle-tab" tabindex="0">
+                                        aria-labelledby="vehicle-tab" tabindex="0">
                                         <div class="profile-section">
 
                                             <div class="row ">
                                                 <table class="table table-hover">
                                                     <tbody>
 
-                                                    <tr>
-                                                        <th class="fs-6"> Vehicle No:</th>
-                                                        <td id="dataVehicleNo"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th class="fs-6">Vehicle Type :</th>
-                                                        <td id="dataVehicleTypeOfVehicle"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th class="fs-6">Make year:</th>
-                                                        <td id="dataMakeYear"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th class="fs-6">Insurance Expire Date:</th>
-                                                        <td id="dataInsuranceExpireDate"></td>
-                                                    </tr>
+                                                        <tr>
+                                                            <th class="fs-6"> Vehicle No:</th>
+                                                            <td id="dataVehicleNo"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="fs-6">Vehicle Type :</th>
+                                                            <td id="dataVehicleTypeOfVehicle"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="fs-6">Make year:</th>
+                                                            <td id="dataMakeYear"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="fs-6">Insurance Expire Date:</th>
+                                                            <td id="dataInsuranceExpireDate"></td>
+                                                        </tr>
 
-                                                    <tr>
-                                                        <th class="fs-6">Revenue License Expire Date:</th>
-                                                        <td id="dataRevenueLicenseExpireDate"></td>
-                                                    </tr>
+                                                        <tr>
+                                                            <th class="fs-6">Revenue License Expire Date:</th>
+                                                            <td id="dataRevenueLicenseExpireDate"></td>
+                                                        </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -253,30 +245,31 @@
 
                                 <div class="row mt-5">
                                     <div class="col">
-                                        <label  class="form-label">Approve Note</label>
-                                        <textarea  id="supplierAgreementApprovalNote"
-                                            class="form-control"   onkeyup="editOb.approval_note = this.value"></textarea>
+                                        <label class="form-label">Approve Note</label>
+                                        <textarea id="supplierAgreementApprovalNote" class="form-control"
+                                            onkeyup="editOb.approval_note = this.value"></textarea>
                                     </div>
                                 </div>
                                 <!-- buttons -->
-                                <div  class="mb-4">
-                                    <div class="row" >
+                                <div class="mb-4">
+                                    <div class="row">
                                         <div class="col-6">
-                                            <button type="button" class="btn-3d btn-3d-cancel" data-bs-dismiss="modal" aria-label="Close"
-                                                    onclick="refreshCustomerForm()">Close</button>
+                                            <button type="button" class="btn-3d btn-3d-cancel" data-bs-dismiss="modal"
+                                                aria-label="Close" onclick="refreshCustomerForm()">Close</button>
                                         </div>
                                         <div class="col-6">
                                             <div class="row">
                                                 <div class="col-4"></div>
                                                 <div class="col-4 text-start">
-                                                    <button type="button" id="deleteButtonFrom" class="btn-3d btn-3d-cancel"
-                                                            onclick="supplierAgreementRejectButton()">
+                                                    <button type="button" id="deleteButtonFrom"
+                                                        class="btn-3d btn-3d-cancel"
+                                                        onclick="supplierAgreementRejectButton()">
                                                         <i class="fa-solid fa-xmark me-3"></i>
                                                         Reject</button>
                                                 </div>
                                                 <div class="col-4 text-start">
                                                     <button type="submit" id="submitButton" class="btn-3d btn-3d-submit"
-                                                            onclick="supplierAgreementAprrovalButton()">
+                                                        onclick="supplierAgreementAprrovalButton()">
                                                         <i class="fa-solid fa-check me-3"></i>
                                                         Approve</button>
                                                 </div>

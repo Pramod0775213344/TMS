@@ -17,7 +17,7 @@ const getServiceRequest = (url) =>{
     $.ajax({
 
         url: url,//the url to which the request is sent
-        type: 'GET',//http method to use for the request(gor or post) 
+        type: 'GET',//http method to use for the request(get or post)
         contentType: 'json',
         async: false,
         success: function (response) {
@@ -62,4 +62,15 @@ const httpServiceRequest = (url,method,dataOb) =>{
         }
     });
     return httpServiceResponse;  
+}
+
+const removePhoto= (photoPreviewContainerId,previewId,uploadContainerId) => {
+    photoPreviewContainerId.value = '';
+    photoPreviewContainerId.style.display = 'none'; // Hide the preview
+    photoPreviewContainerId.classList.remove("d-flex", "flex-column", "align-items-center");//class list  remove karanna oni
+    previewId.src = '';
+    uploadContainerId.style.display = 'block'; // Show the upload container
+    photoPreviewContainerId.style.display = 'none'; // Hide the preview container
+    // Optionally hide the preview container:
+    // document.getElementById('photoPreview').style.display = 'none';
 }

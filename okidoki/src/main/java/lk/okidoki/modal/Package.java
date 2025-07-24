@@ -47,6 +47,9 @@ public class Package {
 
     @NotNull
     private BigDecimal package_charge_sup;
+
+    @NotNull
+    private String package_type;
    
     @NotNull
     private LocalDateTime added_datetime;
