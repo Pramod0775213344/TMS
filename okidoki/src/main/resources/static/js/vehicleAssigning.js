@@ -1,27 +1,39 @@
 window.addEventListener("load", () => {
 
+    refresh();
+    $('#vehicleAssigningTable').DataTable().clear().draw(); // Clear table if no data
+    $('#vehicleAssigningTable tbody').html('<tr><td colspan="100%" class="text-center">No data available</td></tr>');
+    showLoadingOverlayOnTable("loaderId","vehicleAssigningTable");
+
+});
+// reset button
+const reset = () =>{
+
+    $('#vehicleAssigningTable').DataTable().clear().draw(); // Clear table if no data
+    $('#vehicleAssigningTable tbody').html('<tr><td colspan="100%" class="text-center">No data available</td></tr>');
+    showLoadingOverlayOnTable("loaderId","vehicleAssigningTable");
 
     let customer = getServiceRequest('/customer/alldata');
     dataFilIntoSelect(selectCustomerSearch, "Select Customer ", customer, "company_name")
 
-    $('#vehicleAssigningTable').DataTable();
-    refreshVehicleAssigningForm();
-    $(document).ready(function() {
-        $('.selectCustomerSearch').select2();
-    });
-});
+    dateFrom.value = ""
+    dateTo.value = ""
+}
 
-// customer change karaddi data table eka clear karanawa
-selectCustomerSearch.addEventListener("change", function () {
-    $('#vehicleAssigningTable').DataTable().clear().destroy();
-
-    loadVehicleAssigningTable();
-});
 // load booking deatils
-let customerElement = document.querySelector("#selectCustomerSearch");
-const loadVehicleAssigningTable = () => {
- let selectCustomerId = JSON.parse(customerElement.value);
-    bookingList = getServiceRequest('/booking/bydaterangeandcustomerid?startdate='+ dateFrom.value +'&enddate='+ dateTo.value +'&customerid=' + selectCustomerId.id);
+const search = () =>{
+
+    if ($.fn.dataTable.isDataTable('#vehicleAssigningTable')) {
+        $('#vehicleAssigningTable').DataTable().clear().destroy();
+    }
+
+    let customerIdElement = document.getElementById('selectCustomerSearch').value;
+    bookingList = getServiceRequest('/booking/bydaterangeandcustomerid?startdate='+ dateFrom.value +'&enddate='+ dateTo.value +'&customerid=' + JSON.parse(customerIdElement).id);
+    loadVehicleAssigningTable(bookingList);
+}
+
+// load booking deatils
+const loadVehicleAssigningTable = (bookingList) => {
 
     let propertyList = [
         { propertyName: "booking_no", dataType: "string" },
@@ -48,8 +60,32 @@ const loadVehicleAssigningTable = () => {
         { propertyName: getStatus, dataType: "function" }
     ];
 
-    fillDataIntoApprovalTable(vehicleAssigningTableBody, bookingList, propertyList, vehicleAssigningForm, datetimeFunctionForm);
-    $('#vehicleAssigningTable').DataTable();
+    if (bookingList.length <= 0){
+        $('#vehicleAssigningTable').DataTable().clear().draw(); // Clear table if no data
+        $('#vehicleAssigningTable tbody').html('<tr><td colspan="100%" class="text-center">No data available</td></tr>');
+        showLoadingOverlayOnTable("loaderId","vehicleAssigningTable");
+
+    }else {
+
+        fillDataIntoVehicleAssigningTable(vehicleAssigningTableBody, bookingList, propertyList, vehicleAssigningForm, datetimeFunctionForm);
+        // $('#vehicleAssigningTable').DataTable();
+
+        new DataTable('#vehicleAssigningTable', {
+            scrollX: true,
+            scrollY: 600
+        });
+        showLoadingOverlayOnTable("loaderId","vehicleAssigningTable");
+        // error massage eka hide karanwa datatable wala
+        // $.fn.dataTable.ext.errMode = 'none';
+
+    }
+
+
+    // new DataTable('#vehicleAssigningTable', {
+    //     scrollX: true,
+    //     scrollY: 200
+    // });
+
 }
 
 // get customer name
@@ -258,7 +294,7 @@ const vehicleAssigningForm = (dataOb) => {
             {propertyName: "distance", dataType: "string"}
         ]
 
-        dataFillIntoTheReportTable(revenueTableBody, reportDatalist, propertyList);
+        dataFillIntoTheReportTable(revenueViewTableBody, reportDatalist, propertyList);
 
     }else{
 
@@ -270,7 +306,7 @@ const vehicleAssigningForm = (dataOb) => {
 
 }
 
-// datetime adding midal form open function
+// datetime adding modal form open function
 const datetimeFunctionForm = (dataOb) => {
 
     // cancelled karapu booking wala date time add karann ba
@@ -356,7 +392,7 @@ const datetimeFunctionForm = (dataOb) => {
 }
 
 // data fill function for table
-const fillDataIntoApprovalTable = (tableBodyId, dataList, propertyList, editFunction, datetimeFunctionForm) => {
+const fillDataIntoVehicleAssigningTable = (tableBodyId, dataList, propertyList, editFunction, datetimeFunctionForm) => {
 
     tableBodyId.innerHTML = "";
 
@@ -485,8 +521,8 @@ const vehicleAssigningFormSubmitButton = () => {
                         customClass :{
                             confirmButton :'btn-3d btn-3d-other'
                         }                    });
-                    loadVehicleAssigningTable();
-                    refreshVehicleAssigningForm();
+                    search();
+                    refresh();
                     $("#vehicleAssigning").modal("hide");
                 } else {
                     Swal.fire({
@@ -583,8 +619,8 @@ const vehicleAssigningFormUpdate = () => {
                                 confirmButton :'btn-3d btn-3d-other'
                             }
                         });
-                        loadVehicleAssigningTable();
-                        refreshVehicleAssigningForm();
+                        search();
+                        refresh();
                         $("#vehicleAssigning").modal("hide");
 
                     } else {
@@ -646,8 +682,8 @@ const dateAddingButton = () => {
                     confirmButton :'btn-3d btn-3d-other'
                 }
             });
-            loadVehicleAssigningTable();
-            refreshVehicleAssigningForm();
+            search();
+            refresh();
             $("#datetimeAddingFormModal").modal("hide");
 
         } else {
@@ -751,8 +787,8 @@ const dateUpadteButton = () => {
                                 confirmButton :'btn-3d btn-3d-other'
                             }
                         });
-                        loadVehicleAssigningTable();
-                        refreshVehicleAssigningForm();
+                        search();
+                        refresh();
                         $("#datetimeAddingFormModal").modal("hide");
 
                     } else {
@@ -793,7 +829,7 @@ const dateUpadteButton = () => {
 }
 
 // refresh form funtion eka
-const refreshVehicleAssigningForm = () => {
+const refresh = () => {
     booking = new Object();
 
     datetimeAddingForm.reset();
@@ -820,12 +856,25 @@ const refreshVehicleAssigningForm = () => {
 
     setDefault([selectVehicleNo,selectdriver,pickupDateAndTime,departedPickupDateAndTime,arrivedDeliveryDateAndTime,departedDeliveryDateAndTime,textStartMeterReading,textEndtMeterReading]);
 
-    //removing validation at refresh
-    if (selectCustomerSearch.parentNode.children[2] != undefined) {
-        selectCustomerSearch.parentNode.children[2].children[0].children[0].style.border = "1px solid #ced4da";
-        selectCustomerSearch.parentNode.children[2].children[0].children[0].classList.remove("is-valid");
-        selectCustomerSearch.parentNode.children[2].children[0].children[0].classList.remove("is-invalid");
-    }
+    let customer = getServiceRequest('/customer/alldata');
+    dataFilIntoSelect(selectCustomerSearch, "Select Customer ", customer, "company_name")
+
+
+    dateFrom.value = ""
+    dateTo.value = ""
+}
+
+const refreshVehicleAssigningForm = ()=>{
+    let vehicleList = getServiceRequest("vehicle/vehiclebyvehiclegroupandvehicletype?customer_id="+booking.customer_id.id +"&vehicletype_id="+booking.vehicle_type_id.id);
+    dataFilIntoSelect(selectVehicleNo, "Select Vehicle ", vehicleList, "vehicle_no")
+
+    let driver = getServiceRequest('/driver/alldata');
+    dataFilIntoSelect(selectdriver, "Select Driver ", driver, "fullname")
+
+    updateButton.style.display = "none";
+    submitButton.style.display = "";
+
+    setDefault([selectVehicleNo,selectdriver])
 }
 
 // select vehicle no with supplier transport name
@@ -855,6 +904,7 @@ selectVehicleNo.addEventListener("change", () => {
     console.log(vehicle);
     let supplier = vehicle.supplier_id;
     console.log(supplier);
+    selectVehicleNo.classList.add("is-valid");
     booking.vehicle_id = JSON.parse(selectVehicleNo.value);
 
 
@@ -933,12 +983,12 @@ textEndtMeterReading.addEventListener("keyup", () => {
 })
 
 
-const bookingLists = getServiceRequest('/booking/alldata');
+const bookingListsForDate = getServiceRequest('/booking/alldata');
 
 const fromDate = new Date("2024-03-24T01:03");
 const toDate = new Date("2024-05-24T01:03");
 
-const daterange = bookingLists.filter(booking => {
+const daterange = bookingListsForDate.filter(booking => {
     const pickupDate = new Date(booking.pickup_date_time);
     const deliveryDate = new Date(booking.delivery_date_time);
 

@@ -1,3 +1,6 @@
+html {
+    scroll-behavior: smooth;
+}
 /* Body */
 body {
     font-family: 'Inter', sans-serif;
@@ -748,4 +751,20 @@ table.dataTable thead>tr>th.dt-orderable-asc, table.dataTable thead>tr>th.dt-ord
     padding-right: 4.125rem;
     background-position: right 0.25rem center, center right 2.25rem !important;
     background-size: 16px 12px, calc(.75em + .375rem) calc(.75em + .375rem);
+}
+
+.headStyle{
+    background-color: #f1f5f9;
+    font-size: 16px;
+    top: 0;
+    white-space: nowrap;
+    padding: 15px 100px;
+    border-bottom: 1px solid #e5e7eb;
+    font-weight: 600;
+    color: #111827;
+    text-align: left;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+
 }

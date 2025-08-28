@@ -13,9 +13,9 @@ const loadCustomerTable = () => {
     let customer = getServiceRequest('/customer/alldata');
 
     let propertyList = [
-        { propertyName: "company_name", dataType: "string" },
+        { propertyName: getCompnayDetails, dataType: "function" },
         { propertyName: getBusinessType, dataType: "function" },
-        { propertyName: "contact_person_fullname", dataType: "string" },
+        { propertyName: getContactPersonDeatils, dataType: "function" },
         { propertyName: "contact_person_mobileno", dataType: "string" },
         { propertyName: getCustomerStatus, dataType: "function" },
 
@@ -26,7 +26,12 @@ const loadCustomerTable = () => {
     $('#customerTable').DataTable();
 
 };
-
+const getCompnayDetails = (dataOb) => {
+    return "<span>" + dataOb.company_name + "</span><span><p class='text-muted mt-2' >"+ dataOb.direct_email_no +"</p></span>";
+}
+const getContactPersonDeatils = (dataOb) => {
+    return "<span>" + dataOb.contact_person_fullname + "</span><span><p class='text-muted mt-2' >"+ dataOb.contact_person_email +"</p></span>";
+}
 // status Function
 const getCustomerStatus = (dataOb) => {
     if (dataOb.customer_status_id.status == 'Active') {
@@ -105,8 +110,49 @@ const customerDelete = (dataOb) => {
 }
 
 // Table View Button
-const customerView = () => {
+const customerView = (dataOb) => {
 
+    $('#customerdetailsform').modal('show');
+
+
+    viewCustomerId.innerText = dataOb.customer_reg_no;
+    viewCurrentDate.innerText = new Date().toLocaleDateString();
+    viewCustomerName.innerText = dataOb.company_name;
+    viewCustomerAddress.innerText = dataOb.company_address;
+    viewCustomerPhone.innerText = dataOb.direct_telephone_no;
+    viewCustomerEmail.innerText = dataOb.direct_email_no;
+    viewContactPersonName.innerText = dataOb.contact_person_fullname;
+    viewContactPersonEmail.innerText = dataOb.contact_person_email;
+    viewContactPersonPhone.innerText = dataOb.contact_person_mobileno;
+    viewBusinessType.innerText = dataOb.business_type_id.name;
+    viewRegistrationNo.innerText = dataOb.customer_reg_no;
+
+    if (dataOb.customer_status_id.status == 'Active') {
+        viewWorkStatus.innerHTML = `<span class='status-badge status-active'> <span class='dot'> </span>${dataOb.customer_status_id.status}</span>`;
+    }
+
+    if (dataOb.customer_status_id.status == 'Inactive') {
+        viewWorkStatus.innerHTML = `<span class='status-badge status-pending'> <span class='dot'> </span>${dataOb.customer_status_id.status}</span>`;
+    }
+
+    if (dataOb.customer_status_id.status == 'Deleted') {
+        viewWorkStatus.innerHTML = `<span class='status-badge status-inactive'> <span class='dot'> </span>${dataOb.customer_status_id.status}</span>`;
+    }
+}
+
+// print view eka floating rate booking invoice ekata
+const printCustomer = () =>{
+    let newWindow = window.open();
+    let preview = "<html><head><title>TMS</title><link rel='stylesheet' href='/css/customer.css'><link rel='stylesheet' href='/css/common.css.css'><link rel='stylesheet' href='/bootstrap/bootstrap-5.2.3/css/bootstrap.min.css'><script src='/bootstrap/bootstrap-5.2.3/js/bootstrap.bundle.min.js'></script></head><body>" +
+        "<div class='row'><div class='col-12'>" + singleCustomerDetails.outerHTML + "</div></div></body></html>";
+
+    newWindow.document.write(preview);
+
+    setTimeout(()=>{
+        newWindow.stop();
+        newWindow.print();
+        newWindow.close();
+    },500)
 }
 
 // Table edit button

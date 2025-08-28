@@ -78,7 +78,7 @@ const getCustomerAgreementStatus = (dataOb) => {
     }
 
     if (dataOb.customer_agreement_status_id.status == 'Pending') {
-        return "<span class='status-badge status-pending'> " + dataOb.customer_agreement_status_id.status + "</span>"
+        return "<span class='status-badge status-pending'>" + dataOb.customer_agreement_status_id.status + "</span>"
     }
     if (dataOb.customer_agreement_status_id.status == 'Expired') {
         return "<span class='status-badge status-inactive'> " + dataOb.customer_agreement_status_id.status + "</span>"

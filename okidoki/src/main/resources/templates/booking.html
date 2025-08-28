@@ -6,7 +6,6 @@
 <head>
 
     <link rel="stylesheet" href="/css/booking.css">
-    <script src="bootstrap/bootstrap-5.2.3/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body>
@@ -16,25 +15,6 @@
     <div class="main-content">
         <div th:replace="fragments/topbar :: topbarFragment"></div>
         <div class="container-fluid">
-
-            <!-- head area  -->
-<!--            <div class="row align-items-center justify-content-between  mb-2    ">-->
-<!--                <div class="col-auto">-->
-<!--                    <div class="title">Manage Bookings</div>-->
-<!--                    <nav  aria-label="breadcrumb">-->
-<!--                        <ol class="breadcrumb">-->
-<!--                            <li class="breadcrumb-item"><a href="/dashboard"-->
-<!--                                    style="text-decoration: none; color: #0CAF60;">Home</a></li>-->
-<!--                            <li class="breadcrumb-item active" aria-current="page">Booking Management</li>-->
-<!--                            <li class="breadcrumb-item active" aria-current="page">Booking</li>-->
-<!--                        </ol>-->
-<!--                    </nav>-->
-<!--                </div>-->
-<!--                <div class="col-auto">-->
-
-<!--                </div>-->
-<!--            </div>-->
-            <!-- head area  -->
 
             <!--tabs button-->
             <ul class="nav nav-pills mb-3 text-end" id="pills-tab" role="tablist">
@@ -46,13 +26,14 @@
                 <li class="nav-item " role="presentation">
                     <button class="nav-link btn-3d " id="pills-bokiinglist-tab" data-bs-toggle="pill"
                         data-bs-target="#pills-bokiinglist" type="button" role="tab" aria-controls="pills-bokiinglist"
-                        aria-selected="false" onclick="refreshForm()">Pending Bookings</button>
+                        aria-selected="false" onclick="refreshForm();">Pending Bookings</button>
                 </li>
             </ul>
             <!--    tabs button-->
 
             <!-- tab head s -->
             <div class="tab-content" id="pills-tabContent">
+                  <!--booking form area-->
                 <div class="tab-pane fade show active" id="pills-bookingform" role="tabpanel"
                     aria-labelledby="pills-bookingform-tab" tabindex="0">
                     <div class="main-card">
@@ -79,6 +60,12 @@
                                                             <option selected disabled>Select Customer</option>
                                                             <option value="Cargils Foot City">Cargils Foot City</option>
                                                         </select>
+                                                        <div class="valid-feedback">
+                                                            Looks Good!
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            Please choose a Customer!
+                                                        </div>
 
                                                         <!-- ------------------------------------------------------------ -->
 
@@ -98,9 +85,14 @@
                                                             Type<span class="text-danger">*</span></label>
                                                         <select type="text" class="form-select " id="selectVehicleType"
                                                             placeholder="Enter Vehicle type" required
-                                                            onchange="selectDynamicElementValidator(this,'booking','vehicle_type_id');additionalChagersCheckBox()">
-
+                                                            onchange="selectDynamicElementValidator(this,'booking','vehicle_type_id');">
                                                         </select>
+                                                        <div class="valid-feedback">
+                                                            Looks Good!
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            Please choose a Vehicle Type!
+                                                        </div>
                                                     </div>
                                                     <!-- -------------------------------------------------------------- -->
                                                     <div class="col-md-6">
@@ -112,10 +104,10 @@
                                                             onkeyup="validator(this,'^([A-Za-z]{0,20})$','booking','booking_contact_person_name')"
                                                             disabled required>
                                                         <div class="valid-feedback ">
-                                                            Valid Name....
+                                                            Looks Good!
                                                         </div>
                                                         <div class="invalid-feedback ">
-                                                            Invalid Name...!
+                                                            Please Type Valid Contact Person Name!
                                                         </div>
                                                         <!-- ------------------------------------------------------------------------- -->
                                                     </div>
@@ -129,10 +121,10 @@
                                                             onkeyup="validator(this,'^([0][7][01245678][0-9]{7})$','booking','booking_contact_person_mobileno')"
                                                             disabled required>
                                                         <div class="valid-feedback ">
-                                                            Valid Mobile No....
+                                                            Looks Good!
                                                         </div>
                                                         <div class="invalid-feedback">
-                                                            Invalid Mobile No...!
+                                                            Please Type Valid Mobile No!
                                                         </div>
                                                     </div>
                                                 </div>
@@ -143,7 +135,7 @@
                                             <div class="mb-4">
                                                 <h4 class="section-title">Shipment
                                                     Deatils</h4>
-                                                <div class="row" id="shipmentdetails">
+                                                <div class="row" id="shipmentdetails" style="display: none">
                                                     <div class="col-md-6 mb-3 ">
                                                         <label for="textPickupLocation"
                                                             class="form-label fw-bold">Pickup
@@ -151,15 +143,12 @@
                                                         <select name="" id="textPickupLocation" class="form-select"
                                                             required
                                                             onchange="selectDynamicElementValidator(this,'booking','pickup_locations_id')">
-
-                                                        </select>
-
                                                         </select>
                                                         <div class="valid-feedback">
-                                                            Valid Location....
+                                                            Looks Good!
                                                         </div>
                                                         <div class="invalid-feedback">
-                                                            Invalid Location...!
+                                                            Please Select Valid Location!
                                                         </div>
                                                     </div>
 
@@ -170,10 +159,16 @@
                                                             Time<span class="text-danger">*</span></label>
                                                         <input type="datetime-local" class="form-control text-muted"
                                                             id="textPickupDateAndTime" required onkeyup="return false"
-                                                            onchange="dateElementValidator(this,'booking','pickup_date_time')">
+                                                            onchange="dateElementValidator(this,'booking','pickup_date_time');document.getElementById('textDeliveryDateAndTime').min =this.value">
+                                                        <div class="valid-feedback">
+                                                            Looks Good!
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            Please Select Valid Date & Time!
+                                                        </div>
                                                     </div>
                                                     <!-- ---------------------------------------------------------------------------- -->
-                                                    <div class="col-md-12 mt-2">
+                                                    <div class="col-md-12 mt-2" >
                                                         <label class="form-label me-3">Via Location :</label>
                                                         <div class="form-check form-check-inline">
                                                             <input class="form-check-input" type="checkbox" value=""
@@ -196,20 +191,28 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="via-location mt-3" id="viaLocation">
+                                                    <div >
+                                                    <div class="via-location mt-3 vialocationDiv" id="viaLocation">
                                                         <div class="input-group mb-3">
-                                                            <select name="" id="selectViaLocation" class="form-select">
+                                                            <select name="" id="selectViaLocation" class="form-select" onchange="this.classList.add('is-valid')">
                                                             </select>
                                                             <button class="btn btn-success" type="button"
-                                                                id="add-waypoint"><i
+                                                                id="add-waypoint" onclick="document.getElementById('selectViaLocation').classList.remove('is-valid')"><i
                                                                     class="fa-solid fa-plus"></i></button>
+                                                            <div class="valid-feedback">
+                                                                Looks Good!
+                                                            </div>
+                                                            <div class="invalid-feedback">
+                                                                Please Select Valid Location!
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div>
-                                                        <select class="form-select" size="6" aria-label="size 3"
+                                                    <div class="vialocationDiv">
+                                                        <select class="form-select vialocationDiv" size="6" aria-label="size 3"
                                                             id="waypointslist"
                                                             onchange="selectDynamicElementValidator(this,'booking','via_location')">
                                                         </select>
+                                                    </div>
                                                     </div>
                                                     <!-- ----------------------------------------------------------->
                                                     <div class="col-md-6 mt-3">
@@ -218,13 +221,12 @@
                                                             Location<span class="text-danger">*</span></label>
                                                         <select name="" id="textDeliveryLocation" class="form-select"
                                                             onchange="selectDynamicElementValidator(this,'booking','delivery_locations_id')">
-
                                                         </select>
                                                         <div class="valid-feedback">
-                                                            Valid Location....
+                                                            Looks Good!
                                                         </div>
                                                         <div class="invalid-feedback">
-                                                            Invalid Location...!
+                                                            Please Select Valid Location!
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 mt-3">
@@ -235,6 +237,12 @@
                                                         <input type="datetime-local" class="form-control text-muted"
                                                             id="textDeliveryDateAndTime" required onkeyup="return false"
                                                             onchange="dateRangeValidator(this,document.getElementById('textPickupDateAndTime').value,'booking','delivery_date_time')">
+                                                        <div class="valid-feedback">
+                                                            Looks Good!
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            Please Select Valid Date & Time!
+                                                        </div>
                                                     </div>
                                                     <!-- ditance auto calculate -->
                                                     <div class="col-md-12 mt-5">
@@ -245,13 +253,7 @@
                                                             id="textDistance" placeholder="Distance" readonly>
                                                     </div>
 
-<!--                                                    additional chargre view-->
-                                                    <div class="col-md-12 mb-3 mt-3">
-                                                        <label class="form-label">Chargers</label>
-                                                        <div id="divChargers">
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                </div >
 
                                             </div>
                                         </div>
@@ -259,33 +261,30 @@
 
                                         <!-- buttons -->
                                         <div class="mb-4">
-                                            <div class="row">
+                                            <div class="row" buttonDiv>
                                                 <div class="col-6"></div>
                                                 <div class="col-6">
                                                     <div class="row">
                                                         <div class="col-2"></div>
                                                         <div class="col-5 text-start">
                                                             <button type="button" id="deleteButtonFrom"
-                                                                class="btn-3d btn-3d-cancel"
+                                                                class="btn-3d btn-3d-cancel buttonDiv"
                                                                 onclick="bookingFormClearButton()">
                                                                 <i class="fa-solid fa-xmark me-3"></i>
                                                                 Cancel</button>
                                                         </div>
-                                                        <div class="col-5 text-start">
-                                                            <button type="button" class="btn-3d btn-3d-update"
+                                                        <div class="col-5 text-start" >
+                                                            <button type="button" class="btn-3d btn-3d-update buttonDiv" style="display: none"
                                                                 id="updateButton" onclick="bookingFormUpdate()">
                                                                 <i class="fa-solid fa-arrows-rotate me-3"></i>
                                                                 Update</button>
 
                                                             <button type="submit" id="submitButton"
-                                                                class="btn-3d btn-3d-submit"
+                                                                class="btn-3d btn-3d-submit buttonDiv"
                                                                 onclick="bookingFormSubmit()">
                                                                 <i class="fa-solid fa-check me-3"></i>
                                                                 Submit</button>
 
-                                                            <button type="button" id="addButton"
-                                                                class="btn btn-primary">
-                                                                Add</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -306,66 +305,39 @@
                         </form>
                     </div>
 
-                    <div class="main-card mt-3" id="tempeoryBookingListView">
-                        <div class="table-responsive">
-                            <table id="multipleBookingTable" class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Customer Name</th>
-                                        <th>Pickup Location</th>
-                                        <th>Via Locations</th>
-                                        <th>Delivery Location</th>
-                                        <th>Distance</th>
-                                        <th>ACTION</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="multipleBookingTableBody">
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-
                 </div>
 
-                <!-- ------------------------------------------------------------------------------- -->
+                <!--booking table area -->
                 <div class="tab-pane fade" id="pills-bokiinglist" role="tabpanel"
                     aria-labelledby="pills-bokiinglist-tab" tabindex="0">
                     <!-- serarch area -->
                     <div class="main-card mb-3">
                         <div class="row">
                             <div class="col-5">
-                                <label for="" class="form-label">Name</label>
-                                <input type="text" name="" id="" placeholder="Search Name" class="form-control">
                             </div>
                             <div class="col-6">
                                 <div class="row">
                                     <div class="col-4">
-                                        <label for="" class="form-label">Customer</label>
-                                        <select name="" id="" class="form-select">
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="searchCustomerName" class="form-label">Customer</label>
+                                        <select name="" id="searchCustomerName" class="form-select">
                                             <option value="">Select Customer</option>
                                         </select>
                                     </div>
                                     <div class="col-4">
-                                        <label for="" class="form-label">Vehicle Type</label>
-                                        <select name="" id="" class="form-select">
+                                        <label for="searchVehicleType" class="form-label">Vehicle Type</label>
+                                        <select name="" id="searchVehicleType" class="form-select">
                                             <option value="">Select Vehicle Type</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-4">
-                                        <label for="" class="form-label">Status</label>
-                                        <select name="" id="" class="form-select">
-                                            <option value="">Select Status</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-1 mt-4">
                                 <button class="btn btn-search mt-3" data-bs-toggle="tooltip" data-bs-placement="top"
-                                    data-bs-title="Search"><i class="fas fa-search"></i></button>
+                                    data-bs-title="Search" onclick="searchBooking();"><i class="fas fa-search" id="bookingSearchButton"></i></button>
                                 <button class="btn btn-reset mt-3" data-bs-toggle="tooltip" data-bs-placement="top"
-                                    data-bs-title="Reset"><i class="fa-solid fa-rotate-right"></i></button>
+                                    data-bs-title="Reset" onclick="refreshForm();"><i class="fa-solid fa-rotate-right"></i></button>
                             </div>
                         </div>
                     </div>
@@ -374,7 +346,7 @@
 
                     <!-- Table Area -->
                     <div class="main-card">
-                        <div class="table-responsive">
+                        <div class="table-responsive" style="height: 580px">
                             <table id="bookingTable" class="table table-hover">
                                 <thead>
                                     <tr>
@@ -389,9 +361,15 @@
                                     </tr>
                                 </thead>
                                 <tbody id="bookingTableBody">
-
                                 </tbody>
                             </table>
+                            <div class="loader-table" id="loaderId" style="display: none">
+                                <div class="spinner-table">
+                                    <div class="spinner-outer-circle-table"></div>
+                                    <div class="spinner-inner-circle-table"></div>
+                                    <div class="spinner-middle-circle-table"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!-- Table Area End -->

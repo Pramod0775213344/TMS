@@ -2,7 +2,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TMS</title>
-    <link rel="icon" href="images/tab-logo.png">
+    <link rel="icon" href="images/tablogo.png">
     <link rel="stylesheet" href="bootstrap/bootstrap-5.2.3/css/bootstrap.min.css">
     <link rel=stylesheet href="/fontawesome-free-6.7.2-web/css/all.css">
     <link rel="stylesheet" href="/dataTable/datatables.min.css">
@@ -30,6 +30,7 @@
             let logedUserPhoto =/*[[${loggeduserphoto}]]*/ 'loggeduserphoto'
             if (logedUserPhoto != null){
                 imgLogUserPhoto.src = atob(logedUserPhoto);
+                profileViewUserPhoto.src = atob(logedUserPhoto);
             }
         })
     </script>

@@ -355,7 +355,7 @@ const invoiceForm = (dataOb) => {
     viewInvoiceNo.innerText = customerPayment.bill_no;
 }
 
-// fprm refresh function eka
+// form refresh function eka
 const refresh = () => {
 
     customerPayment = new Object();

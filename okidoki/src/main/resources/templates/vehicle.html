@@ -36,18 +36,16 @@
                     <div class="col-6">
                         <div class="row">
                             <div class="col-4">
-                                <label for="" class="form-label">Name</label>
-                                <input type="text" name="" id="" placeholder="Search Name" class="form-control">
                             </div>
                             <div class="col-4">
-                                <label for="" class="form-label">Vehicle Type</label>
-                                <select name="" id="" class="form-select">
+                                <label for="searchVehicleType" class="form-label">Vehicle Type</label>
+                                <select  id="searchVehicleType" class="form-select">
                                     <option value="">Select Vehicle Type</option>
                                 </select>
                             </div>
                             <div class="col-4">
-                                <label for="" class="form-label">Status</label>
-                                <select name="" id="" class="form-select">
+                                <label for="searchVehicleStatus" class="form-label">Status</label>
+                                <select id="searchVehicleStatus" class="form-select">
                                     <option value="">Select Status</option>
                                 </select>
                             </div>
@@ -55,9 +53,9 @@
                     </div>
                     <div class="col-1 mt-4">
                         <button class="btn btn-search mt-3" data-bs-toggle="tooltip" data-bs-placement="top"
-                            data-bs-title="Search"><i class="fas fa-search"></i></button>
+                            data-bs-title="Search" onclick="searchVehicle()"><i class="fas fa-search"></i></button>
                         <button class="btn btn-reset mt-3" data-bs-toggle="tooltip" data-bs-placement="top"
-                            data-bs-title="Reset"><i class="fa-solid fa-rotate-right"></i></button>
+                            data-bs-title="Reset" onclick="refreshVehicleForm()"><i class="fa-solid fa-rotate-right"></i></button>
                     </div>
                 </div>
             </div>
@@ -67,7 +65,7 @@
             <!-- Table Area -->
             <div class="main-card">
                 <div class="table-responsive">
-                    <table class="table table-hover" id="vehicleTable">
+                    <table class="table table-hover table-striped" id="vehicleTable">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -85,6 +83,13 @@
 
                         </tbody>
                     </table>
+                    <div class="loader-table" id="loaderId" style="display: none">
+                        <div class="spinner-table">
+                            <div class="spinner-outer-circle-table"></div>
+                            <div class="spinner-inner-circle-table"></div>
+                            <div class="spinner-middle-circle-table"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- Table Area End -->
@@ -117,6 +122,12 @@
                                                             class="form-select"
                                                             onchange="selectDynamicElementValidator(this,'vehicle','supplier_id')"
                                                             required></select>
+                                                        <div class="valid-feedback">
+                                                            Looks Good!
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            Please choose a Transport Name!
+                                                        </div>
                                                     </div>
 
                                                     <div class="col-md-6 mb-3">
@@ -141,7 +152,7 @@
                                                                 <img id="previewImageVehicle" src="" alt="Preview">
                                                                 <br>
                                                                 <button type="button" class="remove-photo"
-                                                                    onclick="removePhoto()">Remove Photo</button>
+                                                                        onclick="removePhoto(photoPreviewVehicle,previewImageVehicle,uploadContainerVehiclePhoto)">Remove Photo</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -159,6 +170,13 @@
                                                             placeholder="Enter Vehicle No"
                                                             onkeyup="validator(this,'^[A-Za-z]{2}[-][A-Za-z]{2,3}[-][0-9]{4}$','vehicle','vehicle_no')"
                                                             required>
+                                                        <div id="vehicleNoHelp" class="form-text">Ex:- WP-BAD-4853  /  WP-PA-4875</div>
+                                                        <div class="valid-feedback">
+                                                            Looks Good!
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            Please Enter valid Vehicle No!
+                                                        </div>
                                                     </div>
                                                     <div class="col-md-6 mb-3">
                                                         <label for="selectVehicleType" class="form-label">Vehicle
@@ -168,6 +186,12 @@
                                                             onchange="selectDynamicElementValidator(this,'vehicle','vehicle_type_id')"
                                                             required>
                                                         </select>
+                                                        <div class="valid-feedback">
+                                                            Looks Good!
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            Please choose a Vehicle Type!
+                                                        </div>
                                                     </div>
                                                     <div class="col-md-4 mb-3">
                                                         <label for="selectVehicleMake" class="form-label">Make<span
@@ -176,6 +200,12 @@
                                                             placeholder="Enter Vehicle type"
                                                             onchange="selectDynamicElementValidator(this,'vehicle','vehicle_make_id')"
                                                             required> </select>
+                                                        <div class="valid-feedback">
+                                                            Looks Good!
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            Please choose a Make!
+                                                        </div>
                                                     </div>
                                                     <div class="col-md-4 mb-3">
                                                         <label for="textVehicleModel" class="form-label">Model<span
@@ -184,6 +214,12 @@
                                                             placeholder="Enter Vehicle Model"
                                                             onkeyup="validator(this,'^[A-Za-z0-9]+(?:[\\s\\-\\.\\/][A-Za-z0-9]+)*$','vehicle','model')"
                                                             required>
+                                                        <div class="valid-feedback">
+                                                            Looks Good!
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            Please Enter Valid Model !
+                                                        </div>
                                                     </div>
                                                     <div class="col-md-4 mb-3">
                                                         <label for="textVehicleYear" class="form-label">Make Year<span
@@ -192,6 +228,12 @@
                                                             placeholder="Enter Vehicle Year"
                                                             onchange="dateElementValidator(this,'vehicle','make_year')"
                                                             required>
+                                                        <div class="valid-feedback">
+                                                            Looks Good!
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            Please Enter Valid Make Year !
+                                                        </div>
                                                     </div>
                                                     <div class="col-md-6 mb-3">
                                                         <label for="textVehicleInsuranceExpireDate"
@@ -201,6 +243,12 @@
                                                             id="textVehicleInsuranceExpireDate"
                                                             onchange="dateElementValidator(this,'vehicle','insurance_expire_date')"
                                                             required>
+                                                        <div class="valid-feedback">
+                                                            Looks Good!
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            Please Enter Valid Expire Date !
+                                                        </div>
                                                     </div>
                                                     <div class="col-md-6 mb-3">
                                                         <label for="textVehicleRevenuLicenseExpireDate"
@@ -211,6 +259,12 @@
                                                             id="textVehicleRevenuLicenseExpireDate"
                                                             onchange="dateElementValidator(this,'vehicle','revenu_license_expire_date')"
                                                             required>
+                                                        <div class="valid-feedback">
+                                                            Looks Good!
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            Please Enter Valid Expire Date !
+                                                        </div>
                                                     </div>
                                                     <div class="col-md-6 mb-3">
                                                         <label for="textVehicleStartMeterReading"
@@ -221,6 +275,12 @@
                                                             id="textVehicleStartMeterReading"
                                                             placeholder="Enter Start Meter Reading"
                                                             onkeyup="validator(this,'^[0-9]{1,30}$','vehicle','startup_meter_reading')">
+                                                        <div class="valid-feedback">
+                                                            Looks Good!
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            Please Enter Valid Start Meter Reading !
+                                                        </div>
                                                     </div>
                                                     <div class="col-md-6 mb-3">
                                                         <label for="textVehicleCurrentMeterReading"
@@ -229,6 +289,12 @@
                                                         <input type="text" class="form-control"
                                                             id="textVehicleCurrentMeterReading" placeholder=""
                                                             onkeyup="validator(this,'^[0-9]{1,30}$','vehicle','current_meter_reading')">
+                                                        <div class="valid-feedback">
+                                                            Looks Good!
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            Please Enter Valid Meter Reading !
+                                                        </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="row mt-3"></div>
@@ -276,7 +342,7 @@
                                                                 <img id="previewImageCr" src="" alt="Preview">
                                                                 <br>
                                                                 <button type="button" class="remove-photo"
-                                                                    onclick="removePhoto()">Remove Photo</button>
+                                                                        onclick="removePhoto(photoPreviewCr,previewImageCr,uploadContainerCr)">Remove Photo</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -301,7 +367,7 @@
                                                                 <img id="previewImageRl" src="" alt="Preview">
                                                                 <br>
                                                                 <button type="button" class="remove-photo"
-                                                                    onclick="removePhoto()">Remove Photo</button>
+                                                                        onclick="removePhoto(photoPreviewRl,previewImageRl,uploadContainerRl)">Remove Photo</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -328,7 +394,7 @@
                                                                     alt="Preview">
                                                                 <br>
                                                                 <button type="button" class="remove-photo"
-                                                                    onclick="removePhoto()">Remove Photo</button>
+                                                                        onclick="removePhoto(photoPreviewInsuranceCard,previewImageInsuranceCard,uploadContainerInsuranceCard)">Remove Photo</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -356,7 +422,7 @@
                                                                     alt="Preview">
                                                                 <br>
                                                                 <button type="button" class="remove-photo"
-                                                                    onclick="removePhoto()">Remove Photo</button>
+                                                                        onclick="removePhoto(photoPreviewInspectionReport,previewImageInspectionReport,uploadContainerInspectionReport)">Remove Photo</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -378,6 +444,12 @@
                                                         <select id="textVehicleStatus" class="form-select"
                                                             onchange="selectDynamicElementValidator(this,'vehicle','vehicle_status_id')">
                                                         </select>
+                                                        <div class="valid-feedback">
+                                                            Looks Good!
+                                                        </div>
+                                                        <div class="invalid-feedback">
+                                                            Please Choose a Status !
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

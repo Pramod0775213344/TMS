@@ -1,15 +1,69 @@
 window.addEventListener("load", () => {
 
-    loadVehicleTable();
     refreshVehicleForm();
-
-
 });
 
-// load vehicle table
-const loadVehicleTable = () => {
+// load bookingtable with search area
 
-    let vehicles = getServiceRequest('/vehicle/alldata');
+const searchVehicle = () =>{
+    if ($.fn.dataTable.isDataTable('#vehicleTable')) {
+        $('#vehicleTable').DataTable().clear().destroy();
+    }
+    let searchVehicleStatus = document.getElementById('searchVehicleStatus').value;
+    let searchVehicleType = document.getElementById('searchVehicleType').value;
+
+    if (searchVehicleStatus != "" && searchVehicleType != "") {
+
+        vehicleByStatusAndVehicleType = getServiceRequest('/vehicle/bystatusidandvehicletypeid?vehicleStatusId=' + JSON.parse(searchVehicleStatus).id + '&vehicletypeid=' + JSON.parse(searchVehicleType).id);
+        // length eka 0 num me if eka wada karanwa
+        if (vehicleByStatusAndVehicleType.length <=0){
+            $('#vehicleTable').DataTable().clear().draw(); // Clear table if no data
+            $('#vehicleTable tbody').html('<tr><td colspan="100%" class="text-center">No data available</td></tr>');
+        }else{
+            loadVehicleTable(vehicleByStatusAndVehicleType);
+        }
+        showTableLoading();
+
+    } else if (searchVehicleType != "") {
+
+        vehicleByVehicleType = getServiceRequest('/vehicle/byvehicletypeid?vehicletypeid=' + JSON.parse(searchVehicleType).id);
+        // length eka 0 num me if eka wada karanwa
+        if (vehicleByVehicleType.length <=0){
+
+            $('#vehicleTable').DataTable().clear().draw(); // Clear table if no data
+            $('#vehicleTable tbody').html('<tr><td colspan="100%" class="text-center">No data available</td></tr>');
+
+        }else{
+            loadVehicleTable(vehicleByVehicleType);
+        }
+        showTableLoading();
+
+    } else if (searchVehicleStatus != "") {
+        showTableLoading();
+        vehicleByStatus = getServiceRequest('/vehicle/bystatus?&vehicleStatusId=' + JSON.parse(searchVehicleStatus).id);
+        // length eka 0 num me if eka wada karanwa
+        if (vehicleByStatus.length <=0){
+            $('#vehicleTable').DataTable().clear().draw(); // Clear table if no data
+            $('#vehicleTable tbody').html('<tr><td colspan="100%" class="text-center">No data available</td></tr>');
+
+        }else{
+            loadVehicleTable(vehicleByStatus);
+        }
+    } else  {
+        Swal.fire({
+            title: "Opps?",
+            text: "Please Select Vehicle Type or Vehicle Status",
+            icon: "question",
+            allowOutsideClick: false,
+        });
+        loadVehicleTable(vehicles);
+    }
+};
+
+
+// load vehicle table
+const loadVehicleTable = (vehicles) => {
+
 
     const propertyList = [
         { propertyName: "vehicle_photo", dataType: "truck-image-array" },
@@ -321,6 +375,9 @@ const checkFormUpdates = () => {
         if (vehicle.supplier_id.transportname != oldVehicle.supplier_id.transportname) {
             updates = updates + "Transport Name is changed.... ";
         }
+        if (vehicle.vehicle_photo != oldVehicle.vehicle_photo) {
+            updates = updates + "Vehicle Photo is changed.... ";
+        }
         if (vehicle.vehicle_no != oldVehicle.vehicle_no) {
             updates = updates + "Vehicle Number is changed.... ";
         }
@@ -501,7 +558,28 @@ const refreshVehicleForm = () => {
     uploadContainerInspectionReport.style.display = 'block';
 
     additionalInformationSection.style.display = "none";
-};
 
+
+//     for sreach drop downs
+    dataFilIntoSelect(searchVehicleStatus, "Select Status", vehicleStatus, "status");
+    dataFilIntoSelect(searchVehicleType, "Select Vehicle Type", vehicleType, "name");
+
+//     refesh ekedi load wenawa tabale eka
+    vehicles = getServiceRequest('/vehicle/alldata');
+    loadVehicleTable(vehicles);
+    showTableLoading();
+};
+// table eke loading spin eka load karanwa
+function showTableLoading(loaderId,tableId) {
+    const loader = document.getElementById('loaderId');
+    const VehicleTable = document.getElementById('vehicleTable');
+    loader.style.display = ''; // Clear loading after 2 seconds
+    VehicleTable.style.display = 'none'; // Hide the booking table while loading
+    setTimeout(() => {
+        const loader = document.getElementById('loaderId');
+        loader.style.display = 'none'; // Clear loading after 2 seconds
+        VehicleTable.style.display = ''; // Hide the booking table while loading
+    }, 500);
+}
 //Alert Box Call function
 Swal.isVisible();

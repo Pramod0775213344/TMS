@@ -254,4 +254,27 @@ public class BookingController {
     public List<Booking> getBookingByDateRangeAndCustomer( @RequestParam("startdate") String startdate, @RequestParam("enddate") String enddate, @RequestParam("customerid") Integer customerid) {
         return bookingRepository.getBookingByDateRangeAndCustomer(startdate, enddate, customerid);
     }
+
+//--------------------inproccess data search Mappings--------------------------------------------------
+// -->/booking/inproccessbookingbycustomerid?&customerid=3)
+@GetMapping(value = "/booking/inproccessbookingbycustomerid", params = {"customerid" }, produces = "application/json")
+// param method eka haraha thama data ganne
+public List<Booking> getInproccessBookingByCustomer(@RequestParam("customerid") Integer customerid) {
+    return bookingRepository.getInproccessBookingByCustomer(customerid);
+}
+
+    // -->/booking/inproccessbookingbyvehicletypeid?vehicletypeid=3)
+    @GetMapping(value = "/booking/inproccessbookingbyvehicletypeid", params = {"vehicletypeid" }, produces = "application/json")
+// param method eka haraha thama data ganne
+    public List<Booking> getInproccessBookingByVehicleType(@RequestParam("vehicletypeid") Integer vehicletypeid) {
+        return bookingRepository.getInproccessBookingByVehicleType(vehicletypeid);
+    }
+
+    // -->/booking/inproccessbookingbycustomeridandvehicletypeid?customerid=3&vehicletypeid=3)
+    @GetMapping(value = "/booking/inproccessbookingbycustomeridandvehicletypeid", params = {"customerid","vehicletypeid" }, produces = "application/json")
+// param method eka haraha thama data ganne
+    public List<Booking> getInproccessBookingByCustomerAndVehicleType(@RequestParam("customerid") Integer customerid,@RequestParam("vehicletypeid") Integer vehicletypeid) {
+        return bookingRepository.getInproccessBookingByCustomerAndVehicleType(customerid,vehicletypeid);
+    }
+    //--------------------inproccess data search Mappings end--------------------------------------------------
 }

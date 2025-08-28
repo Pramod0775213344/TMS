@@ -13,9 +13,8 @@ const loadEmployeeTable = () => {
     let employee = getServiceRequest('/employee/alldata');
 
     const propertyList = [
-        { propertyName: "emp_photo", dataType: "image-array" },
         { propertyName: getEmployeeNo, dataType: "function" },
-        { propertyName: "fullname", dataType: "string" },
+        { propertyName: getEmployeeInfo, dataType: "function" },
         { propertyName: getDesignation, dataType: "function" },
         { propertyName: getDepartment, dataType: "function" },
         { propertyName: "mobileno", dataType: "string" },
@@ -28,6 +27,13 @@ const loadEmployeeTable = () => {
     $('#employeeTable').DataTable();
 };
 
+const getEmployeeInfo = (dataOb) => {
+    if (dataOb.emp_photo != null) {
+        return ` <div class="row"><div class="col-2"><img src="${atob(dataOb.emp_photo)}" class="rounded-circle" style="width: 50px;height: 50px;"></div><div class="col-10"><span>${dataOb.fullname}</span><span><p class='text-muted mt-2' > ${dataOb.email}</p></span></div></div>`;
+    } else {
+        return ` <div class="row"><div class="col-2"><img src="images/user.png" class="rounded-circle" style="width: 50px;height: 50px;"></div><div class="col-10"><span>${dataOb.fullname}</span><span><p class='text-muted mt-2' > ${dataOb.email}</p></span></div></div>`;
+    }
+}
 // get Employee  no
 const getEmployeeNo = (dataOb) => {
     return "<span class ='unique_no'>" + dataOb.emp_no + "</span >";

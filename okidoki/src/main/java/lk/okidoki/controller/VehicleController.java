@@ -1,5 +1,6 @@
 package lk.okidoki.controller;
 
+import lk.okidoki.modal.Booking;
 import lk.okidoki.modal.Privilage;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -246,6 +247,27 @@ public class VehicleController {
         return vehicleRepository.getVehicleByVehicleGroupIdForCustomerVehicleGroup(customer_id,vehicletype_id);
     }
 
+    //--------------------vehicle data search Mappings--------------------------------------------------
+// -->/vehicle/bystatus?&vehicleStatusId=3)
+    @GetMapping(value = "/vehicle/bystatus", params = {"vehicleStatusId" }, produces = "application/json")
+// param method eka haraha thama data ganne
+    public List<Vehicle> getVehicleByStatus(@RequestParam("vehicleStatusId") Integer vehicleStatusId) {
+        return vehicleRepository.getVehicleByStatus(vehicleStatusId);
+    }
 
+    // -->/vehicle/byvehicletypeid?vehicletypeid=3)
+    @GetMapping(value = "/vehicle/byvehicletypeid", params = {"vehicletypeid" }, produces = "application/json")
+// param method eka haraha thama data ganne
+    public List<Vehicle> getVehiclesByVehicleType(@RequestParam("vehicletypeid") Integer vehicletypeid) {
+        return vehicleRepository.getVehiclesByVehicleType(vehicletypeid);
+    }
+
+    // -->/vehicle/bystatusidandvehicletypeid?vehicleStatusId=3&vehicletypeid=3)
+    @GetMapping(value = "/vehicle/bystatusidandvehicletypeid", params = {"vehicleStatusId","vehicletypeid" }, produces = "application/json")
+// param method eka haraha thama data ganne
+    public List<Vehicle> getVehicleByStatusAndVehicleType(@RequestParam("vehicleStatusId") Integer vehicleStatusId,@RequestParam("vehicletypeid") Integer vehicletypeid) {
+        return vehicleRepository.getVehicleByStatusAndVehicleType(vehicleStatusId,vehicletypeid);
+    }
+    //--------------------vehicle data search Mappings end--------------------------------------------------
 
 }

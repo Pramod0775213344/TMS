@@ -59,6 +59,9 @@ public class User {
 
     private String note;
 
+
+    private String otp;
+
     // optinal nam me widihata optinal true karann oni
     @ManyToOne(optional = true)
     @JoinColumn(name = "employee_id", referencedColumnName = "id")

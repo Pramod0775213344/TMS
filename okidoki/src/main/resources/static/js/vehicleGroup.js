@@ -1,6 +1,8 @@
 window.addEventListener('load', () => {
     refreshVehicleGroupForm();
-    $('#vehicleTableByVehicleGroup').DataTable().clear().destroy();
+    // $('#vehicleTableByVehicleGroup').DataTable().clear().destroy();
+    $('#vehicleTableByVehicleGroup').DataTable().clear().draw(); // Clear table if no data
+    $('#vehicleTableByVehicleGroup tbody').html('<tr><td colspan="100%" class="text-center">No data available</td></tr>');
 });
 
 const refreshVehicleGroupForm = () => {
@@ -11,7 +13,7 @@ const refreshVehicleGroupForm = () => {
     vehicleGroupAddForm.reset();
     vehicleAddForm.reset();
 
-    let customers = getServiceRequest('/customer/byactiveagreements');
+    let customers = getServiceRequest('/customer/bynotinvehiclegroup');
     dataFilIntoSelect(selectCustomerName, "Select Company Name", customers, "company_name")
 
     let vehicleGroups = getServiceRequest('/vehiclegroup/alldata');
@@ -252,9 +254,11 @@ const addVehicle = (dataOb) => {
 
 // select karana vehicle group card eka anuwa table eka load karanawa
 const loadTable = (dataOb) => {
-
     let vehicleByVehicleGroup = getServiceRequest('vehicle/vehiclebyvehiclegroup?vehiclegroup_id=' + dataOb.id);
-
+    if ($.fn.dataTable.isDataTable('#vehicleTableByVehicleGroup')) {
+        $('#vehicleTableByVehicleGroup').DataTable().clear().destroy();
+    }
+if (vehicleByVehicleGroup.length >= 0){
 
     const propertyList = [
         { propertyName: "vehicle_photo", dataType: "truck-image-array" },
@@ -270,7 +274,15 @@ const loadTable = (dataOb) => {
         vehicleTableByVehicleGroupBody.children[index].lastChild.children[0].classList.add("d-none");
         vehicleTableByVehicleGroupBody.children[index].lastChild.children[1].classList.add("d-none");
     }
+    showTableLoading();
     $("#vehicleTableByVehicleGroup").dataTable();
+}else{
+
+    $('#vehicleTableByVehicleGroup').DataTable().clear().draw(); // Clear table if no data
+    $('#vehicleTableByVehicleGroup tbody').html('<tr><td colspan="100%" class="text-center">No data available</td></tr>');
+    showTableLoading();
+}
+
 }
 
 // get Transport Name
@@ -325,3 +337,16 @@ const dataListValidator = (element, object, property) => {
 
 // modal eka hide karaddi object eka reset wenawa
 $('#vehicleAddModalForGroup').on('hidden.bs.modal', refreshVehicleGroupForm);
+
+// table eke loading spin eka load karanwa
+function showTableLoading(loaderId,tableId) {
+    const loader = document.getElementById('loaderId');
+    const vehicleTableByVehicleGroup = document.getElementById('vehicleTableByVehicleGroup');
+    loader.style.display = ''; // Clear loading after 2 seconds
+    vehicleTableByVehicleGroup.style.display = 'none'; // Hide the booking table while loading
+    setTimeout(() => {
+        const loader = document.getElementById('loaderId');
+        loader.style.display = 'none'; // Clear loading after 2 seconds
+        vehicleTableByVehicleGroup.style.display = ''; // Hide the booking table while loading
+    }, 500);
+}

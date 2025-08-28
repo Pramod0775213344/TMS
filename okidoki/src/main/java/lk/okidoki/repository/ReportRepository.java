@@ -46,6 +46,7 @@ public interface ReportRepository extends JpaRepository<Vehicle,Integer> {
     List<Vehicle> getInsuranceExpireList();
 
 //    ______________________________count for vehicle dashboard report___________________________________________________________
+
     @Query(value = "SELECT count(v.id) FROM tms.vehicle as v where v.vehicle_status_id=1",nativeQuery = true)
     Integer getCountOfActiveVehicles();
 
@@ -70,4 +71,14 @@ public interface ReportRepository extends JpaRepository<Vehicle,Integer> {
     @Query(value = "SELECT v.vehicle_no,sum(b.distance) as distance FROM tms.booking as b, tms.vehicle as v,tms.vehicle_type as vt where b.vehicle_id=v.id and v.vehicle_type_id=vt.id and b.customer_id=?1 and b.vehicle_type_id=?2 and v.id in (SELECT vghv.vehicle_id FROM tms.vehicle_group_has_vehicle as vghv where vghv.vehicle_group_id in(SELECT vg.id FROM tms.vehicle_group as vg where vg.customer_id =?1))and MONTH(b.pickup_date_time) = MONTH(CURDATE()) AND YEAR(b.pickup_date_time) = YEAR(CURDATE()) group by v.id", nativeQuery = true)
     List<Object[]> getVehiclesRevenueByCustomerIdAndVehicleTypeAndGroupByCurrantMonthAndYear(Integer customerId, Integer vehicleTypeId);
 
+    //    ______________________________count for vehicle dashboard report___________________________________________________________
+
+    @Query(value = "SELECT count(b.id) FROM tms.booking as b where b.booking_status_id=1",nativeQuery = true)
+    Integer getPendingBookingCount();
+
+    @Query(value = "SELECT count(c.id) FROM tms.customer as c where c.customer_status_id=1",nativeQuery = true)
+    Integer getActiveCustomerCount();
+
+    @Query(value = "SELECT count(d.id) FROM tms.driver as d where d.driver_status_id=1",nativeQuery = true)
+    Integer getActiveDriverCount();
 }

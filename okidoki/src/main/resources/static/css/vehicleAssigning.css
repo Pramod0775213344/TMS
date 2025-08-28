@@ -48,8 +48,8 @@ td:last-child {
     z-index: 1;
 }
 /* Hide only horizontal scrollbar */
-tbody {
-    overflow-x: scroll;
+#vehicleAssigningTable{
+    overflow-y: auto;
     scrollbar-width: none;
 }
 tbody::-webkit-scrollbar {

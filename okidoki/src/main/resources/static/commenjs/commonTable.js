@@ -270,7 +270,7 @@ const dataFilIntoSelect = (parentId, massage, dataList, displayProperties) => {
     parentId.innerHTML = "";
 if (massage != ""){
     let optionMsgEs = document.createElement("option");
-    optionMsgEs.value = " ";
+    optionMsgEs.value = "";
     optionMsgEs.selected = "selected";
     optionMsgEs.disabled = "disabled";
     optionMsgEs.innerText = massage;

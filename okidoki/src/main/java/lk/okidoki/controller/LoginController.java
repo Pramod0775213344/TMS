@@ -8,15 +8,14 @@ import java.util.Set;
 import lk.okidoki.modal.ChangedUser;
 import lk.okidoki.modal.Module;
 import lk.okidoki.modal.Privilage;
+import lk.okidoki.repository.EmployeeRepository;
 import lk.okidoki.repository.ModuleRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import lk.okidoki.modal.Role;
@@ -25,9 +24,10 @@ import lk.okidoki.repository.RoleRepository;
 import lk.okidoki.repository.UserRepository;
 
 
+//@Slf4j
 @RestController
 public class LoginController {
-    
+
 
     @Autowired
     private UserRepository userRepository;
@@ -43,6 +43,8 @@ public class LoginController {
 
     @Autowired
     private ModuleRepository moduleRepository;
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     // get login ui (url -->/login)
     @RequestMapping(value = "/login")
@@ -52,36 +54,40 @@ public class LoginController {
         return loginUi;
     }
 
+
     // get dashboard ui (url -->/dashboard)
     @RequestMapping(value = "/dashboard")
     public ModelAndView getDashboardUi() {
-         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User logeduser = userRepository.getByUsername(auth.getName());
-    
+
         ModelAndView dashboardUi = new ModelAndView();
         dashboardUi.setViewName("dashboard.html");
         dashboardUi.addObject("logedusername", auth.getName());
         dashboardUi.addObject("loggeduserphoto", logeduser.getUser_photo());
+        dashboardUi.addObject("logeduseremail", logeduser.getEmail());
+        dashboardUi.addObject("logeduserfullname", logeduser.getEmployee_id() != null ? logeduser.getEmployee_id().getFullname() : null);
+
         dashboardUi.addObject("pageTitle", "Dashboard");
         return dashboardUi;
-        
+
     }
 
 
-	// Request mapping for load vehicledashboard ui (url -->/vehicledashboard)
-	@RequestMapping(value = "/vehicledashboard")
-	public ModelAndView getVehicleDashboardUi() {
+    // Request mapping for load vehicledashboard ui (url -->/vehicledashboard)
+    @RequestMapping(value = "/vehicledashboard")
+    public ModelAndView getVehicleDashboardUi() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User logeduser = userRepository.getByUsername(auth.getName());
 
-		ModelAndView vehicleDashboardUi = new ModelAndView();
+        ModelAndView vehicleDashboardUi = new ModelAndView();
         vehicleDashboardUi.setViewName("vehicleDashboard.html");
         vehicleDashboardUi.addObject("logedusername", auth.getName());
         vehicleDashboardUi.addObject("loggeduserphoto", logeduser.getUser_photo());
         vehicleDashboardUi.addObject("pageTitle", "Fleet Dashboard");
 
-		return vehicleDashboardUi;
-	}
+        return vehicleDashboardUi;
+    }
 
 
     // get errorpage ui(url -->/errorpage)
@@ -143,6 +149,7 @@ public class LoginController {
         changedUser.setOldusername(logeduser.getUsername());
         changedUser.setEmail(logeduser.getEmail());
         changedUser.setUser_photo(logeduser.getUser_photo());
+        changedUser.setEmployeeId(logeduser.getEmployee_id() != null ? logeduser.getEmployee_id().getId() : null);
         return changedUser;
     }
 
@@ -152,48 +159,48 @@ public class LoginController {
         // check loged user authorization
 
 
-            // chehck existing
-            User extUser = userRepository.getByUsername(changedUser.getOldusername());
-            if (extUser == null) {
-                return "Change Not Success: User not found ";
-            }
-           //check duplicate username
-            User extUserByUserName = userRepository.getByUsername(changedUser.getUsername());
-            if (extUserByUserName != null && extUser.getId() != extUserByUserName.getId()) {
-                return "Change Not Success: User Already found ";
-            }
-            try {
+        // chehck existing
+        User extUser = userRepository.getByUsername(changedUser.getOldusername());
+        if (extUser == null) {
+            return "Change Not Success: User not found ";
+        }
+        //check duplicate username
+        User extUserByUserName = userRepository.getByUsername(changedUser.getUsername());
+        if (extUserByUserName != null && extUser.getId() != extUserByUserName.getId()) {
+            return "Change Not Success: User Already found ";
+        }
+        try {
 
 //                change user ta old password ekak thiyenwd kiyala balanawa
-                if(changedUser.getOldpassword() !=null){
-                    // check old password and password samana nam true return wenawa
-                    if(bCryptPasswordEncoder.matches(changedUser.getOldpassword(),extUser.getPassword())){
+            if (changedUser.getOldpassword() != null) {
+                // check old password and password samana nam true return wenawa
+                if (bCryptPasswordEncoder.matches(changedUser.getOldpassword(), extUser.getPassword())) {
 //                        user ge kalin password ekai new password ekai samana nadda kiyala balanna oni
-                        if (!bCryptPasswordEncoder.matches(changedUser.getNewpassword(),extUser.getPassword())) {
+                    if (!bCryptPasswordEncoder.matches(changedUser.getNewpassword(), extUser.getPassword())) {
 //                            kalin password ekai new password ekai samana nathnam set karanwa extuser object ekata
-                            extUser.setPassword(bCryptPasswordEncoder.encode(changedUser.getNewpassword()));
-                        }
-                    }else {
-                        return "Change Not Success: Old Password is not correct";
+                        extUser.setPassword(bCryptPasswordEncoder.encode(changedUser.getNewpassword()));
                     }
+                } else {
+                    return "Change Not Success: Old Password is not correct";
                 }
-
-                // user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-                extUser.setUsername(changedUser.getUsername());
-                extUser.setEmail(changedUser.getEmail());
-                extUser.setUser_photo(changedUser.getUser_photo());
-
-                // save updated data
-                userRepository.save(extUser);
-
-                // return ok
-                return "ok";
-
-            } catch (Exception e) {
-
-                return "change Not Completed :" + e.getMessage();
-
             }
+
+            // user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            extUser.setUsername(changedUser.getUsername());
+            extUser.setEmail(changedUser.getEmail());
+            extUser.setUser_photo(changedUser.getUser_photo());
+
+            // save updated data
+            userRepository.save(extUser);
+
+            // return ok
+            return "ok";
+
+        } catch (Exception e) {
+
+            return "change Not Completed :" + e.getMessage();
+
+        }
 
     }
 
@@ -212,4 +219,7 @@ public class LoginController {
         User logeduser = userRepository.getByUsername(auth.getName());
         return moduleRepository.getModuleByUserName(logeduser.getUsername());
     }
+
+
 }
+

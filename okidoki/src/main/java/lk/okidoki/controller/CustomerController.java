@@ -232,4 +232,16 @@ public class CustomerController {
             return new ArrayList<>();
         }
     }
+
+    //    get customers if agreements available
+    @GetMapping(value = "/customer/bynotinvehiclegroup", produces = "application/json")
+    public List<Customer> getCustomerByAgreementAndNotInVehicleGroup() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Privilage userPrivilage = userPrivilageController.getUserPrivilageByUserModule(auth.getName(), "Customer");
+        if (userPrivilage.getPrivi_select()) {
+            return customerRepository.getCustomerByAgreementAndNotInVehicleGroup();
+        } else {
+            return new ArrayList<>();
+        }
+    }
 }

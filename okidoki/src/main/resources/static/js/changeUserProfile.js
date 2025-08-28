@@ -106,6 +106,7 @@ const checkFormChangers = () => {
 const userChangeFormSave = () => {
     // check form error for required element
         let changers = checkFormChangers();
+    console.log(logedUser)
         // updates not exit
         if (changers == "") {
             Swal.fire({

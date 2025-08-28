@@ -2,7 +2,7 @@ package lk.okidoki.repository;
 
 
 
-import lk.okidoki.modal.Location;
+
 import lk.okidoki.modal.PickupLocation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

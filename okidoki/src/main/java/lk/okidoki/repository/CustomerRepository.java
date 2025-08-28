@@ -36,4 +36,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
       @Query(value = "SELECT * FROM tms.customer as c where c.id in (SELECT ca.customer_id FROM tms.customer_agreement as ca where ca.customer_agreement_status_id = 2)",nativeQuery = true)
     public List<Customer> getCustomerByAgreement();
 
+    @Query(value = "SELECT * FROM tms.customer as c where c.id in (SELECT ca.customer_id FROM tms.customer_agreement as ca where ca.customer_agreement_status_id = 2) and c.id not in(SELECT vg.customer_id FROM tms.vehicle_group as vg)",nativeQuery = true)
+    public List<Customer> getCustomerByAgreementAndNotInVehicleGroup();
+
 }

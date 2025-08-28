@@ -65,7 +65,7 @@ const httpServiceRequest = (url,method,dataOb) =>{
 }
 
 const removePhoto= (photoPreviewContainerId,previewId,uploadContainerId) => {
-    photoPreviewContainerId.value = '';
+
     photoPreviewContainerId.style.display = 'none'; // Hide the preview
     photoPreviewContainerId.classList.remove("d-flex", "flex-column", "align-items-center");//class list  remove karanna oni
     previewId.src = '';

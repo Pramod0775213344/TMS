@@ -48,34 +48,7 @@ const dateElementValidator = (element, object, property) => {
     }
 }
 
-// date range validator
-const dateRangeValidator = (end, start, object, property) => {
-    const startDate = start;
-    const endDate = end.value;
-    console.log(startDate,endDate)
-    const ob = window[object];
 
-    if (endDate != "") {
-        if (new Date(startDate) < new Date(endDate)) {
-            end.classList.remove("is-invalid");
-            end.classList.add("is-valid");
-            ob[property] = endDate;
-        } else {
-            end.classList.remove("is-valid");
-            end.classList.add("is-invalid");
-            ob[property] = null;
-        }
-    } else {
-        if (end.required) {
-            end.classList.remove("is-valid");
-            end.classList.add("is-invalid");
-            ob[property] = null;
-        } else {
-            end.classList.remove("is-invalid");
-            ob[property] = "";
-        }
-    }
-}
 
 // statice select Element Validator
 const selectElementValidator = (element, object, property) => {
@@ -119,6 +92,8 @@ const selectDynamicElementValidator = (element, object, property) => {
     }
 }
 
+// --------------------------------date validators start-----------------------------------------------------------
+
 // current date and time eken issraha date witharai pennanne
 const currentdatetimevalidator = (elementId) =>{
     const currentDateTimeInput = document.getElementById(elementId);
@@ -131,6 +106,7 @@ const currentdatetimevalidator = (elementId) =>{
     const currentDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
 
     currentDateTimeInput.min = currentDateTime;
+
 }
 
 const customedatevalidator = (elementId,customedateId) =>{
@@ -172,6 +148,39 @@ const currentdatevalidator = (elementId) =>{
 
     currentDateInput.min = currentDate;
 }
+
+// date range validator
+const dateRangeValidator = (end, start, object, property) => {
+    const startDate = start;
+    const endDate = end.value;
+    console.log(startDate,endDate)
+    const ob = window[object];
+
+    if (endDate != "") {
+        if (new Date(startDate) < new Date(endDate)) {
+            end.classList.remove("is-invalid");
+            end.classList.add("is-valid");
+            ob[property] = endDate;
+        } else {
+            end.classList.remove("is-valid");
+            end.classList.add("is-invalid");
+
+            ob[property] = null;
+        }
+    } else {
+        if (end.required) {
+            end.classList.remove("is-valid");
+            end.classList.add("is-invalid");
+            ob[property] = null;
+        } else {
+            end.classList.remove("is-invalid");
+            ob[property] = "";
+        }
+    }
+}
+
+// --------------------------------date validators end-----------------------------------------------------------
+
 
 // image and file validator
 const fileValidator = (elementId,object ,property,previewId,photoPreviewContainerId,uploadContainerId) =>{

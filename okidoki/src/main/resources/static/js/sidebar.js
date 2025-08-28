@@ -1,24 +1,29 @@
    // JavaScript for dropdown functionality
    document.addEventListener('DOMContentLoaded', function () {
+    //    submenu thiyena items tika gnnw
     const menuItems = document.querySelectorAll('.has-submenu');
 
+    // menu items click karaddi eata adala menu item eka gnnw
     menuItems.forEach(item => {
-      item.addEventListener('click', function () {
+      item.addEventListener('click', function ()  {
+        // menu item eke thiyena data-target attribute eka gnnw
         const targetId = this.getAttribute('data-target');
+        // e data-target attribute eka use karala submenu eka gnnw
         const submenu = document.getElementById(targetId);
 
-        // Toggle the open class for the clicked item
+        // // Toggle the open class for the clicked item
         this.classList.toggle('open');
 
         // Toggle the submenu
         submenu.classList.toggle('open');
       });
     });
-
+       // load the module list for the user dom load ekedi call karanwa
        loadModuleWithoutUser();
+       // naviate to the current page on dom load karaddi
        breadCrumbItemInTopBar();
 
-
+        // dom load weddi loge userta adala module list eka search eke fill karanwa
         moduleListForUser = getServiceRequest("/moduleforuser");
        dataFillIntoDataList(selectModuleList, moduleListForUser, "name");
   });
@@ -31,14 +36,16 @@
          const selectedModule = this.value;
         console.log("Selected module:", selectedModule);
             // Check if the selected module is in the list
+
             const isModuleInList = moduleListForUser.find(module => module.name === selectedModule);
-            // If the selected module is in the list, navigate to its page
+            // select karana  module eka list eke thiyenawa nam navigate karanwa adala page ekata
          if (isModuleInList) {
               // selectmodule eke id eke lowwercase walata convert karala link eke yawanawa
               // select karana module eke space thiyenw nam ewath ayin karanawa
               window.location.href = `/${selectedModule.toLowerCase().replace(/\s+/g, '')}`;
 
          } else{
+             // select karana module eka naththan console log karanawa
              console.log("Please select a module from the list.");
          }
     });
@@ -46,10 +53,14 @@
 
    // -------------------------------------------------------topbar js---------------------------------
 
+   // profile button dropdown eke id eka gnnwa
    const profileBtn = document.querySelector('.profile-btn');
+    // profile button click karaddi dropdown eka open karanawa
    const profileDropdown = document.querySelector('.profile-dropdown');
    profileBtn.addEventListener('click', (e) => {
+
        e.stopPropagation();
+         // Toggle the dropdown visibility
        profileDropdown.classList.toggle('active');
    });
    // Close dropdown when clicking outside
@@ -90,40 +101,68 @@
    // -----------------------------------------------------active side bar item highlight----------------------------------------
 
    const colorActiveSideBarMenuItem = () => {
+
+       // current path eke loaction eka gnnw
        const currentPath = window.location.pathname;
+       // Select all menu items
        const menuItems = document.querySelectorAll('.menu-item');
-
-
+       // Select all submenu items
        const subMenuItems = document.querySelectorAll('.submenu-item');
 
        // Highlight main menu items
        menuItems.forEach(menuItem => {
+           // item path eka gnnw menu item wala thiyen a tag eke href attribute eken
            const itemPath = menuItem.querySelector('.menu-item a')?.getAttribute('href');
+           // itempath eka curruntpath ekata samana nam
            if (itemPath && itemPath === currentPath) {
+               // Add karanwa active and open classes
                menuItem.classList.add('active', 'open');
            } else {
+                //samana naththan  Remove karanwa active and open classes
                menuItem.classList.remove('active', 'open');
            }
        });
 
        // Highlight submenu items
-       subMenuItems.forEach(item => {
-           const itemPath = item.getAttribute('href');
+       subMenuItems.forEach(submenuItem => {
+           // subemenu wala a tag eke href attribute eken item path eka gnnw
+           const itemPath = submenuItem.getAttribute('href');
+           // item path eka currunt path ekata samanada kiyala balanawa
            if (itemPath === currentPath) {
-               item.classList.add('active');
-               item.style.cssText += 'background-color: #e0f7fa; color: #00796b;';
+               // samana nam active class eka add karala css add karanwa
+               submenuItem.classList.add('active');
 
-               // Open parent menu if submenu is active
-               const parentMenu = item.closest('.submenu');
+               // submenu eke active class eka thiyenawanam eka open karala thiyanna oni
+               // eka nisa submenu item ekata adala menu itema eka gnnwa
+               // closest method eka use karala submenu item ekata adala parent menu eka gnnw
+               const parentMenu = submenuItem.closest('.submenu');
+               // parent menu ekata kalin class eka gnnwa
+               const parentMenuItem = parentMenu ? parentMenu.previousElementSibling : null;
+               console.log("Parent Menu:", parentMenuItem);
+               // parent menu ekak thiyenw nam if eka true karanwa
                if (parentMenu) {
+                     // parent menu ekata open class eka saha active class eka add karanawa
                    parentMenu.classList.add('open');
-                   const parentMenuItem = document.querySelector(`[data-target="${parentMenu.id}"]`);
-                   if (parentMenuItem) {
-                       parentMenuItem.classList.add('open');
-                   }
+                   parentMenuItem.classList.add('active','open');
+
                }
            } else {
-               item.classList.remove('active');
+               submenuItem.classList.remove('active');
            }
        });
    }
+
+
+// //craete function for toggle button topbar sidebar
+//     const sidebarToggleBtn = document.getElementById('sidebarToggleBtn');
+//     const sidebar = document.getElementsByClassName('navigation');
+//    const menuItems = document.getElementsByClassName('menu-item');
+//     const content = document.getElementById('content');
+//
+//    sidebarToggleBtn.addEventListener('click', () => {
+//        Array.from(sidebar).forEach(el => el.classList.toggle('active'));
+//        Array.from(menuItems).forEach(el => el.classList.toggle('active'));
+//    });
+//
+//     // Call the function to color the active menu item when the page loads
+//     document.addEventListener('DOMContentLoaded', colorActiveSideBarMenuItem);

@@ -5,7 +5,9 @@
 
     <div class="row align-items-center justify-content-between">
       <div class="col-4 ms-2">
+
         <div class="">
+<!--          <div> <i class="fa-solid fa-bars fa-lg mb-3" style="color: #63E6BE;" id="sidebarToggleBtn"></i></div>-->
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb m-0">
                 <li class="breadcrumb-item" id="dashobordPath"></li>
@@ -19,7 +21,7 @@
       <div class="col-2"></div>
       <div class="col-4 d-flex justify-content-end text-end">
         <div class="d-flex align-items-center justify-content-center me-3">
-          <input type="text" name="" list="selectModuleList" id="typeModule" placeholder="Search here..." class="form-control" style="border-radius: 10px; width: 200px;">
+          <input type="text" name="" list="selectModuleList" id="typeModule" placeholder="Search here..." class="form-control" style="border-radius: 10px; width: 400px;">
           <datalist id="selectModuleList"></datalist>
         </div>
         <div class="d-flex align-items-center justify-content-center ms-3 me-3">
@@ -30,10 +32,17 @@
             <div class="profile-avatar d-flex align-items-center justify-content-center" >
               <img src="/images/user.png" id="imgLogUserPhoto" alt="Profile Photo" style="width: 40px; height: 40px;border-radius: 100px">
             </div>
-            <span class="fw-bold me-2" th:text ="${logedusername}" style="word-wrap: anywhere"></span>
+<!--            <span class="fw-bold me-2" th:text ="${logedusername}" style="word-wrap: anywhere"></span>-->
             <i class="fa-solid fa-caret-down"></i>
           </button>
           <div class="profile-dropdown">
+            <div class="d-flex justify-content-center align-items-center flex-column mt-3">
+            <img src="/images/user.png" id="profileViewUserPhoto" alt="Profile Photo" style="width: 60px; height: 60px; border-radius: 100px;">
+          </div>
+            <div class="profile-info text-center">
+              <p class="profile-name mb-0 fw-bold" th:text="${logeduserfullname}">Username</p>
+              <p class="profile-email mt-0 fw-bold" th:text="${logeduseremail}">Email</p>
+            </div>
             <ul class="profile-menu">
               <li>
                 <button class="profile-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">

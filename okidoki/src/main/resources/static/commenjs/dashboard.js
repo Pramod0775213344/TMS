@@ -21,16 +21,22 @@ window.addEventListener("load", ()=> {
           bookingcountgeneratebybookingstatus();
           bookingcountgeneratebyCustomer();
           monthlydistancegeneratebyBookings();
+
+      //     counts
+    allVehicleCount();
+    pendingBookingCount();
+    activeCustomerCount();
+    activeDriverCount();
       });
 
       // get customer name
-      const getCustomer = (dataOb) => {
+const getCustomer = (dataOb) => {
           return dataOb.customer_id.company_name;
           console.log(dataOb)
       }
 
       // get vehicle no
-      const getVehicleNo = (dataOb) => {
+const getVehicleNo = (dataOb) => {
           if(dataOb.vehicle_id != null){
               return dataOb.vehicle_id.vehicle_no;
           }else{
@@ -39,7 +45,7 @@ window.addEventListener("load", ()=> {
       }
 
       // vehicle count eka chart eken generate karana function eka
-      const bookingcountgeneratebybookingstatus = () =>{
+const bookingcountgeneratebybookingstatus = () =>{
 
           let datalist = getServiceRequest('/report/countbybookingstatus');
 
@@ -94,7 +100,7 @@ window.addEventListener("load", ()=> {
       }
 
       // booking count eka chart eken generate karana function eka
-      const bookingcountgeneratebyCustomer = () =>{
+const bookingcountgeneratebyCustomer = () =>{
 
           let datalist = getServiceRequest('/report/bookingcountbycustomer');
 
@@ -147,7 +153,7 @@ window.addEventListener("load", ()=> {
       }
 
       // booking count eka chart eken generate karana function eka
-      const monthlydistancegeneratebyBookings = () =>{
+const monthlydistancegeneratebyBookings = () =>{
 
           let datalist = getServiceRequest('/report/totalbookingdistancebymonthlybookings');
 
@@ -217,4 +223,50 @@ window.addEventListener("load", ()=> {
               }
           });
       }
+
+//       status card
+
+// get service request function for get vehicle count
+const allVehicleCount = () => {
+    let allVehicleCount = getServiceRequest('/report/countofallvehicles');
+    console.log(allVehicleCount);
+    if (allVehicleCount.length == 0) {
+        document.getElementById("totalActiveVehicles").innerHTML = "0";
+    } else {
+        document.getElementById("totalActiveVehicles").innerHTML = allVehicleCount;
+    }
+}
+
+//active vehicle count
+const pendingBookingCount = () => {
+    let activeVehicleCount = getServiceRequest('/report/countofpendingbookings');
+    console.log(activeVehicleCount);
+    if (activeVehicleCount.length == 0) {
+        document.getElementById("totalPendingBookings").innerHTML = "0";
+    } else {
+        document.getElementById("totalPendingBookings").innerHTML = activeVehicleCount;
+    }
+}
+
+//revenue license expire vehicle count
+const activeCustomerCount = () => {
+    let revenueLicenseExpireVehicleCount = getServiceRequest('/report/countofactivecustomers');
+    console.log(revenueLicenseExpireVehicleCount);
+    if (revenueLicenseExpireVehicleCount.length == 0) {
+        document.getElementById("totalActiveCustomers").innerHTML = "0";
+    } else {
+        document.getElementById("totalActiveCustomers").innerHTML = revenueLicenseExpireVehicleCount;
+    }
+}
+
+//insurance expire vehicle count
+const activeDriverCount = () => {
+    let insuranceExpireVehicleCount = getServiceRequest('/report/countofactivedrivers');
+    console.log(insuranceExpireVehicleCount);
+    if (insuranceExpireVehicleCount.length == 0) {
+        document.getElementById("totalActiveDrivers").innerHTML = "0";
+    } else {
+        document.getElementById("totalActiveDrivers").innerHTML = insuranceExpireVehicleCount;
+    }
+}
 

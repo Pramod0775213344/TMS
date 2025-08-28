@@ -150,4 +150,26 @@ public class ReportDataController {
         Privilage userPrivilage = userPrivilageController.getUserPrivilageByUserModule(auth.getName(), "Report");
         return reportRepository.getVehiclesRevenueByCustomerIdAndVehicleTypeAndGroupByCurrantMonthAndYear(customerId, vehicleTypeId);
     }
+
+    // (url -->/report/countofpendingbookings)
+    @GetMapping(value = "/report/countofpendingbookings")
+    public Integer getPendingBookingCount() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Privilage userPrivilage = userPrivilageController.getUserPrivilageByUserModule(auth.getName(), "Report");
+        return reportRepository.getPendingBookingCount();
+    }
+    // (url -->/report/countofactivecustomers)
+    @GetMapping(value = "/report/countofactivecustomers")
+    public Integer getActiveCustomerCount() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Privilage userPrivilage = userPrivilageController.getUserPrivilageByUserModule(auth.getName(), "Report");
+        return reportRepository.getActiveCustomerCount();
+    }
+    // (url -->/report/countofactivedrivers)
+    @GetMapping(value = "/report/countofactivedrivers")
+    public Integer getActiveDriverCount() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Privilage userPrivilage = userPrivilageController.getUserPrivilageByUserModule(auth.getName(), "Report");
+        return reportRepository.getActiveDriverCount();
+    }
 }
