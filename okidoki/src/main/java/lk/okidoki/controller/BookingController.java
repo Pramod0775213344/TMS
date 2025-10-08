@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 
 @RestController
@@ -88,13 +89,34 @@ public class BookingController {
                 booking.setAdded_user_id(logeduser.getId());
 
 
-//                booking eka daddi customer agreement eka auto select wenna oni vehic type ekata saha customert adala
-                booking.setCustomer_agreement_id(
-                    customerAgreementRepository.findByVehicleTypeIdAndCustomerId(
-                        booking.getCustomer_id().getId(),
-                        booking.getVehicle_type_id().getId()  
-                    )
-                );
+//                booking eka daddi customer agreement eka auto select wenna oni vehic type ekata saha customert adala agreement eka fix rate new nam
+//                var agreement = customerAgreementRepository.findByVehicleTypeIdAndCustomerId(
+//                        booking.getCustomer_id().getId(),
+//                        booking.getVehicle_type_id().getId()
+//                );
+//
+//                if (agreement != null && agreement.getPackage_id() != null) {
+//                    String packageType = agreement.getPackage_id().getPackage_type();
+//                    System.out.println(packageType);
+//                    if ("Floating Rate".equals(packageType)) {
+//                        booking.setCustomer_agreement_id(agreement);
+//                    } else if ("Fix Rate".equals(packageType)) {
+//                        // If there are multiple supplier agreements for Fix Rate, set to null
+//                        if (customerAgreementRepository.countByVehicleTypeIdAndCustomerId(
+//                                booking.getCustomer_id().getId(),
+//                                booking.getVehicle_type_id().getId()) > 1) {
+//                            booking.setCustomer_agreement_id(null);
+//                            System.out.println("Multiple Fix Rate agreements found. Setting to null.");
+//                        } else {
+//                            booking.setCustomer_agreement_id(agreement);
+//                            System.out.println("one agreement have");
+//                        }
+//                    }
+//                } else {
+//                    booking.setCustomer_agreement_id(null);
+//                }
+
+
 
                 // set user status into inproccess
                 booking.setBooking_status_id(bookingStatusRepository.getReferenceById(1));

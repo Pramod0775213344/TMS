@@ -67,9 +67,8 @@ const loadVehicleTable = (vehicles) => {
 
     const propertyList = [
         { propertyName: "vehicle_photo", dataType: "truck-image-array" },
-        { propertyName: getTransportName, dataType: "function" },
-        { propertyName: "vehicle_no", dataType: "string" },
-        { propertyName: getVehicleType, dataType: "function" },
+        { propertyName: getSupplierDetails, dataType: "function" },
+        { propertyName: getVehicleDetails, dataType: "function" },
         { propertyName: getVehicleMake, dataType: "function" },
         { propertyName: "model", dataType: "string" },
         { propertyName: getVehicleStatus, dataType: "function" }]
@@ -77,19 +76,34 @@ const loadVehicleTable = (vehicles) => {
     dataFillIntoTheTable(vehicleTableBody, vehicles, propertyList, vehicleView, vehicleEdit, vehicleDelete, true);
 
 
-    $("#vehicleTable").dataTable();
+    $("#vehicleTable").dataTable({
+        "createdRow": function(row, data, dataIndex) {
+            $(row).find("td").css({
+                "text-align": "left",
+                "height": "80px"
+            });
+        },
+        "headerCallback": function(thead, data, start, end, display) {
+            $(thead).find("th").css({
+                "text-align": "left",
+                "padding": "20px"
+            });
+        }
+    });
 
 };
 
-// get Transport Name
-const getTransportName = (dataOb) => {
-
-    return dataOb.supplier_id.transportname;
+// get supplier Details Name
+const getSupplierDetails = (dataOb) => {
+    return `<div class="row fw-bold pb-2" >${dataOb.supplier_id.fullname}</div>
+<div class="row pb-2" style="font-size: 14px;">${dataOb.supplier_id.transportname}</div>
+<div class="row pb-2" style="font-size: 14px;">${dataOb.supplier_id.mobileno}</div>`;
 };
 
 // get Vehicle Type
-const getVehicleType = (dataOb) => {
-    return dataOb.vehicle_type_id.name;
+const getVehicleDetails = (dataOb) => {
+    return `<div class="row fw-bold" >${dataOb.vehicle_no}</div>
+<div class="row" style="font-size: 14px;">${dataOb.vehicle_type_id.name}</div>`
 };
 
 // get Vehicle Make

@@ -9,8 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import lk.okidoki.modal.Customer;
@@ -18,12 +17,6 @@ import lk.okidoki.modal.User;
 import lk.okidoki.repository.CustomerRepository;
 import lk.okidoki.repository.CustomerStatusRepository;
 import lk.okidoki.repository.UserRepository;
-
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 public class CustomerController {
@@ -244,4 +237,28 @@ public class CustomerController {
             return new ArrayList<>();
         }
     }
+
+
+    //--------------------Customer data search Mappings--------------------------------------------------
+// -->/customer/bystatus?&customerstatusId=3)
+    @GetMapping(value = "/customer/bystatus", params = {"customerstatusId" }, produces = "application/json")
+// param method eka haraha thama data ganne
+    public List<Customer> getCustomersByStatus(@RequestParam("customerstatusId") Integer customerstatusId) {
+        return customerRepository.getCustomersByStatus(customerstatusId);
+    }
+
+    // -->/customer/businesstypeid?businesstypeid=3)
+    @GetMapping(value = "/customer/businesstypeid", params = {"businesstypeid" }, produces = "application/json")
+// param method eka haraha thama data ganne
+    public List<Customer> getCustomersByBusinessType(@RequestParam("businesstypeid") Integer businesstypeid) {
+        return customerRepository.getCustomersByBusinessType(businesstypeid);
+    }
+
+    // -->/customer/bycustomerstatusandbusinesstype?businesstypeid=3&customerstatusId=3)
+    @GetMapping(value = "/customer/bycustomerstatusandbusinesstype", params = {"businesstypeid","customerstatusId" }, produces = "application/json")
+// param method eka haraha thama data ganne
+    public List<Customer> getCustomerByBusinessTypeAndStatus(@RequestParam("businesstypeid") Integer businesstypeid, @RequestParam("customerstatusId") Integer customerstatusId) {
+        return customerRepository.getCustomerByBusinessTypeAndStatus(businesstypeid,customerstatusId);
+    }
+    //--------------------vehicle data search Mappings end--------------------------------------------------
 }

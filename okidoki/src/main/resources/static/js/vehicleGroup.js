@@ -275,7 +275,20 @@ if (vehicleByVehicleGroup.length >= 0){
         vehicleTableByVehicleGroupBody.children[index].lastChild.children[1].classList.add("d-none");
     }
     showTableLoading();
-    $("#vehicleTableByVehicleGroup").dataTable();
+    $("#vehicleTableByVehicleGroup").dataTable({
+        "createdRow": function(row, data, dataIndex) {
+            $(row).find("td").css({
+                "text-align": "center",
+                "height": "80px"
+            });
+        },
+        "headerCallback": function(thead, data, start, end, display) {
+            $(thead).find("th").css({
+                "text-align": "center",
+                "padding": "20px"
+            });
+        }
+    });
 }else{
 
     $('#vehicleTableByVehicleGroup').DataTable().clear().draw(); // Clear table if no data

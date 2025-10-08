@@ -207,5 +207,84 @@ public class SupplierAgreementController {
         }
     }
 
-    //Getmapping for get supplier by
+    //    ------------------------------------------filtering wala api tika------------------------------------------
+    // Request mapping for get supplier agreement using vehicle type (url
+    // -->/supplieragreement/filterbyvehicletype?vehicleTypeId=1)
+    @GetMapping(value = "/supplieragreement/filterbyvehicletype", produces = "application/json")
+    public List<SupplierAgreement> getSupplierAgreementByVehicleType(Integer vehicleTypeId) {
+        return supplierAgreementRepository.getByVehicleType(vehicleTypeId);
+    }
+
+    // Request mapping for get supplier agreement using status (url
+    // -->/supplieragreement/filterbystatus?statusId=1)
+    @GetMapping(value = "/supplieragreement/filterbystatus", produces = "application/json")
+    public List<SupplierAgreement> getSupplierAgreementByStatus(Integer statusId) {
+        return supplierAgreementRepository.getByStatus(statusId);
+    }
+
+    // Request mapping for get supplier agreement using supplier id (url
+    // -->/supplieragreement/filterbysupplierid?supplierId=1)
+    @GetMapping(value = "/supplieragreement/filterbysupplierid", produces = "application/json")
+    public List<SupplierAgreement> getSupplierAgreementBySupplierId(Integer supplierId) {
+        return supplierAgreementRepository.getBySupplierId(supplierId);
+    }
+
+    // Request mapping for get supplier agreement using supplier id and vehicle type (url
+    // -->/supplieragreement/filterbysupplieridandvehicletype?supplierId=1&vehicleTypeId=1)
+    @GetMapping(value = "/supplieragreement/filterbysupplieridandvehicletype", produces = "application/json")
+    public List<SupplierAgreement> getSupplierAgreementBySupplierIdAndVehicleType(Integer supplierId, Integer vehicleTypeId) {
+        return supplierAgreementRepository.getBySupplierIdAndVehicleType(supplierId, vehicleTypeId);
+    }
+
+    // Request mapping for get supplier agreement using supplier id and status (url
+    // -->/supplieragreement/filterbysupplieridandstatus?supplierId=1&statusId=1)
+    @GetMapping(value = "/supplieragreement/filterbysupplieridandstatus", produces = "application/json")
+    public List<SupplierAgreement> getSupplierAgreementBySupplierIdAndStatus(Integer supplierId, Integer statusId) {
+        return supplierAgreementRepository.getBySupplierIdAndStatus(supplierId, statusId);
+    }
+
+    // Request mapping for get supplier agreement using vehicle type and status (url
+    // -->/supplieragreement/filterbyvehicletypeandstatus?vehicleTypeId=1&statusId=1)
+    @GetMapping(value = "/supplieragreement/filterbyvehicletypeandstatus", produces = "application/json")
+    public List<SupplierAgreement> getSupplierAgreementByVehicleTypeAndStatus(Integer vehicleTypeId, Integer statusId) {
+        return supplierAgreementRepository.getByVehicleTypeAndStatus(vehicleTypeId, statusId);
+    }
+
+    // Request mapping for get supplier agreement using supplier id and vehicle type and status (url
+    // -->/supplieragreement/filterbysupplieridandvehicletypeandstatus?supplierId=1&vehicleTypeId=1&statusId=1)
+    @GetMapping(value = "/supplieragreement/filterbysupplieridandvehicletypeandstatus", produces = "application/json")
+    public List<SupplierAgreement> getSupplierAgreementBySupplierIdAndVehicleTypeAndStatus(Integer supplierId, Integer vehicleTypeId, Integer statusId) {
+        return supplierAgreementRepository.getBySupplierIdAndVehicleTypeAndStatus(supplierId, vehicleTypeId, statusId);
+    }
+
+    //    -----------------------------------------agreement count eka gannawa-----------------------------------------
+    // Request mapping for get all supplier agreement count (url
+    // -->/supplieragreement/countallsupplieragreements)
+    @GetMapping(value = "/supplieragreement/countall", produces = "application/json")
+    public Integer countAllSupplierAgreements() {
+        return supplierAgreementRepository.countAllSupplierAgreements();
+    }
+
+    // Request mapping for get active supplier agreement count (url
+    // -->/supplieragreement/countactivesupplieragreements)
+    @GetMapping(value = "/supplieragreement/countactive", produces = "application/json")
+    public Integer countActiveSupplierAgreements() {
+        return supplierAgreementRepository.countActiveSupplierAgreements();
+    }
+
+    // Request mapping for get pending supplier agreement count (url
+    // -->/supplieragreement/countpendingsupplieragreements)
+    @GetMapping(value = "/supplieragreement/countpending", produces = "application/json")
+    public Integer countPendingSupplierAgreements() {
+        return supplierAgreementRepository.countPendingSupplierAgreements();
+    }
+
+    // Request mapping for get rejected supplier agreement count (url
+    // -->/supplieragreement/countrejectedsupplieragreements)
+    @GetMapping(value = "/supplieragreement/countreject", produces = "application/json")
+    public Integer countRejectedSupplierAgreements() {
+        return supplierAgreementRepository.countRejectedSupplierAgreements();
+    }
+
+
 }

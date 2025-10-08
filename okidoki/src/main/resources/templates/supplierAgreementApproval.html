@@ -4,9 +4,9 @@
 <head th:replace="fragments/head :: headFragment"></head>
 
 <body>
-    <div class="sidebar">
+    <div class="app">
         <div th:replace="fragments/sidebar :: sidebarFragment"></div>
-    </div>
+
     <div class="main-content">
         <div th:replace="fragments/topbar :: topbarFragment"></div>
         <div class="container-fluid">
@@ -49,7 +49,7 @@
             <!-- Modal -->
             <div class="modal fade" id="supplierAgreementAprrovalModal" data-bs-backdrop="static"
                 data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-xl">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h1 class="modal-title fs-5" id="staticBackdropLabel">Approval</h1>
@@ -289,7 +289,7 @@
 
         </div>
     </div>
-
+    </div>
     <div th:replace="fragments/loading :: overlayFragment"></div>
 
     <script src="/commenjs/reusabal.js"></script>

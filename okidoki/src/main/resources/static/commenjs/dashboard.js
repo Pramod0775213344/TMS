@@ -68,35 +68,57 @@ const bookingcountgeneratebybookingstatus = () =>{
               { propertyName: "status", dataType: "string" },
           ];
           // chart generate
+
           const ctx = document.getElementById('myChart');
 
-          new Chart(ctx, {
-              type: 'bar',
-              data: {
-                  labels: label,
-                  datasets: [{
-                      label: 'Number Of Bookings',
-                      data: data,
-                      borderWidth: 1,
-                      backgroundColor: [
-                          '#22C55E',  // Primary green
-                          '#4ADE80',  // Mint green
-                          '#86EFAC',  // Soft light green
-                          '#16A34A',  // Darker green
-                          '#BBF7D0',  // Very light green
-                          '#15803D',  // Forest green
-                          '#A7F3D0'   // Mint pastel
-                      ],
-                  }]
-              },
-              options: {
-                  scales: {
-                      y: {
-                          beginAtZero: true
-                      }
-                  }
-              }
-          });
+      //     create another suitable chart design
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: label,
+            datasets: [{
+                label: 'Distance(KM)',
+                data: data,
+                borderColor: '#e81515',
+                backgroundColor :function(context) {
+                    const chart = context.chart;
+                    const {ctx, chartArea} = chart;
+                    if (!chartArea) {
+                        return null;
+                    }
+                    const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+                    // gradient.addColorStop(0, 'rgba(59, 130, 246, 0.8)');
+                    // gradient.addColorStop(0.5, 'rgba(59, 130, 246, 0.4)');
+                    // gradient.addColorStop(1, 'rgba(59, 130, 246, 0.1)');
+                    gradient.addColorStop(0, 'rgba(239, 68, 68, 0.8)');   // Primary red (#EF4444)
+                    gradient.addColorStop(0.5, 'rgba(239, 68, 68, 0.4)');
+                    gradient.addColorStop(1, 'rgba(239, 68, 68, 0.1)');
+                    return gradient;
+                },
+                borderWidth: 2.5,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#EF4444', // Primary red
+                pointBorderColor: '#B91C1C',     // Darker red
+                pointBorderWidth: 2,
+                pointRadius: 5,
+                pointHoverRadius: 7,
+                pointHoverBackgroundColor: '#EF4444', // Primary red
+                pointHoverBorderColor: '#B91C1C',     // Darker red
+                pointHoverBorderWidth: 3
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+
+
       }
 
       // booking count eka chart eken generate karana function eka
@@ -125,32 +147,65 @@ const bookingcountgeneratebyCustomer = () =>{
           // chart generate
           const ctx = document.getElementById('myChart2');
 
-          new Chart(ctx, {
-              type: 'doughnut',
-              data: {
-                  labels: label,
-                  datasets: [{
-                      label: 'Number Of Bookings',
-                      data: data,
-                      borderWidth: 1,
-                      backgroundColor: [
-                          '#22C55E',
-                          '#4ADE80',
-                          '#86EFAC',
-                          '#16A34A',
-                          '#BBF7D0'
-                      ],
-                  }]
-              },
-              options: {
-                  scales: {
-                      y: {
-                          beginAtZero: true
-                      }
-                  }
-              }
-          });
-      }
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: label,
+            datasets: [{
+                label: 'Number Of Bookings',
+                data: data,
+                backgroundColor: [
+                    '#cc0000',
+                    '#ff3333',
+                    '#ff6666',
+                    '#ff9999',
+                    '#ffcccc',
+                    '#800000',
+                ],
+                borderColor: '#ffffff',
+                borderWidth: 2,
+                borderRadius: 8,
+                borderSkipped: false
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+          // new Chart(ctx, {
+          //     type: 'doughnut',
+          //     data: {
+          //         labels: label,
+          //         datasets: [{
+          //             label: 'Number Of Bookings',
+          //             data: data,
+          //             borderWidth: 3,
+          //             hoverOffset: 10,
+          //             borderColor: '#ffffff',
+          //             backgroundColor: [
+          //                  '#EF4444',  // Primary red
+          //                  '#ff3333',  // Light red
+          //                 // '#FCA5A5',  // Soft pastel red
+          //                 // '#B91C1C',  // Darker red
+          //                 // '#FECACA'   // Very light red
+          //                 '#ff6666'
+          //             ],
+          //         }]
+          //     },
+          //     options: {
+          //         scales: {
+          //             y: {
+          //                 beginAtZero: true
+          //             }
+          //         },
+          //     }
+          // });
+}
 
       // booking count eka chart eken generate karana function eka
 const monthlydistancegeneratebyBookings = () =>{
@@ -185,7 +240,7 @@ const monthlydistancegeneratebyBookings = () =>{
                   datasets: [{
                       label: 'Distance(KM)',
                       data: data,
-                      borderColor: '#22C55E',
+                      borderColor: '#e81515',
                       backgroundColor :function(context) {
                           const chart = context.chart;
                           const {ctx, chartArea} = chart;
@@ -196,21 +251,21 @@ const monthlydistancegeneratebyBookings = () =>{
                           // gradient.addColorStop(0, 'rgba(59, 130, 246, 0.8)');
                           // gradient.addColorStop(0.5, 'rgba(59, 130, 246, 0.4)');
                           // gradient.addColorStop(1, 'rgba(59, 130, 246, 0.1)');
-                          gradient.addColorStop(0, 'rgba(34, 197, 94, 0.8)');   // Primary green (#22C55E)
-                          gradient.addColorStop(0.5, 'rgba(34, 197, 94, 0.4)');
-                          gradient.addColorStop(1, 'rgba(34, 197, 94, 0.1)');
+                          gradient.addColorStop(0, 'rgba(239, 68, 68, 0.8)');   // Primary red (#EF4444)
+                          gradient.addColorStop(0.5, 'rgba(239, 68, 68, 0.4)');
+                          gradient.addColorStop(1, 'rgba(239, 68, 68, 0.1)');
                           return gradient;
                       },
                       borderWidth: 2.5,
                       fill: true,
                       tension: 0.4,
-                      pointBackgroundColor: '#1ebb59',
-                      pointBorderColor: '#ffffff',
+                      pointBackgroundColor: '#EF4444', // Primary red
+                      pointBorderColor: '#B91C1C',     // Darker red
                       pointBorderWidth: 2,
                       pointRadius: 5,
                       pointHoverRadius: 7,
-                      pointHoverBackgroundColor: '#1ebb59',
-                      pointHoverBorderColor: '#ffffff',
+                      pointHoverBackgroundColor: '#EF4444', // Primary red
+                      pointHoverBorderColor: '#B91C1C',     // Darker red
                       pointHoverBorderWidth: 3
                   }]
               },
@@ -268,5 +323,14 @@ const activeDriverCount = () => {
     } else {
         document.getElementById("totalActiveDrivers").innerHTML = insuranceExpireVehicleCount;
     }
+}
+
+// recent aqctivity feed
+const recentBookingActivity = () =>{
+
+    let recentBookingsActivity = getServiceRequest('/booking/alldta');
+    console.log(recentBookingsActivity);
+
+
 }
 

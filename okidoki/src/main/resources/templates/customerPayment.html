@@ -10,51 +10,11 @@
 </head>
 
 <body>
-    <div class="sidebar">
+    <div class="app">
         <div th:replace="fragments/sidebar :: sidebarFragment"></div>
-    </div>
     <div class="main-content">
         <div th:replace="fragments/topbar :: topbarFragment"></div>
         <div class="container-fluid">
-
-            <!-- header -->
-            <div class="row align-items-center justify-content-between mb-2">
-                <div class="col-auto">
-                </div>
-            </div>
-            <!-- header -->
-
-            <!-- serarch area -->
-            <div class="main-card mb-3">
-                <div class="row">
-                    <div class="col-5"></div>
-                    <div class="col-6">
-                        <div class="row">
-                            <div class="col-4">
-                                <label for="" class="form-label">Name</label>
-                                <input type="text" name="" id="" placeholder="Search Name" class="form-control">
-                            </div>
-                            <div class="col-4">
-                                <label for="" class="form-label">Vehicle Type</label>
-                                <select name="" id="" class="form-select">
-                                    <option value="">Select Vehicle Type</option>
-                                </select>
-                            </div>
-                            <div class="col-4 text-end">
-                                <label for="" class="form-label">Status</label>
-                                <select name="" class="form-select">
-                                    <option value="">Select Status</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-1 mt-4 text-end">
-                        <button class="btn btn-search mt-3 ms-0"><i class="fas fa-search"></i></button>
-                        <button class="btn btn-reset mt-3 ms-0"><i class="fa-solid fa-trash"></i></button>
-                    </div>
-                </div>
-            </div>
-            <!-- search area end -->
 
             <!-- Main Table Card -->
             <div class="main-card">
@@ -81,6 +41,7 @@
             </div>
 
         </div>
+    </div>
     </div>
     <!-- Modal -->
     <div class="modal fade" id="paymentModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"

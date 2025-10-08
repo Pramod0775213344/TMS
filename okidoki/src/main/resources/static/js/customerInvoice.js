@@ -46,8 +46,34 @@ if (packageType === "Floating Rate") {
 }
 
     // table eka initialize karanawa
-    $('#customerPaymentInvoiceTable').DataTable();
-    $('#customerPaymentInvoiceTableFixedRate').DataTable();
+    $("#customerPaymentInvoiceTable").dataTable({
+        "createdRow": function(row, data, dataIndex) {
+            $(row).find("td").css({
+                "text-align": "center",
+                "height": "80px"
+            });
+        },
+        "headerCallback": function(thead, data, start, end, display) {
+            $(thead).find("th").css({
+                "text-align": "center",
+                "padding": "20px"
+            });
+        }
+    });
+    $("#customerPaymentInvoiceTableFixedRate").dataTable({
+        "createdRow": function(row, data, dataIndex) {
+            $(row).find("td").css({
+                "text-align": "center",
+                "height": "80px"
+            });
+        },
+        "headerCallback": function(thead, data, start, end, display) {
+            $(thead).find("th").css({
+                "text-align": "center",
+                "padding": "20px"
+            });
+        }
+    });
 
 }
 
@@ -403,7 +429,7 @@ const fillDataIntoInvoiceTable = (tableBodyId, dataList, propertyList, editFunct
 
         let button = document.createElement("button");
         button.className = "btn-3d btn-3d-submit";
-        button.innerText = "Generate Invoice"
+        button.innerHTML = "<i class='fa-solid fa-file-invoice me-2'></i> Generate Invoice"
         // if you want to open button with clicking the row.you should change the button.onclick to tr.onclick
         button.onclick = () => {
             editFunction(dataob, index);

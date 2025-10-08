@@ -47,21 +47,30 @@
      display: inline-block;
      width: 8px;
      height: 8px;
-     background: #10b981;
+     background: #dc4b4b;
      border-radius: 50%;
  }
  .nav-link {
-     color: #1f2937;
-     background-color: #4cd964;
-     box-shadow: 0 8px 0 #32b64a, 0 15px 20px rgba(0, 0, 0, 0.15);
+     padding: 12px 24px;
+     background: #fff;
+     color: black;
+     cursor: pointer;
+     font-size: 14px;
+     font-weight: 500;
+     transition: all 0.3s ease;
+     border-radius: 8px 8px 0 0;
  }
  .nav-link:focus, .nav-link:hover {
-     background-color: #4cd964;
-     color: white;
+     /*background-color: #4cd964;*/
+     /*color: white;*/
+     color: black;
+     background: rgba(255, 255, 255, 0.1);
  }
  .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
-     color: var(--bs-nav-pills-link-active-color);
-     background-color: #4cd964;
+     /*color: var(--bs-nav-pills-link-active-color);*/
+     /*background-color: #4cd964;*/
+     background: #343E4D;
+     color: white;
  }
  /*add decoration effects*/
  .tab-pane{
@@ -175,8 +184,8 @@
      width: 70%;
      height: 70%;
      border: 4px solid transparent;
-     border-bottom-color: #0CAF60;
-     border-left-color: #0CAF60;
+     border-bottom-color: #dc4b4b;
+     border-left-color: #dc4b4b;
      border-radius: 50%;
      animation: spin-counterclockwise 1.2s linear infinite;
      position: absolute;

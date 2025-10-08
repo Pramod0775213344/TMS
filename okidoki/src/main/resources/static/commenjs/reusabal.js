@@ -74,3 +74,41 @@ const removePhoto= (photoPreviewContainerId,previewId,uploadContainerId) => {
     // Optionally hide the preview container:
     // document.getElementById('photoPreview').style.display = 'none';
 }
+
+// datetime format
+// const datetimeformat = (selecttime) => {
+//
+//     let date = new Date(selecttime);
+//
+//     const hours = date.getHours().toString().padStart(2, "0");
+//     const minutes = date.getMinutes().toString().padStart(2, "0");
+//
+//     // Get month name abbreviated
+//     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+//     const month = months[date.getMonth()];
+//
+//     // Format day and year
+//     const day = date.getDate();
+//     const year = date.getFullYear();
+//
+//     // Return the formatted string
+//     return `${hours}:${minutes}\n ${month} ${day}, ${year}`;
+//
+// }
+
+const dateformat = (selecttime) => {
+
+    let date = new Date(selecttime);
+
+    // Get month name abbreviated
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const month = months[date.getMonth()];
+
+    // Format day and year
+    const day = date.getDate();
+    const year = date.getFullYear();
+
+    // Return the formatted string
+    return `${month} ${day}, ${year}`;
+
+}

@@ -149,7 +149,7 @@ public class LoginController {
         changedUser.setOldusername(logeduser.getUsername());
         changedUser.setEmail(logeduser.getEmail());
         changedUser.setUser_photo(logeduser.getUser_photo());
-        changedUser.setEmployeeId(logeduser.getEmployee_id() != null ? logeduser.getEmployee_id().getId() : null);
+        changedUser.setEmployee_id(logeduser.getEmployee_id() != null ? logeduser.getEmployee_id().getId() : null);
         return changedUser;
     }
 

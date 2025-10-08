@@ -23,7 +23,21 @@ const loadDriverTable = () => {
 
     dataFillIntoTheTable(driverTableBody, drivers, propertyList, driverView,driverEdit,driverDelete, true);
 
-    $("#driverTable").dataTable();
+
+    $("#driverTable").dataTable({
+        "createdRow": function(row, data, dataIndex) {
+            $(row).find("td").css({
+                "text-align": "center",
+                "height": "80px"
+            });
+        },
+        "headerCallback": function(thead, data, start, end, display) {
+            $(thead).find("th").css({
+                "text-align": "center",
+                "padding": "20px"
+            });
+        }
+    });
 
 };
 

@@ -7,9 +7,9 @@
 </head>
 
 <body>
-    <div class="sidebar">
+    <div class="app">
         <div th:replace="fragments/sidebar :: sidebarFragment"></div>
-    </div>
+
     <div class="main-content">
         <div th:replace="fragments/topbar :: topbarFragment"></div>
         <div class="container-fluid">
@@ -17,13 +17,14 @@
             <!-- Title  and add button-->
             <div class="row align-items-center justify-content-between mb-2">
                 <div class="col-auto">
-                </div>
-                <div class="col-auto">
-                    <button class="btn-3d btn-3d-submit" type="button" data-bs-toggle="modal" id="addButton"
-                        data-bs-target="#employee" aria-controls="staticBackdrop"><i
+                    <button class="btn-3d btn-3d-add" type="button" data-bs-toggle="modal" id="addButton"
+                            data-bs-target="#employee" aria-controls="staticBackdrop"><i
                             class="fa-solid fa-user-plus me-3"></i>
                         Add Employee
                     </button>
+                </div>
+                <div class="col-auto">
+
                 </div>
             </div>
 
@@ -31,7 +32,7 @@
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-title">Total Employees</div>
-                    <div class="stat-value">1,438</div>
+                    <div class="stat-value text-dark" >1,438</div>
 
                 </div>
                 <div class="stat-card">
@@ -54,7 +55,7 @@
             <!-- serarch area -->
             <div class="main-card mb-3">
                 <div class="row">
-                    <div class="col-5"></div>
+                    <div class="col-3"></div>
                     <div class="col-6">
                         <div class="row">
                             <div class="col-4">
@@ -75,11 +76,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-1 mt-4">
-                        <button class="btn btn-search mt-3" data-bs-toggle="tooltip" data-bs-placement="top"
-                            data-bs-title="Search"><i class="fas fa-search"></i></button>
-                        <button class="btn btn-reset mt-3" data-bs-toggle="tooltip" data-bs-placement="top"
-                            data-bs-title="Reset"><i class="fa-solid fa-rotate-right"></i></button>
+
+                    <div class="col-3 mt-3 d-flex justify-content-center align-items-center gap-3">
+                        <button class="btn-3d btn-3d-submit mt-3" data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-title="Search"><i class="fas fa-search me-3"></i> Search</button>
+                        <button class="btn-3d btn-3d-cancel mt-3" data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-title="Reset"><i class="fa-solid fa-rotate-right me-3"></i>Reset</button>
                     </div>
                 </div>
             </div>
@@ -89,7 +91,7 @@
 
                 <!-- Table -->
                 <div class="table-responsive">
-                    <table id="employeeTable" class="table table-hover">
+                    <table id="employeeTable" class="table">
                         <thead>
                             <th>No</th>
                             <th>Employee No</th>
@@ -99,7 +101,7 @@
                             <th>Contact</th>
                             <th>Nic </th>
                             <th>Status</th>
-                            <th>Action</th>
+                            <th style="display: none"></th>
                         </thead>
                         <tbody id="employeeTableBody">
                         </tbody>
@@ -110,7 +112,7 @@
             <!-- Form Area -->
             <div class="modal fade" id="employee" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-xl">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h1 class="modal-title fs-5" id="staticBackdropLabel">Employee Registration</h1>
@@ -453,7 +455,7 @@
         </div>
         <!-- Employee View Form -->
     </div>
-
+    </div>
     <div th:replace="fragments/loading :: overlayFragment"></div>
 
 

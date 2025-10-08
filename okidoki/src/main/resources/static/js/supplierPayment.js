@@ -22,7 +22,21 @@ const loadSupplierPaymentTable = () => {
     // table data fill function
     dataFillIntoTheReportTableWithRowClick(supplierPaymentTableBody, supplierPaymentList, propertyList, supplierPaymentView, false);
 
-    $("#supplierPaymentTable").dataTable();
+
+    $("#supplierPaymentTable").dataTable({
+        "createdRow": function(row, data, dataIndex) {
+            $(row).find("td").css({
+                "text-align": "center",
+                "height": "80px"
+            });
+        },
+        "headerCallback": function(thead, data, start, end, display) {
+            $(thead).find("th").css({
+                "text-align": "center",
+                "padding": "20px"
+            });
+        }
+    });
 }
 
 // get customer name for table
@@ -93,10 +107,11 @@ const getVehicleNo = (dataOb)=>{
 // get amount for table
 const getAmount = (dataOb) =>{
     if (dataOb.customer_agreement_id.package_id.name == "Floating Rate") {
-        return (dataOb.customer_agreement_id.package_id.package_charge_cus * dataOb.distance).toLocaleString('en-US', { style: 'currency', currency: 'LKR' });
+        return (dataOb.customer_agreement_id.package_id.package_charge_sup * dataOb.distance).toLocaleString('en-US', { style: 'currency', currency: 'LKR' });
     } else {
-        return (dataOb.customer_agreement_id.package_id.package_charge_cus / 30).toLocaleString('en-US', { style: 'currency', currency: 'LKR' });
+        return (dataOb.customer_agreement_id.package_id.package_charge_sup / 30).toLocaleString('en-US', { style: 'currency', currency: 'LKR' });
     }
+    console.log(dataOb);
 }
 
 //total amount calculation
@@ -109,9 +124,9 @@ const totalAmountCalculation = (paidValue) => {
 
     bookingList.forEach(booking => {
         if (booking.customer_agreement_id.package_id.name == "Floating Rate") {
-            totalAmount += booking.customer_agreement_id.package_id.package_charge_cus * booking.distance;
+            totalAmount += booking.customer_agreement_id.package_id.package_charge_sup * booking.distance;
         } else {
-            totalAmount += booking.customer_agreement_id.package_id.package_charge_cus / 30;
+            totalAmount += booking.customer_agreement_id.package_id.package_charge_sup / 30;
         }
     });
 
@@ -156,6 +171,8 @@ const calculateBalance = (paidValue) =>{
             });
             // set the balance amount to 0
             balanceAmount = 0;
+            textSupplierPaidAmount.value = "";
+            supplierPayment.paid_amount =null;
 
         // if paid amount is less than or equal to total amount
         } else if (typePaidAmount <= Number(totalAmountWithoutCurrancy)) {
@@ -174,6 +191,19 @@ const calculateBalance = (paidValue) =>{
 // check errors
 const checkFormError = ()=>{
     let errors = "";
+
+    if(supplierPayment.balance_amount == null){
+        errors += "Balance Amount is not calculated....";
+    }
+    if(!supplierPayment.paid_amount){
+        errors += "Paid Amount is not Entered.........";
+    }
+    if(!supplierPayment.total_amount){
+        errors += "Total Amount is not calculated...........";
+    }
+    if(!supplierPayment.due_amount){
+        errors += "Due Amount is not calculated............";
+    }
 
     return errors;
 }

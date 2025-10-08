@@ -9,96 +9,103 @@
 </head>
 
 <body>
-    <div class="sidebar">
+    <div class="app">
         <div th:replace="fragments/sidebar :: sidebarFragment"></div>
-    </div>
+
 
     <div class="main-content">
         <div th:replace="fragments/topbar :: topbarFragment"></div>
         <div class="container-fluid">
             <div class="row align-items-center justify-content-between mb-2">
-                <div class="col-md-4">
-                </div>
-                <div class="col-md-6 d-flex justify-content-end">
+                <div class="col-md-6 d-flex justify-content-start">
                     <div class="row">
                         <div class="col-md-6">
-                            <a href="/vehicle" style="text-decoration: none"> <button class="btn-3d btn-3d-submit"
+                            <a href="/vehicle" style="text-decoration: none"> <button class="btn-3d btn-3d-add"
                                     type="button" data-bs-toggle="modal" data-bs-target="#vehicleFormModal"
                                     aria-controls="staticBackdrop"><i class="fa-solid fa-plus me-3"></i>
                                     Vehicle
                                 </button></a>
                         </div>
                         <div class="col-md-6">
-                            <a href="/vehiclegroup" style="text-decoration: none"> <button class="btn-3d btn-3d-submit" type="button" data-bs-toggle="modal" data-bs-target="#vehicleFormModal" aria-controls="staticBackdrop"><i class="fa-solid fa-plus me-3"></i>
+                            <a href="/vehiclegroup" style="text-decoration: none"> <button class="btn-3d btn-3d-add" type="button" data-bs-toggle="modal" data-bs-target="#vehicleFormModal" aria-controls="staticBackdrop"><i class="fa-solid fa-plus me-3"></i>
                                  Groups
                             </button></a>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!--  status card -->
-
-            <div class="row mb-4">
-                <div class="col-md-6">
-                    <div class="row mb-5 mt-3">
-                        <div class="col-6">
-                            <div class="stat-card " style="height: 180px;background-color: #0CAF60;">
-                                <div class="bg-white rounded-5 d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; margin: 0 ;">
-                                    <i class="fa-solid fa-truck fa-2x" style="color: #000000;"></i>
-                                </div>
-                                <span class="state-value text-white mb-3 fs-2" id="totalVehicle"></span>
-                                <h1 class="state-title text-white fs-5">Total Vehicle</h1>
-
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="stat-card " style="height: 180px;background-color: #000000;">
-                                <div class="bg-white rounded-5 d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; margin: 0 ;">
-                                    <i class="fa-solid fa-truck fa-2x" style="color: #000000;"></i>
-                                </div>
-                                <span class="state-value text-white fs-2 " id="totalActiveVehicle"></span>
-                                <h1 class="state-title text-white fs-5">Active Vehicles</h1>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mt-5">
-                        <div class="col-6">
-                            <div class="stat-card " style="height: 180px;background-color: #000000;">
-                                <div class="bg-white rounded-5 d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; margin: 0 ;">
-                                    <i class="fa-solid fa-truck fa-2x" style="color: #000000;"></i>
-                                </div>
-                                <span class="state-value text-white fs-2" id="totalRevenueLicenseExpireVehicle"></span>
-                                <h1 class="state-title text-white fs-5">Revenue License Expired Vehicles</h1>
-
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="stat-card" style="height: 180px;background-color: #000000;">
-                                <div class="bg-white rounded-5 d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; margin: 0 ;">
-                                    <i class="fa-solid fa-truck fa-2x" style="color: #000000;"></i>
-                                </div>
-                                <span class="state-value text-white fs-2" id="totalInsuranceExpireVehicle"></span>
-                                <h1 class="state-title text-white fs-5">Insurance Expired Vehicles</h1>
-
-                            </div>
-                        </div>
-                    </div>
+                <div class="col-md-4">
                 </div>
-                <div class="col-md-6">
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid mt-4">
+
+                <div class="stat-card priority">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.22.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="stat-number" id="totalVehicle">24</div>
+                    <div class="stat-label">Total Vehicles</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="#cc1b1b">
+                                <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.22.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="stat-number"  id="totalActiveVehicle">7</div>
+                    <div class="stat-label">Active Vehicles</div>
+
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="#cc1b1b">
+                                <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.22.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="stat-number" id="totalRevenueLicenseExpireVehicle">11</div>
+                    <div class="stat-label">Revenue License Expired Vehicles</div>
+
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="#cc1b1b">
+                                <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.22.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="stat-number" id="totalInsuranceExpireVehicle">25</div>
+                    <div class="stat-label">Insurance Expired Vehicles</div>
+
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-6">
                     <div class="main-card">
                         <div class="card-header" style="border-left: 3px solid #66bb6a;">
                             <h5>Total Vehicles</h5>
                         </div>
                         <canvas id="myChart"></canvas>
                     </div>
-                </div>
 
+                </div>
             </div>
 
-
             <!--    Insurance Expired vehicle list and Revenue Licenese Expired Vehicles-->
-            <div class="row mt-1">
+            <div class="row mt-3">
                 <div class="col-6">
                     <div class="main-card">
                         <div class="card-header" style="border-left: 3px solid #66bb6a;">
@@ -236,6 +243,7 @@
             </div>
 
         </div>
+    </div>
     </div>
     <div th:replace="fragments/loading :: overlayFragment"></div>
 

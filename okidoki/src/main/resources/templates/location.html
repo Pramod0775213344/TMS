@@ -9,9 +9,9 @@
 </head>
 
 <body>
-    <div class="sidebar">
+    <div class="app">
         <div th:replace="fragments/sidebar :: sidebarFragment"></div>
-    </div>
+
     <div class="main-content">
         <div th:replace="fragments/topbar :: topbarFragment"></div>
         <div class="container-fluid">
@@ -94,6 +94,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <div th:replace="fragments/loading :: overlayFragment"></div>
     <script

@@ -73,6 +73,14 @@ public class SupplierAgreement {
 
     private String approval_note;
 
+    private LocalDateTime approved_datetime;
+
+    private Integer approved_user_id;
+
+    private LocalDateTime reject_datetime;
+
+    private Integer reject_user_id;
+
     @ManyToOne()
     @JoinColumn(name = "supplier_agreement_status_id", referencedColumnName = "id")
     private SupplierAgreementStatus supplier_agreement_status_id;

@@ -21,6 +21,6 @@ public class ChangedUser {
 
     private byte[] user_photo;
 
-    private Integer employeeId;
+    private Integer employee_id;
 
 }

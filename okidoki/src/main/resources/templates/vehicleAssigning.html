@@ -8,29 +8,28 @@
 </head>
 
 <body>
-    <div class="sidebar">
+    <div class="app">
         <div th:replace="fragments/sidebar :: sidebarFragment"></div>
-    </div>
     <div class="main-content">
         <div th:replace="fragments/topbar :: topbarFragment"></div>
         <div class="container-fluid">
-
             <div class="row align-items-center justify-content-between mb-2">
                 <div class="col-auto">
-                </div>
-                <div class="col-auto">
-                    <a href="/revenue" target="_blank" style="text-decoration: none"> <button class="btn-3d btn-3d-submit"
-                                                                              type="button" data-bs-toggle="modal" data-bs-target="#vehicleFormModal"
-                                                                              aria-controls="staticBackdrop"><i class="fa-solid fa-plus me-3"></i>
+                    <a href="/revenue" target="_blank" style="text-decoration: none"> <button class="btn-3d btn-3d-add"
+                                                                                              type="button" data-bs-toggle="modal" data-bs-target="#vehicleFormModal"
+                                                                                              aria-controls="staticBackdrop"><i class="fa-solid fa-plus me-3"></i>
                         Revenue
                     </button></a>
+                </div>
+                <div class="col-auto">
+
                 </div>
             </div>
 
             <!--search area-->
             <div class="main-card mb-3">
                 <div class="row">
-                    <div class="col-5"></div>
+                    <div class="col-3"></div>
                     <div class="col-6">
                         <div class="row">
                             <div class="col-4">
@@ -49,11 +48,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-1 mt-4">
-                        <button class="btn btn-search mt-3" data-bs-toggle="tooltip" data-bs-placement="top"
-                                data-bs-title="Search" onclick="search()"><i class="fas fa-search"></i></button>
-                        <button class="btn btn-reset mt-3" data-bs-toggle="tooltip" data-bs-placement="top"
-                                data-bs-title="Reset" onclick="reset()"><i class="fa-solid fa-rotate-right"></i></button>
+                    <div class="col-3 d-flex justify-content-center mt-3 gap-3">
+                        <button class="btn-3d btn-3d-submit mt-3" data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-title="Search" onclick="search()"><i class="fas fa-search me-2"></i>Search</button>
+                        <button class="btn-3d btn-3d-cancel mt-3" data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-title="Reset" onclick="reset()"><i class="fa-solid fa-rotate-right me-2"></i> Reset</button>
                     </div>
                 </div>
             </div>
@@ -61,36 +60,35 @@
 
             <!-- Main Table Card -->
             <div class="main-card">
-
                 <!-- Table Area -->
                 <div class="table-responsive">
-                    <table class="table table-hover" id="vehicleAssigningTable">
+                    <table class="table" id="vehicleAssigningTable">
                         <thead >
-                            <tr>
-                                <th>No</th>
-                                <th>Booking No</th>
-                                <th>Customer Name</th>
-                                <th>Contact Person</th>
-                                <th>Contact Person Mobile</th>
-                                <th>Vehicle Type</th>
-                                <th>Pickup Location</th>
-                                <th>Pickup Datetime</th>
-                                <th>Via Locations</th>
-                                <th>Delivery Location</th>
-                                <th>Delivery Datetime</th>
-                                <th>Distance</th>
-                                <th>Transport Name</th>
-                                <th>Supplier Details</th>
-                                <th>Vehicle No</th>
-                                <th>Vehicle Type</th>
-                                <th>Driver Name</th>
-                                <th>Driver Contact Details</th>
-                                <th>Arrived At Pickup Datetime</th>
-                                <th>Departed From Pickup Datetime</th>
-                                <th>Arrived At Delivery Datetime</th>
-                                <th>Departed From Delivery Datetime</th>
-                                <th style="position: sticky; right:0; z-index: 1">Status</th>
-                            </tr>
+                        <tr>
+                            <th>No</th>
+                            <th>Booking No</th>
+                            <th>Customer Name</th>
+                            <th>Contact Person</th>
+                            <th>Contact Person Mobile</th>
+                            <th>Vehicle Type</th>
+                            <th>Pickup Location</th>
+                            <th>Pickup Datetime</th>
+                            <th>Via Locations</th>
+                            <th>Delivery Location</th>
+                            <th>Delivery Datetime</th>
+                            <th>Distance</th>
+                            <th>Transport Name</th>
+                            <th>Supplier Details</th>
+                            <th>Vehicle No</th>
+                            <th>Vehicle Type</th>
+                            <th>Driver Name</th>
+                            <th>Driver Contact Details</th>
+                            <th>Arrived At Pickup Datetime</th>
+                            <th>Departed From Pickup Datetime</th>
+                            <th>Arrived At Delivery Datetime</th>
+                            <th>Departed From Delivery Datetime</th>
+                            <th style="position: sticky; right:0; z-index: 1">Status</th>
+                        </tr>
                         </thead>
                         <tbody id="vehicleAssigningTableBody">
 
@@ -105,12 +103,11 @@
                     </div>
                 </div>
                 <!-- Table Area End -->
-
             </div>
             <!-- Main Table Card End -->
         </div>
     </div>
-
+    </div>
     <div th:replace="fragments/loading :: overlayFragment"></div>
 
 

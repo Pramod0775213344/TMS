@@ -87,6 +87,23 @@ const customerAgreemnentView = (dataOb) => {
 
     customerAgreementApprovalNote.value = dataOb.approval_note;
 
+    let selectedCompany = dataOb.customer_id;
+    let customerAgreements = getServiceRequest("/customeragreement/bycutomer?customerId=" + selectedCompany.id);
+    console.log(customerAgreements, "agreement");
+    if (customerAgreements && customerAgreements.length > 0) {
+        customerAgreementViewTable.style.display = "";
+        newCustomerNote.style.display = "none";
+        const propertyList = [
+            { propertyName: "cus_agreement_no", dataType: "string" },
+            { propertyName: (dataOb) => dataOb.vehicle_type_id.name, dataType: "function" },
+            { propertyName: (dataOb) => dataOb.package_id.name, dataType: "function" },
+        ];
+        dataFillIntoTheReportTable(customerAgreementViewTableBody, customerAgreements, propertyList);
+    } else {
+        customerAgreementViewTable.style.display = "none";
+        newCustomerNote.style.display = "";
+    }
+
     $("#customerAgreementAprrovalModal").modal('show');
 
     customerAgreementAprrovalButton.onclick = () => {

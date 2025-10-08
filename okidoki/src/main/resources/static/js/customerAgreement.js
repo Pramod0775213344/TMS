@@ -1,7 +1,24 @@
 window.addEventListener("load", () => {
 
     // load the customer agreement table
-    loadCustomerAgreementTable();
+    let customerAgreements = getServiceRequest('/customeragreement/alldata');
+    loadCustomerAgreementTable(customerAgreements);
+
+    // get count of the customer agreement
+    let customerAgreementCount = getServiceRequest('/customeragreement/countall');
+    document.getElementById('customerAgreementCount').innerText = customerAgreementCount;
+
+    // get count of the active customer agreement
+    let activeCustomerAgreementCount = getServiceRequest('/customeragreement/countactive');
+    document.getElementById('activeCustomerAgreementCount').innerText = activeCustomerAgreementCount;
+
+    // get count of the pending customer agreement
+    let pendingCustomerAgreementCount = getServiceRequest('/customeragreement/countpending');
+    document.getElementById('pendingCustomerAgreementCount').innerText = pendingCustomerAgreementCount;
+
+    // get count of the reject customer agreement
+    let rejectCustomerAgreementCount = getServiceRequest('/customeragreement/countreject');
+    document.getElementById('rejectCustomerAgreementCount').innerText = rejectCustomerAgreementCount;
 
     // refresh the customer agreement form
     refreshCustomerAgreementForm();
@@ -15,18 +32,104 @@ window.addEventListener("load", () => {
 
 })
 
-// table data load function
-const loadCustomerAgreementTable = () => {
 
-    customerAgreements = getServiceRequest('/customeragreement/alldata');
+// filtering area functions
+const filteringCustomerName = document.getElementById('filteringCustomerName')
+const filteringVehicleType = document.getElementById('filteringVehicleType')
+const filteringStatus = document.getElementById('filteringStatus')
+const filtering = () => {
+    if ($.fn.dataTable.isDataTable('#customerAgreementTable')) {
+        $('#customerAgreementTable').DataTable().destroy();
+    }
+
+    // customerge name eka witharak thiyenw nam
+    if (filteringCustomerName.value != "" && filteringVehicleType.value === "" && filteringStatus.value === "") {
+        let selectCustomer = JSON.parse(filteringCustomerName.value);
+        let customerAgreements = getServiceRequest("/customeragreement/bycutomer?customerId=" + selectCustomer.id);
+        loadCustomerAgreementTable(customerAgreements);
+        showTableLoading();
+    }
+    // vehicle type eka witharak thiyenw nam
+    else if (filteringCustomerName.value === "" && filteringVehicleType.value != "" && filteringStatus.value === "") {
+        let selectVehicleType = JSON.parse(filteringVehicleType.value);
+        let customerAgreements = getServiceRequest("/customeragreement/filterbyvehicletype?vehicleTypeId=" + selectVehicleType.id);
+        loadCustomerAgreementTable(customerAgreements);
+        showTableLoading();
+    }
+    // status eka witharak thiyenw nam
+    else if (filteringCustomerName.value === "" && filteringVehicleType.value === "" && filteringStatus.value != "") {
+        let selectStatus = JSON.parse(filteringStatus.value);
+        let customerAgreements = getServiceRequest("/customeragreement/filterbystatus?statusId=" + selectStatus.id);
+        loadCustomerAgreementTable(customerAgreements);
+        showTableLoading();
+    }
+//     customerge name eka saha vehicle type eka thiyenw nam
+    else if (filteringCustomerName.value != "" && filteringVehicleType.value != "" && filteringStatus.value === "") {
+        let selectCustomer = JSON.parse(filteringCustomerName.value);
+        let selectVehicleType = JSON.parse(filteringVehicleType.value);
+        let customerAgreements = getServiceRequest("/customeragreement/filterbycustomerandvehicletype?customerId=" + selectCustomer.id + "&vehicleTypeId=" + selectVehicleType.id);
+        loadCustomerAgreementTable(customerAgreements);
+        showTableLoading();
+    }
+    // customerge name eka saha status eka thiyenw nam
+    else if (filteringCustomerName.value != "" && filteringVehicleType.value === "" && filteringStatus.value != "") {
+        let selectCustomer = JSON.parse(filteringCustomerName.value);
+        let selectStatus = JSON.parse(filteringStatus.value);
+        let customerAgreements = getServiceRequest("/customeragreement/filterbycustomerandstatus?customerId=" + selectCustomer.id + "&statusId=" + selectStatus.id);
+        loadCustomerAgreementTable(customerAgreements);
+        showTableLoading();
+    }
+    // vehicle type eka saha status eka thiyenw nam
+    else if (filteringCustomerName.value === "" && filteringVehicleType.value != "" && filteringStatus.value != "") {
+        let selectVehicleType = JSON.parse(filteringVehicleType.value);
+        let selectStatus = JSON.parse(filteringStatus.value);
+        let customerAgreements = getServiceRequest("/customeragreement/filterbyvehicletypeandstatus?vehicleTypeId=" + selectVehicleType.id + "&statusId=" + selectStatus.id);
+        loadCustomerAgreementTable(customerAgreements);
+        showTableLoading();
+    }
+    // customerge name eka saha vehicle type eka saha status eka thiyenw nam
+    else if (filteringCustomerName.value != "" && filteringVehicleType.value != "" && filteringStatus.value != "") {
+        let selectCustomer = JSON.parse(filteringCustomerName.value);
+        let selectVehicleType = JSON.parse(filteringVehicleType.value);
+        let selectStatus = JSON.parse(filteringStatus.value);
+        let customerAgreements = getServiceRequest("/customeragreement/filterbycustomerandvehicletypeandstatus?customerId=" + selectCustomer.id + "&vehicleTypeId=" + selectVehicleType.id + "&statusId=" + selectStatus.id);
+        loadCustomerAgreementTable(customerAgreements);
+        showTableLoading();
+    }
+    // ewa naththam alll data gannawa
+    else {
+        let customerAgreements = getServiceRequest('/customeragreement/alldata');
+        loadCustomerAgreementTable(customerAgreements);
+        showTableLoading();
+    }
+}
+// filtering eka reset karanwa funtion eka
+const resetFilter = () => {
+    // select wala value eka reset karanawa
+    filteringCustomerName.value = "";
+    filteringVehicleType.value = "";
+    filteringStatus.value = "";
+
+    // data table eka destroy karanawa
+    if ($.fn.dataTable.isDataTable('#customerAgreementTable')) {
+        $('#customerAgreementTable').DataTable().destroy();
+    }
+
+    // all agreement data tika load karanwa
+    let customerAgreements = getServiceRequest('/customeragreement/alldata');
+    loadCustomerAgreementTable(customerAgreements);
+    showTableLoading();
+}
+
+// table data load function
+const loadCustomerAgreementTable = (customerAgreements) => {
 
     const propertyList = [
         { propertyName: getAgreementNo, dataType: "function" },
         { propertyName: getCustomer, dataType: "function" },
         { propertyName: getPackage, dataType: "function" },
-        { propertyName: getPackageDsitance, dataType: "function" },
         { propertyName: getVehicleType, dataType: "function" },
-        { propertyName: "agreement_end_date", dataType: "string" },
+        { propertyName: getContractDetails, dataType: "function" },
         { propertyName: getCustomerAgreementStatus, dataType: "function" }
     ];
 
@@ -34,7 +137,23 @@ const loadCustomerAgreementTable = () => {
     // table data fill function
     dataFillIntoTheTable(customerAgreementTableBody, customerAgreements, propertyList, customerAgreemnentView, customerAgreemnentEdit, customerAgreemnentDelete, true);
 
-    $("#customerAgreementTable").dataTable();
+
+    $("#customerAgreementTable").dataTable({
+        "createdRow": function(row, data, dataIndex) {
+            $(row).find("td").css({
+                "text-align": "left",
+                "padding": "25px",
+                "text-wrap": "normal",
+            });
+        },
+        "headerCallback": function(thead, data, start, end, display) {
+            $(thead).find("th").css({
+                "text-align": "left",
+                "padding": "20px",
+                "text-wrap": "normal"
+            });
+        }
+    });
 
 }
 
@@ -46,29 +165,27 @@ const getAgreementNo = (dataOb) => {
 
 // get customer name
 const getCustomer = (dataOb) => {
-    return dataOb.customer_id.company_name;
+    return `<div class="row fw-bold" >${dataOb.customer_id.company_name}</div>
+<div class="row" style="font-size: 14px;">${dataOb.customer_id.business_type_id.name}</div>`
+
 }
 
 // get package name
 const getPackage = (dataOb) => {
-    return dataOb.package_id.name;
-}
-
-// get package distance
-const getPackageDsitance = (dataOb) => {
-    if (dataOb.package_id.name == "Floating rate") {
-        return "<span >" + dataOb.package_id.distance + "<span> Km </span></span>"
-    }
-
-    if (dataOb.package_id.name = "Fix Rate") {
-        return "<span >" + dataOb.package_id.distance + "<span> Km </span></span>"
-    }
+    return `<div class="row" >${dataOb.package_id.name}</div>
+<div class="row" style="font-size: 14px;">${dataOb.package_id.distance} Km</div>`
 
 }
 
 //get vehicle type
 const getVehicleType = (dataOb) => {
-    return dataOb.vehicle_type_id.name;
+    return `<div class="row" >${dataOb.vehicle_type_id.name} Truck</div>`
+}
+
+// get contract details
+const getContractDetails = (dataOb) => {
+    return `<div class="row" >${dateformat(dataOb.agreement_date)}  - ${dateformat(dataOb.agreement_end_date)}</div>
+<div class="row" >${(dataOb.agreement_period)} months</div>`;
 }
 
 // get customer agreement Status
@@ -228,7 +345,7 @@ const customerAgreemnentEdit = (dataOb) => {
     }
 
 
-    selectCompanyName.value = JSON.stringify(dataOb.customer_id);
+    $('#selectCompanyName').val(JSON.stringify(dataOb.customer_id)).trigger('change');
 
     textCustomerAgreementDate.value = dataOb.agreement_date;
 
@@ -242,13 +359,12 @@ const customerAgreemnentEdit = (dataOb) => {
 
     selectPackageType.value = JSON.stringify(dataOb.package_id);
 
-    textCustomerAgreementNote.value = dataOb.special_note;
-
     textCustomerAgreementApprovalNote.value = dataOb.approval_note;
 
     // update button dispaly and submit button hide
     updateButton.style.display = "";
     submitButton.style.display = "none";
+    textCustomerAgreementApprovalNoteDiv.style.display = "";
 
     // when click the edit button the form will be display
     $("#customerAgreementModal").modal("show");
@@ -256,7 +372,22 @@ const customerAgreemnentEdit = (dataOb) => {
     customerAgreement = JSON.parse(JSON.stringify(dataOb));
     oldCustomerAgreement = JSON.parse(JSON.stringify(dataOb));
 
-    refreshChargersInnerForm();
+
+    let customerAgreements = getServiceRequest("/customeragreement/bycutomer?customerId=" + dataOb.customer_id);
+    console.log(customerAgreements, "agreement");
+    if (customerAgreements && customerAgreements.length > 0) {
+        customerAgreementViewTable.style.display = "";
+        newCustomerNote.style.display = "none";
+        const propertyList = [
+            { propertyName: "cus_agreement_no", dataType: "string" },
+            { propertyName: (dataOb) => dataOb.vehicle_type_id.name, dataType: "function" },
+            { propertyName: (dataOb) => dataOb.package_id.name, dataType: "function" },
+        ];
+        dataFillIntoTheReportTable(customerAgreementViewTableBody, customerAgreements, propertyList);
+    } else {
+        customerAgreementViewTable.style.display = "none";
+        newCustomerNote.style.display = "";
+    }
 
 
 };
@@ -398,15 +529,6 @@ const checkFormUpdates = () => {
         if (customerAgreement.package_id.name != oldCustomerAgreement.package_id.name) {
             updates += "Changed the package..... ";
         }
-        if (customerAgreement.special_note != oldCustomerAgreement.special_note) {
-            updates += "Changed  agreement note..... ";
-        }
-        if (customerAgreement.customerAgreementHasAdditionalChargersList.length !== oldCustomerAgreement.customerAgreementHasAdditionalChargersList.length ||
-            !customerAgreement.customerAgreementHasAdditionalChargersList.every((elemnt, index) =>
-                JSON.stringify(elemnt) === JSON.stringify(oldCustomerAgreement.customerAgreementHasAdditionalChargersList[index]))
-        ) {
-            updates += "Change the additional chargers list..... ";
-        }
     }
 
     return updates;
@@ -507,7 +629,7 @@ const refreshCustomerAgreementForm = () => {
     customerAgreementForm.reset();
 
     //form get intial color when refresh the form
-    setDefault([selectCompanyName, textCustomerAgreementDate, textCustomerAgreementPeriod, textCustomerAgreementEndDate, textCustomerDeliveryFrequency, selectVehicleType, selectPackageType, textCustomerAgreementNote]);
+    setDefault([selectCompanyName, textCustomerAgreementDate, textCustomerAgreementPeriod, textCustomerAgreementEndDate, textCustomerDeliveryFrequency, selectVehicleType, selectPackageType]);
 
 
     let compnayNames = getServiceRequest('/customer/bycustomerstatus');
@@ -522,6 +644,9 @@ const refreshCustomerAgreementForm = () => {
     selectPackageType.style.display = "none";
     submitButton.style.display = "";
     updateButton.style.display = "none";
+    textCustomerAgreementApprovalNoteDiv.style.display = "none";
+    customerAgreementViewTable.style.display = "none";
+    newCustomerNote.style.display = "none";
 
     //removing validation at refresh
     if (selectCompanyName.parentNode.children[2] != undefined) {
@@ -529,6 +654,14 @@ const refreshCustomerAgreementForm = () => {
         selectCompanyName.parentNode.children[2].children[0].children[0].classList.remove("is-valid");
         selectCompanyName.parentNode.children[2].children[0].children[0].classList.remove("is-invalid");
     }
+
+//     filtering area eke thiyen drop down tika fil karanawa
+    dataFilIntoSelect(filteringCustomerName, "Select Company Name", compnayNames, "company_name")
+
+    dataFilIntoSelect(filteringVehicleType, "Select Vehicle Type", vehicleTypes, "name")
+
+    let agreementStatus = getServiceRequest('/customeragreementstatus/alldata');;
+    dataFilIntoSelect(filteringStatus, "Select Status ", agreementStatus, "status")
 
 };
 
@@ -581,7 +714,44 @@ document.getElementById('textCustomerAgreementPeriod').onchange = () => {
     console.log(endDate); // "7/15/2024"
 };
 
+// customer ta adala agreement thiyenw nam ewa view karanwa form eke
+// Show agreements for selected company in the form
+let selectCompanyNameElement = document.getElementById("selectCompanyName");
+$('#selectCompanyName').on('change', function(e) {
+    // your code here
+    console.log(2)
+    console.log(selectCompanyNameElement.value)
+    let selectedCompany = JSON.parse(selectCompanyNameElement.value);
+    let customerAgreements = getServiceRequest("/customeragreement/bycutomer?customerId=" + selectedCompany.id);
+    console.log(customerAgreements, "agreement");
+    if (customerAgreements && customerAgreements.length > 0) {
+        customerAgreementViewTable.style.display = "";
+        newCustomerNote.style.display = "none";
+        const propertyList = [
+            { propertyName: "cus_agreement_no", dataType: "string" },
+            { propertyName: (dataOb) => dataOb.vehicle_type_id.name, dataType: "function" },
+            { propertyName: (dataOb) => dataOb.package_id.name, dataType: "function" },
+        ];
+        dataFillIntoTheReportTable(customerAgreementViewTableBody, customerAgreements, propertyList);
+    } else {
+        customerAgreementViewTable.style.display = "none";
+        newCustomerNote.style.display = "";
+    }
+});
+
 // ------------------------------------------------------------------------------------------------------------------------
+// table eke loading spin eka load karanwa
+function showTableLoading() {
+    const loader = document.getElementById('loaderId');
+    const customerAgreementTable = document.getElementById('customerAgreementTable');
+    loader.style.display = ''; // Clear loading after 2 seconds
+    customerAgreementTable.style.display = 'none'; // Hide the booking table while loading
+    setTimeout(() => {
+        const loader = document.getElementById('loaderId');
+        loader.style.display = 'none'; // Clear loading after 2 seconds
+        customerAgreementTable.style.display = ''; // Hide the booking table while loading
+    }, 500);
+}
 
 //Alert Box Call function
 Swal.isVisible();

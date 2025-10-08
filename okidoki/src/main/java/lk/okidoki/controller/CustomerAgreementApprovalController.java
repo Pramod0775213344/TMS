@@ -97,8 +97,8 @@ public class CustomerAgreementApprovalController {
 
         try {
             // set default values
-            customerAgreement.setUpdated_datetime(LocalDateTime.now());
-            customerAgreement.setUpdated_user_id(logedUser.getId());
+            customerAgreement.setApproved_datetime(LocalDateTime.now());
+            customerAgreement.setApproved_user_id(logedUser.getId());
             // set status to deleted
             customerAgreement.setCustomer_agreement_status_id(customerAgreementStatusRepository.getReferenceById(2));
 
@@ -144,8 +144,8 @@ public class CustomerAgreementApprovalController {
 
         try {
             // set default values
-            customerAgreement.setUpdated_datetime(LocalDateTime.now());
-            customerAgreement.setUpdated_user_id(logedUser.getId());
+            customerAgreement.setReject_datetime(LocalDateTime.now());
+            customerAgreement.setReject_user_id(logedUser.getId());
             // set status to deleted
             customerAgreement.setCustomer_agreement_status_id(customerAgreementStatusRepository.getReferenceById(5));
 

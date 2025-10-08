@@ -3,28 +3,29 @@
 <head th:replace="fragments/head :: headFragment"></head>
 
 <body>
-    <div class="sidebar">
+    <div class="app">
         <div th:replace="fragments/sidebar :: sidebarFragment"></div>
-    </div>
+
     <div class="main-content">
         <div th:replace="fragments/topbar :: topbarFragment"></div>
         <div class="container-fluid">
 
             <div class="row align-items-center justify-content-between mb-2">
                 <div class="col-auto">
-                </div>
-                <div class="col-auto">
-                    <button class="btn-3d btn-3d-submit" type="button" data-bs-toggle="modal" id="addButton"
-                        data-bs-target="#driverModal" aria-controls="staticBackdrop"><i class="fa-solid fa-plus"></i>
+                    <button class="btn-3d btn-3d-add" type="button" data-bs-toggle="modal" id="addButton"
+                            data-bs-target="#driverModal" aria-controls="staticBackdrop"><i class="fa-solid fa-plus"></i>
                         Add Payment
                     </button>
+                </div>
+                <div class="col-auto">
+
                 </div>
             </div>
 
             <!-- serarch area -->
             <div class="main-card mb-3">
                 <div class="row">
-                    <div class="col-5"></div>
+                    <div class="col-3"></div>
                     <div class="col-6">
                         <div class="row">
                             <div class="col-4">
@@ -44,11 +45,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-1 mt-4">
-                        <button class="btn btn-search mt-3" data-bs-toggle="tooltip" data-bs-placement="top"
-                            data-bs-title="Search"><i class="fas fa-search"></i></button>
-                        <button class="btn btn-reset mt-3" data-bs-toggle="tooltip" data-bs-placement="top"
-                            data-bs-title="Reset"><i class="fa-solid fa-rotate-right"></i></button>
+
+                    <div class="col-3 mt-3 d-flex justify-content-center align-items-center gap-3">
+                        <button class="btn-3d btn-3d-submit mt-3" data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-title="Search"><i class="fas fa-search me-3"></i> Search</button>
+                        <button class="btn-3d btn-3d-cancel mt-3" data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-title="Reset"><i class="fa-solid fa-rotate-right me-3"></i>Reset</button>
                     </div>
                 </div>
             </div>
@@ -58,7 +60,7 @@
 
                 <!-- Table Area -->
                 <div class="table-responsive">
-                    <table class="table table-hover " id="supplierPaymentTable">
+                    <table class="table " id="supplierPaymentTable">
                         <thead>
                         <tr>
                         <th>#</th>
@@ -236,7 +238,7 @@
         </div>
     </div>
     <div th:replace="fragments/loading :: overlayFragment"></div>
-
+    </div>
     <script src="/commenjs/reusabal.js"></script>
     <script src="/commenjs/commanValidation.js"></script>
     <script src="/commenjs/commonTable.js"></script>

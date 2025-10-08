@@ -8,9 +8,9 @@
 </head>
 
 <body>
-    <div class="sidebar">
+    <div class="app">
         <div th:replace="fragments/sidebar :: sidebarFragment"></div>
-    </div>
+
     <div class="main-content">
         <div th:replace="fragments/topbar :: topbarFragment"></div>
         <div class="container-fluid">
@@ -86,15 +86,6 @@
                                                 <label for="" class="label">End Date</label>
                                                 <div class="value" id="dataEndDate"></div>
                                             </div>
-                                            <div class="info-data">
-                                                <label for="" class="label">Agreement Charge</label>
-                                                <div class="value" id="dataAgreementCharge"></div>
-                                            </div>
-                                            <div class="info-data">
-                                                <label for="" class="label">Additional Charge</label>
-                                                <div class="value" id="dataAdditionalChargersCustomer"></div>
-                                            </div>
-
                                         </div>
                                     </div>
 
@@ -174,12 +165,39 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                </div>
+
+                                <!-- Other Details -->
+                                <div class="mb-2 mt-3">
+                                    <div class="row">
+                                        <div class="col-md-12 mb-3" id="otherDetails">
+                                            <div class="table" id="customerAgreementViewTable">
+                                                <h1 class="section-title" style="font-size:1.5rem;font-weight:600;color:#343a40;margin-bottom:16px; border-bottom: none">Other Agreement Details</h1>
+                                                <table class= "table table-hover" >
+                                                    <thead>
+                                                    <th>No</th>
+                                                    <th>Agreement No</th>
+                                                    <th>Vehicle Type</th>
+                                                    <th>Package Type</th>
+                                                    </thead>
+                                                    <tbody id="customerAgreementViewTableBody">
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div id="newCustomerNote" style="background-color:#f8f9fa;padding:12px;border-radius:6px;border:1px solid #dee2e6;">
+                                                <p style="margin:0;color:#495057;font-weight:500;">This customer is new to our Company. Please review their details carefully before proceeding with the agreement.</p>
+                                            </div>
+
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="row mt-5">
                                     <div class="col">
-                                        <label class="form-label">Approve Note</label>
-                                        <textarea name="" id="customerAgreementApprovalNote" class="form-control"
+                                        <label for="customerAgreementApprovalNote" class="form-label">Approve Note</label>
+                                        <textarea  id="customerAgreementApprovalNote" class="form-control"
                                             onkeyup="editOb.approval_note = this.value"></textarea>
                                     </div>
                                 </div>
@@ -221,11 +239,12 @@
 
         </div>
     </div>
-
+    </div>
     <div th:replace="fragments/loading :: overlayFragment"></div>
 
     <script src="/commenjs/reusabal.js"></script>
     <script src="/commenjs/commanValidation.js"></script>
+    <script src="/commenjs/commonTable.js"></script>
     <script src="js/customerAgreementApproval.js"></script>
     <script src="js/sidebar.js"></script>
 </body>

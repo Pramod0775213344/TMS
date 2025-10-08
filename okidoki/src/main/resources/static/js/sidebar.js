@@ -89,11 +89,11 @@
 
         //class path enter as breadcum
         if (currentPath === '/dashboard') {
-            document.querySelector('#dashobordPath').innerHTML = `<a style="text-decoration: none; color: #0CAF60" href="${currentPath}">Dashboard</a>`;
+            document.querySelector('#dashobordPath').innerHTML = `<a style="text-decoration: none; color: #dc4b4b" href="${currentPath}">Dashboard</a>`;
         }else{
             curruntPath.style.display = 'block';
             document.querySelector('#dashobordPath').innerHTML = `<a class="opacity-5 text-dark" style="text-decoration: none;" href="/dashboard">Dashboard</a>`;
-            document.querySelector('#curruntPath').innerHTML = `<a style="text-decoration: none; color: #0CAF60" href="${currentPath}">${currentPath.split('/')[1].charAt(0).toUpperCase() + currentPath.split('/')[1].slice(1)}</a>`;
+            document.querySelector('#curruntPath').innerHTML = `<a style="text-decoration: none; color: #dc4b4b" href="${currentPath}">${currentPath.split('/')[1].charAt(0).toUpperCase() + currentPath.split('/')[1].slice(1)}</a>`;
         }
 
     };
@@ -166,3 +166,20 @@
 //
 //     // Call the function to color the active menu item when the page loads
 //     document.addEventListener('DOMContentLoaded', colorActiveSideBarMenuItem);
+   // On toggle button click
+   document.getElementById('themeToggleBtn').addEventListener('click', function () {
+       document.body.classList.toggle('dark-theme');
+       // Save preference
+       if (document.body.classList.contains('dark-theme')) {
+           localStorage.setItem('theme', 'dark');
+       } else {
+           localStorage.setItem('theme', 'light');
+       }
+   });
+
+   // On page load
+   window.addEventListener('DOMContentLoaded', function () {
+       if (localStorage.getItem('theme') === 'dark') {
+           document.body.classList.add('dark-theme');
+       }
+   });

@@ -10,9 +10,9 @@
 </head>
 
 <body>
-    <div class="sidebar">
+    <div class="app">
         <div th:replace="fragments/sidebar :: sidebarFragment"></div>
-    </div>
+
     <div class="main-content">
         <div th:replace="fragments/topbar :: topbarFragment"></div>
         <div class="container-fluid">
@@ -20,13 +20,14 @@
             <!-- header -->
             <div class="row align-items-center justify-content-between mb-2">
                 <div class="col-auto">
-                </div>
-                <div class="col-auto">
-                    <button class="btn-3d btn-3d-submit" type="button" data-bs-toggle="modal" id="addButton"
-                        data-bs-target="#packageFormModal" aria-controls="staticBackdrop"><i
+                    <button class="btn-3d btn-3d-add" type="button" data-bs-toggle="modal" id="addButton"
+                            data-bs-target="#packageFormModal" aria-controls="staticBackdrop"><i
                             class="fa-solid fa-plus me-3"></i>
                         Add Package
                     </button>
+                </div>
+                <div class="col-auto">
+
                 </div>
             </div>
             <!-- header -->
@@ -34,7 +35,7 @@
             <!-- serarch area -->
             <div class="main-card mb-3">
                 <div class="row">
-                    <div class="col-5"></div>
+                    <div class="col-3"></div>
                     <div class="col-6">
                         <div class="row">
                             <div class="col-4">
@@ -55,9 +56,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-1 mt-4 text-end">
-                        <button class="btn btn-search mt-3 ms-0"><i class="fas fa-search"></i></button>
-                        <button class="btn btn-reset mt-3 ms-0"><i class="fa-solid fa-trash"></i></button>
+
+                    <div class="col-3 mt-3 d-flex justify-content-center align-items-center gap-3">
+                        <button class="btn-3d btn-3d-submit mt-3" data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-title="Search"><i class="fas fa-search me-3"></i> Search</button>
+                        <button class="btn-3d btn-3d-cancel mt-3" data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-title="Reset"><i class="fa-solid fa-rotate-right me-3"></i>Reset</button>
                     </div>
                 </div>
             </div>
@@ -69,6 +73,7 @@
             <!--packages container-->
 
         </div>
+    </div>
     </div>
     <!-- Modal -->
     <div class="modal fade" id="packageFormModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"

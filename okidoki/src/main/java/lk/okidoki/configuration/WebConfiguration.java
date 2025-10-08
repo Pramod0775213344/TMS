@@ -28,6 +28,7 @@ public class WebConfiguration {
                     .requestMatchers("/websiteImages/**").permitAll()
                     .requestMatchers("/js/webSite.js").permitAll()
                     .requestMatchers("/js/forgetPassword.js").permitAll()
+                    .requestMatchers("/report/**").permitAll()
                     .requestMatchers("/jquery/**").permitAll()
                     .requestMatchers("/commenjs/**").permitAll()
                     .requestMatchers("/sweetalert2/**").permitAll()

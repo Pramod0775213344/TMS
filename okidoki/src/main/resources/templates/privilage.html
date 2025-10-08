@@ -9,10 +9,8 @@
 
 <body>
 
-    <div class="sidebar">
+    <div class="app">
         <div th:replace="fragments/sidebar :: sidebarFragment"></div>
-
-    </div>
 
     <div class="main-content">
         <div th:replace="fragments/topbar :: topbarFragment"></div>
@@ -21,13 +19,14 @@
             <!-- Title  and add button-->
             <div class="row align-items-center justify-content-between mb-2">
                 <div class="col-auto">
+                    <button type="button" class="btn-3d btn-3d-add" data-bs-toggle="modal"
+                            data-bs-target="#privilageForm">
+                        <i class="fa-solid fa-plus me-3"></i> Add Privilege
+                    </button>
                 </div>
                 <div class="col-auto">
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn-3d btn-3d-submit" data-bs-toggle="modal"
-                        data-bs-target="#privilageForm">
-                        <i class="fa-solid fa-plus me-3"></i> Add Privilege
-                    </button>
+
                 </div>
             </div>
 
@@ -36,7 +35,7 @@
 
                 <!-- Table -->
                 <div class="table-responsive">
-                    <table id="privilageTable" class="table table-hover">
+                    <table id="privilageTable" class="table">
                         <thead>
                             <th>#</th>
                             <th>Role</th>
@@ -45,7 +44,7 @@
                             <th>Insert</th>
                             <th>Update</th>
                             <th>Delete</th>
-                            <th>Action</th>
+                            <th style="display: none"></th>
                         </thead>
                         <tbody id="privilageTableBody">
                         </tbody>
@@ -56,7 +55,7 @@
             <!-- Modal form -->
             <div class="modal fade" id="privilageForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-xl">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h1 class="modal-title fs-5" id="staticBackdropLabel">Privilege Management</h1>
@@ -230,6 +229,7 @@
             </div>
 
         </div>
+    </div>
     </div>
     <div th:replace="fragments/loading :: overlayFragment"></div>
 

@@ -76,6 +76,31 @@ public class SupplierController {
         }
     }
 
+//    get company suppliers
+    @GetMapping(value = "/supplier/company", produces = "application/json")
+    public List<Supplier> getCompanySuppliers() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Privilage userPrivilage = userPrivilageController.getUserPrivilageByUserModule(auth.getName(), "Supplier");
+
+        if (userPrivilage.getPrivi_select()) {
+            return supplierRepository.getByCompany("Company");
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+//    get individual suppliers
+    @GetMapping(value = "/supplier/individual", produces = "application/json")
+    public List<Supplier> getIndividualSuppliers() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Privilage userPrivilage = userPrivilageController.getUserPrivilageByUserModule(auth.getName(), "Supplier");
+
+        if (userPrivilage.getPrivi_select()) {
+            return supplierRepository.getByIndividual("Individual");
+        } else {
+            return new ArrayList<>();
+        }
+    }
      
     // Requset post mapping for insert data in to the supplier table(url
     // -->/supplier/insert)
@@ -146,6 +171,7 @@ public class SupplierController {
             // set auto date
             supplier.setAdded_datetime(LocalDateTime.now());
             supplier.setAdded_user_id(logeduser.getId());
+            supplier.setSupplier_status_id(supplierStatusRepository.getReferenceById(1));// default active status
 
             // save operator
             supplierRepository.save(supplier);

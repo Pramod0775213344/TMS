@@ -8,9 +8,9 @@
 </head>
 
 <body>
-    <div class="sidebar">
+    <div class="app">
         <div th:replace="fragments/sidebar :: sidebarFragment"></div>
-    </div>
+
     <div class="main-content">
         <div th:replace="fragments/topbar :: topbarFragment"></div>
         <div class="container-fluid">
@@ -28,8 +28,9 @@
             </div>
 
             <div class="main-card">
-                <div class="row">
-                    <table class="table table-bordered text-center align-middle" id="revenueLicenseExpireReportTable">
+                <h4 class="mb-0 p-3 text-center" style="color:#2c3e50;font-weight:bold; border-bottom: 1px dotted #dc3545"><i class="fa-solid fa-file-invoice-dollar me-3"></i>Revenue Expiry Report</h4>
+                <div class="row p-5">
+                    <table class="table text-center align-middle" id="revenueLicenseExpireReportTable">
                         <thead >
                             <th>#</th>
                             <th>Vehicle No</th>
@@ -44,8 +45,8 @@
             </div>
         </div>
     </div>
-    <div th:replace="fragments/loading :: overlayFragment"></div>
-
+<!--    <div th:replace="fragments/loading :: overlayFragment"></div>-->
+    </div>
 
     <script src="/commenjs/reusabal.js"></script>
     <script src="/commenjs/commanValidation.js"></script>

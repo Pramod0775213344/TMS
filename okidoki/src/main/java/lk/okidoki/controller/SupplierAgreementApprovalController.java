@@ -94,8 +94,8 @@ public class SupplierAgreementApprovalController {
 
         try {
             // set default values
-            supplierAgreement.setUpdated_datetime(LocalDateTime.now());
-            supplierAgreement.setUpdated_user_id(logedUser.getId());
+            supplierAgreement.setApproved_datetime(LocalDateTime.now());
+            supplierAgreement.setApproved_user_id(logedUser.getId());
             // set status to deleted
             supplierAgreement.setSupplier_agreement_status_id(supplierAgreementStatusRepository.getReferenceById(2));
 
@@ -141,8 +141,8 @@ public class SupplierAgreementApprovalController {
 
         try {
             // set default values
-            supplierAgreement.setUpdated_datetime(LocalDateTime.now());
-            supplierAgreement.setUpdated_user_id(logedUser.getId());
+            supplierAgreement.setReject_datetime(LocalDateTime.now());
+            supplierAgreement.setReject_user_id(logedUser.getId());
             // set status to deleted
             supplierAgreement.setSupplier_agreement_status_id(supplierAgreementStatusRepository.getReferenceById(5));
 

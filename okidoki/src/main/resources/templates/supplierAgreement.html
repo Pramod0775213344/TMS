@@ -5,57 +5,65 @@
 
 <body>
     <!-- sidebar -->
-    <div class="sidebar">
+    <div class="app">
         <div th:replace="fragments/sidebar :: sidebarFragment"></div>
-    </div>
+
     <!-- sidebar -->
     <div class="main-content">
         <div th:replace="fragments/topbar :: topbarFragment"></div>
         <div class="container-fluid">
-            <!-- head area  -->
-            <div class="row align-items-center justify-content-between mb-2">
-                <div class="col-auto">
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-title">Total Agreements</div>
+                    <div class="stat-value text-dark" id="supplierAgreementCount">1,438</div>
+
                 </div>
-                <div class="col-auto">
-                    <button class="btn-3d btn-3d-submit" type="button" data-bs-toggle="modal" id="addButton"
-                        data-bs-target="#supplierAgreementFormModal" aria-controls="staticBackdrop"><i
-                            class="fa-solid fa-plus me-3"></i>
-                        Add Supplier Agreement
-                    </button>
+                <div class="stat-card">
+                    <div class="stat-title">Pending Approval</div>
+                    <div class="stat-value" id="pendingSupplierAgreementCount">485</div>
+
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">Active Agreements</div>
+                    <div class="stat-value" id="activeSupplierAgreementCount">23</div>
+
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">Reject Agreements</div>
+                    <div class="stat-value" id="rejectSupplierAgreementCount">50</div>
+
                 </div>
             </div>
-            <!-- head area  -->
-
 
             <!-- serarch area -->
             <div class="main-card mb-3">
-                <div class="row">
-                    <div class="col-5"></div>
-                    <div class="col-6">
-                        <div class="row">
+                <div class="fw-bold ps-3 pe-3 pb-3" style="font-size: 20px"> Filter & Search</div>
+                <div class="row ps-3 pe-3 pt-0 pb-0">
+
                             <div class="col-4">
-                                <label for="" class="form-label">Name</label>
-                                <input type="text" name="" id="" placeholder="Search Name" class="form-control">
+                                <label for="filteringSupplierName" class="form-label">Supplier Name</label>
+                                <select name="" id="filteringSupplierName" class="form-select">
+                                    <option value="">Select Supplier </option>
+                                </select>
                             </div>
                             <div class="col-4">
-                                <label for="" class="form-label">Vehicle Type</label>
-                                <select name="" id="" class="form-select">
+                                <label for="filteringSupplierVehicleType" class="form-label">Vehicle Type</label>
+                                <select name="" id="filteringSupplierVehicleType" class="form-select">
                                     <option value="">Select Vehicle Type</option>
                                 </select>
                             </div>
                             <div class="col-4">
-                                <label for="" class="form-label">Status</label>
-                                <select name="" id="" class="form-select">
+                                <label for="filteringSupplierAgreementStatus" class="form-label">Agreement Status</label>
+                                <select name="" id="filteringSupplierAgreementStatus" class="form-select">
                                     <option value="">Select Status</option>
                                 </select>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-1 mt-4">
-                        <button class="btn btn-search mt-3" data-bs-toggle="tooltip" data-bs-placement="top"
-                            data-bs-title="Search"><i class="fas fa-search"></i></button>
-                        <button class="btn btn-reset mt-3" data-bs-toggle="tooltip" data-bs-placement="top"
-                            data-bs-title="Reset"><i class="fa-solid fa-rotate-right"></i></button>
+                <div class="row p-3" >
+                    <div class="col-3 mt-0 d-flex justify-content-start gap-3">
+                        <button class="btn-3d btn-3d-submit mt-3" onclick="filtering()"> Apply Filters</button>
+                        <button class="btn-3d btn-3d-cancel mt-3" onclick="resetFilter()">Reset</button>
                     </div>
                 </div>
             </div>
@@ -64,24 +72,39 @@
 
             <!-- Table Area -->
             <div class="main-card">
+                <div class="p-3 d-flex align-items-center justify-content-between mb-3" style="background-color: #f1f5f9;border-bottom: 2px solid #e2e8f0; border-top-left-radius: 8px; border-top-right-radius: 8px;">
+                    <h1 style="font-size: 1.5rem;font-weight: 600;color: #1A202C;">Supplier Agreement Details</h1>
+                    <button class="btn-3d btn-3d-add" type="button" data-bs-toggle="modal" id="addButton"
+                            data-bs-target="#supplierAgreementFormModal" aria-controls="staticBackdrop"><i
+                            class="fa-solid fa-plus me-3"></i>
+                        Add Agreement
+                    </button>
+                </div>
                 <div class="table-responsive">
-                    <table class="table table-hover" id="supplierAggrementTable">
+                    <table class="table" id="supplierAggrementTable">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Transport name</th>
-                                <th>Supplier Name</th>
-                                <th>Vehicle Type</th>
-                                <th>Vehicle No</th>
-                                <th>Package</th>
+                                <th>Agreement No</th>
+                                <th>Supplier Details</th>
+                                <th>Vehicle Details</th>
+                                <th>Service Package</th>
+                                <th>Contract Period</th>
                                 <th>Status</th>
-                                <th>Action</th>
+                                <th style="display: none"></th>
                             </tr>
                         </thead>
                         <tbody id="supplierAgreementTableBody">
 
                         </tbody>
                     </table>
+                    <div class="loader-table" id="loaderId" style="display: none">
+                        <div class="spinner-table">
+                            <div class="spinner-outer-circle-table"></div>
+                            <div class="spinner-inner-circle-table"></div>
+                            <div class="spinner-middle-circle-table"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- Table Area End -->
@@ -89,7 +112,7 @@
             <!-- Modal -->
             <div class="modal fade" id="supplierAgreementFormModal" data-bs-backdrop="static" data-bs-keyboard="false"
                 tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-xl">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h1 class="modal-title fs-5" id="staticBackdropLabel">Supplier Agreement</h1>
@@ -288,9 +311,91 @@
                     </div>
                 </div>
             </div>
-
             <!-- Modal End -->
 
+        </div>
+    </div>
+    </div>
+
+<!--  -----------------------------------------------view modal---------------------------    -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="supplierAgreementViewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content rounded-5">
+                <div class="modal-body p-5">
+                    <div id="supplierAgreementDetails">
+                        <div class="details-container">
+                            <!-- Header -->
+                            <div class="details-header d-flex justify-content-between align-items-center mb-5">
+                                <div>
+                                    <div class="details-subtitle">
+                                        Agreement No: <strong class="mb-2" id="viewAgreementNo"></strong><br/>
+                                        Date: <strong id="viewCurrentDate"></strong>
+                                    </div>
+                                </div>
+                                <div>
+                                    <img src="/images/header-logo.png" alt="Company Logo" />
+                                </div>
+                            </div>
+
+                            <!-- Supplier Information -->
+                            <div class="row details-box mb-5 p-3 rounded-5" style="background-color: #f1f5f9">
+                                <div class="col-md-6">
+                                    <div class="section-title">Supplier Information</div>
+                                    <p>Supplier Name : - <strong id="viewSupplierName"></strong></p>
+                                    <p>Supplier Address : - <span id="viewSupplierAddress"></span></p>
+                                    <p >Supplier Email : - <span id="viewSupplierEmail"></span></p>
+                                    <p >Supplier Telephone No : - <span id="viewSupplierPhone"></span></p>
+                                </div>
+                                <div class="col-md-6 mt-4 mt-md-0">
+                                    <div class="section-title text-end">Vehicle Details</div>
+                                    <p >Vehicle No : - <strong id="viewVehicleNo"></strong></p>
+                                    <p >Vehicle Type : - <span id="viewVehicleType"></span></p>
+                                </div>
+                            </div>
+
+                            <!-- Agreement  Information -->
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="section-title">Agreement Information</div>
+                                    <p class="mb-3">Agreement Start Date : - <strong id="viewAgreementStartDate"></strong></p>
+                                    <p class="mb-3">Agreement End Date  : - <strong id="viewAgreementEndDate"></strong></p>
+                                    <p class="mb-3">Agreement Period  : - <strong id="viewAgreementPeriod"></strong></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="section-title">Package Information</div>
+                                    <p class="mb-3">Package Name : - <strong id="viewPackageName"></strong></p>
+                                    <p class="mb-3">Distance : - <strong id="viewPackageDistance"></strong></p>
+                                    <p class="mb-3">Supplier Rate : - <strong id="viewPackageRate"></strong></p>
+
+                                </div>
+                            </div>
+
+                            <!-- Signature Information -->
+                            <div class="row mt-5">
+                                <div class="col-md-6 text-center">
+                                    <p class="mb-1"> <strong >.......................................</strong ></p>
+                                    <p class="mb-1">Supplier Signature</p>
+                                </div>
+                                <div class="col-md-6 text-center">
+                                    <p class="mb-1"> <strong >........................................</strong ></p>
+                                    <p class="mb-1">Manager Signature </p>
+                                </div>
+                            </div>
+                        </div>
+                        <!--                    footer-->
+                        <div class="footer bg-light py-4">
+                            <div class="footer-note text-center text-muted">
+                                <small>
+                                    This document is system-generated and constitutes official company records.<br>
+                                    For any queries, please contact our customer service team.
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

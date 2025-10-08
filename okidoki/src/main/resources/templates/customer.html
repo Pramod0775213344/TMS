@@ -8,66 +8,57 @@
 </head>
 
 <body>
-    <div class="sidebar">
+    <div class="app">
         <div th:replace="fragments/sidebar :: sidebarFragment"></div>
-    </div>
+
 
     <div class="main-content">
 
         <div th:replace="fragments/topbar :: topbarFragment"></div>
         <div class="container-fluid">
 
-
-            <!-- Title  and add button-->
-            <div class="row align-items-center justify-content-between mb-2">
-                <div class="col-auto">
-                </div>
-                <div class="col-auto">
-                    <button class="btn-3d btn-3d-submit" type="button" data-bs-toggle="modal" id="addButton"
-                        data-bs-target="#customerModal" aria-controls="staticBackdrop"><i
-                            class="fa-solid fa-plus me-3"></i>
-                        Add Company
-                    </button>
-                </div>
-            </div>
             <!-- serarch area -->
             <div class="main-card mb-3">
                 <div class="row">
-                    <div class="col-5"></div>
+                    <div class="col-3"></div>
                     <div class="col-6">
                         <div class="row">
                             <div class="col-4">
-                                <label class="form-label">Name</label>
-                                <input type="text" name=""  placeholder="Search Name" class="form-control">
                             </div>
                             <div class="col-4">
-                                <label  class="form-label">Business Type</label>
-                                <select name="" class="form-select">
+                                <label for="searchBusinessType"  class="form-label">Business Type</label>
+                                <select id="searchBusinessType" class="form-select">
                                     <option value="">Select Business Type</option>
                                 </select>
                             </div>
                             <div class="col-4">
-                                <label class="form-label">Status</label>
-                                <select name="" class="form-select">
+                                <label for="searchStatus" class="form-label">Status</label>
+                                <select id="searchStatus" class="form-select">
                                     <option value="">Select Status</option>
                                 </select>
                             </div>
                         </div>
                     </div>
-                    <div class="col-1 mt-4">
-                        <button class="btn btn-search mt-3" data-bs-toggle="tooltip" data-bs-placement="top"
-                            data-bs-title="Search"><i class="fas fa-search"></i></button>
-                        <button class="btn btn-reset mt-3" data-bs-toggle="tooltip" data-bs-placement="top"
-                            data-bs-title="Reset"><i class="fa-solid fa-rotate-right"></i></button>
+                    <div class="col-3 mt-3 d-flex justify-content-center align-items-center gap-3">
+                        <button class="btn-3d btn-3d-submit mt-3" onclick="searchCustomer();"><i class="fas fa-search me-3"></i> Search</button>
+                        <button class="btn-3d btn-3d-cancel mt-3" onclick="resetSearch()"><i class="fa-solid fa-rotate-right me-3"></i>Reset</button>
                     </div>
                 </div>
             </div>
 
             <!-- Main Table Card -->
             <div class="main-card">
+                <div class="p-3 d-flex align-items-center justify-content-between mb-3" style="border-bottom: 2px solid #e2e8f0; border-top-left-radius: 8px; border-top-right-radius: 8px;">
+                    <h1 style="font-size: 1.5rem;font-weight: 600;color: #1A202C;">Customer Details</h1>
+                    <button class="btn-3d btn-3d-add" type="button" data-bs-toggle="modal" id="addButton"
+                            data-bs-target="#customerModal" aria-controls="staticBackdrop"><i
+                            class="fa-solid fa-plus me-3"></i>
+                        Add Company
+                    </button>
+                </div>
                 <!-- Table Area -->
                 <div class="table-responsive">
-                    <table class="table table-hover " id="customerTable">
+                    <table class="table " id="customerTable">
                         <thead>
                             <tr class="table">
                                 <th>#</th>
@@ -76,30 +67,39 @@
                                 <th>Contact Person</th>
                                 <th>Mobile No</th>
                                 <th>Status</th>
-                                <th>Action</th>
+                                <th style="display: none"></th>
                             </tr>
                         </thead>
                         <tbody id="customerTableBody">
 
                         </tbody>
                     </table>
+                    <div class="loader-table" id="loaderId" style="display: none">
+                        <div class="spinner-table">
+                            <div class="spinner-outer-circle-table"></div>
+                            <div class="spinner-inner-circle-table"></div>
+                            <div class="spinner-middle-circle-table"></div>
+                        </div>
+                    </div>
                 </div>
                 <!-- Table Area End -->
             </div>
 
             <!-- Form -->
-            <div class="modal fade" id="customerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            <div class="modal fade " id="customerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-xl">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <div class="header-content ms-4">
-                                <h1 class="modal-title fs-2 text-success" id="staticBackdropLabel">Customer Registration</h1>
-                                <p class="modal-description text-muted">
+                <div class="modal-dialog modal-lg ">
+                    <div class="modal-content rounded-5">
+                        <div class="modal-header" >
+                            <div class="main-card d-flex justify-content-between align-items-center w-100 p-3 shadow-sm">
+                            <div class="header-content flex-grow-1 d-flex flex-column align-items-center ">
+                                <h1 class="modal-title fs-2 text-center" id="staticBackdropLabel"><i class="fa-solid fa-building me-3"></i>Customer Registration</h1>
+                                <p class="modal-description text-muted text-center">
                                     Add a new customer to your system with complete business details and contact information.
                                 </p>
                             </div>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close me-3" data-bs-dismiss="modal" aria-label="Close" onclick="refreshCustomerForm()"></button>
+                            </div>
                         </div>
                         <div class="modal-body">
                             <form id="companyRegistrationForm" onsubmit="return false">
@@ -318,11 +318,11 @@
             <!-- Form -->
         </div>
     </div>
-
+    </div>
     <!--    customer details view form-->
     <div class="modal fade" id="customerdetailsform" data-bs-keyboard="false" tabindex="-1"
          aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content rounded-5">
                 <div class="modal-body p-5">
                     <div id="singleCustomerDetails">

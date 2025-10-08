@@ -1,5 +1,7 @@
 package lk.okidoki.controller;
 
+import lk.okidoki.modal.Employee;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 

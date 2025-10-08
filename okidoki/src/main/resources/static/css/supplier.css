@@ -6,11 +6,18 @@
 
 /* Switch colors */
 #drivingStatusChkbox {
-    width: 2em;
-    height: 1.5em;
-    cursor: pointer;
+    /*width: 2em;*/
+    /*height: 1.5em;*/
+    /*cursor: pointer;*/
 }
 #drivingStatusChkbox:checked {
     background-color: #5DC983;
     border-color: #5DC983;
+}
+/*add changing animation for div*/
+#individualSupplierDetails{
+    transition: all 0.3s ease-in-out;
+}
+#companyDetails {
+    transition: all 0.3s ease-in-out;
 }

@@ -29,16 +29,12 @@ public class Supplier {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto increment
     private Integer id;
 
-    @NotNull
     private String fullname;
 
-    @NotNull
     private String callingname;
 
-    @NotNull
     private String address;
 
-    @NotNull
     @Column(name = "nic", unique = true)
     private String nic;
 
@@ -46,14 +42,28 @@ public class Supplier {
 
     private LocalDate driving_licencen_expiredate;
 
-    @NotNull
     @Length(max = 10)
     @Column(name = "mobileno", unique = true)
     private String mobileno;
 
-    @NotNull
     @Column(name = "email", unique = true)
     private String email;
+
+    private String category_type;
+
+    private String company_name;
+
+    private String company_reg_no;
+
+    private String company_address;
+
+    private String company_email;
+
+    private String company_contact_no;
+
+    private String company_contact_person_mobileno;
+
+    private String company_contact_person_email;
 
     @NotNull
     private LocalDateTime added_datetime;

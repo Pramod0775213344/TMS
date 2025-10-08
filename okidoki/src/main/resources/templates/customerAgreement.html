@@ -9,9 +9,9 @@
 
 <body>
     <!-- sidebar -->
-    <div class="sidebar">
+    <div class="app">
         <div th:replace="fragments/sidebar :: sidebarFragment"></div>
-    </div>
+
     <!-- sidebar -->
     <div class="main-content">
         <!-- topnavbar -->
@@ -23,46 +23,65 @@
             <!-- header -->
             <div class="row align-items-center justify-content-between mb-2">
                 <div class="col-auto">
+
                 </div>
                 <div class="col-auto">
-                    <button class="btn-3d btn-3d-submit" type="button" data-bs-toggle="modal" id="addButton"
-                        data-bs-target="#customerAgreementModal" aria-controls="staticBackdrop"><i
-                            class="fa-solid fa-plus"></i>
-                        Add Agreement
-                    </button>
+
                 </div>
             </div>
             <!-- header -->
 
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-title">Total Agreemnts</div>
+                    <div class="stat-value text-dark" id="customerAgreementCount">1,438</div>
+
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">Pending Approval</div>
+                    <div class="stat-value" id="pendingCustomerAgreementCount">485</div>
+
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">Active Agreements</div>
+                    <div class="stat-value" id="activeCustomerAgreementCount">23</div>
+
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">Reject Agreements</div>
+                    <div class="stat-value" id="rejectCustomerAgreementCount">50</div>
+
+                </div>
+            </div>
+
             <!-- serarch area -->
             <div class="main-card mb-3">
-                <div class="row">
-                    <div class="col-5"></div>
-                    <div class="col-6">
-                        <div class="row">
-                            <div class="col-4">
-                                <label for="" class="form-label">Name</label>
-                                <input type="text" name="" id="" placeholder="Search Name" class="form-control">
-                            </div>
-                            <div class="col-4">
-                                <label for="" class="form-label">Vehicle Type</label>
-                                <select name="" id="" class="form-select">
-                                    <option value="">Select Vehicle Type</option>
-                                </select>
-                            </div>
-                            <div class="col-4">
-                                <label for="" class="form-label">Status</label>
-                                <select name="" id="" class="form-select">
-                                    <option value="">Select Status</option>
-                                </select>
-                            </div>
-                        </div>
+                <div class="fw-bold ps-3 pe-3 pb-3" style="font-size: 20px"> Filter & Search</div>
+                <div class="row ps-3 pe-3 pt-0 pb-0">
+                    <div class="col-4">
+                        <label for="filteringCustomerName" class="form-label">Customer Name</label>
+                        <select  id="filteringCustomerName" class="form-select">
+                            <option value="">Select Customer Name</option>
+                        </select>
                     </div>
-                    <div class="col-1 mt-4">
-                        <button class="btn btn-search mt-3" data-bs-toggle="tooltip" data-bs-placement="top"
-                            data-bs-title="Search"><i class="fas fa-search"></i></button>
-                        <button class="btn btn-reset mt-3" data-bs-toggle="tooltip" data-bs-placement="top"
-                            data-bs-title="Reset"><i class="fa-solid fa-rotate-right"></i></button>
+                    <div class="col-4">
+                        <label for="filteringVehicleType" class="form-label">Vehicle Type</label>
+                        <select id="filteringVehicleType" class="form-select">
+                            <option value="">Select Vehicle Type</option>
+                        </select>
+                    </div>
+                    <div class="col-4">
+                        <label for="filteringStatus" class="form-label">Agreement Status</label>
+                        <select id="filteringStatus" class="form-select">
+                            <option value="">Select Status</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="col-3 mt-0 d-flex justify-content-start gap-3">
+                        <button class="btn-3d btn-3d-submit mt-3" onclick="filtering()"> Apply Filters</button>
+                        <button class="btn-3d btn-3d-cancel mt-3" onclick="resetFilter()">Reset</button>
                     </div>
                 </div>
             </div>
@@ -70,24 +89,38 @@
 
             <!-- Main Table Card -->
             <div class="main-card">
+                <div class="p-3 d-flex align-items-center justify-content-between mb-3" style="background-color: #f1f5f9;border-bottom: 2px solid #e2e8f0; border-top-left-radius: 8px; border-top-right-radius: 8px;">
+                    <h1 style="font-size: 1.5rem;font-weight: 600;color: #1A202C;">Customer Agreement Details</h1>
+                    <button class="btn-3d btn-3d-add" type="button" data-bs-toggle="modal" id="addButton"
+                            data-bs-target="#customerAgreementModal" aria-controls="staticBackdrop"><i
+                            class="fa-solid fa-plus"></i>
+                        Add Agreement
+                    </button>
+                </div>
                 <div class="table-responsive">
-                    <table class="table table-hover " id="customerAgreementTable">
+                    <table class="table " id="customerAgreementTable">
                         <thead>
-                            <tr class="table">
+                            <tr>
                                 <th>No</th>
                                 <th>Agreement No</th>
-                                <th>Customer Name</th>
-                                <th>Package</th>
-                                <th>Distance</th>
-                                <th>Vehicle Type</th>
-                                <th>End Date</th>
+                                <th>Customer Details</th>
+                                <th>Service Package</th>
+                                <th>Vehicle Specifications</th>
+                                <th>Contract Period</th>
                                 <th>Status</th>
-                                <th>Actions</th>
+                                <th style="display: none"></th>
                             </tr>
                         </thead>
                         <tbody id="customerAgreementTableBody">
                         </tbody>
                     </table>
+                    <div class="loader-table" id="loaderId" style="display: none">
+                        <div class="spinner-table">
+                            <div class="spinner-outer-circle-table"></div>
+                            <div class="spinner-inner-circle-table"></div>
+                            <div class="spinner-middle-circle-table"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- Mani Table Card end -->
@@ -95,7 +128,7 @@
             <!-- Modal -->
             <div class="modal fade" id="customerAgreementModal" data-bs-backdrop="static" data-bs-keyboard="false"
                 tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-xl">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h1 class="modal-title fs-4 text-center">Customer
@@ -200,20 +233,31 @@
 
                                             <!-- Other Details -->
                                             <div class="mb-4">
-                                                <h4 class="section-title">Other Details</h4>
                                                 <div class="row">
-                                                    <div class="col-md-12 mb-3">
-                                                        <label for="textCustomerAgreementNote"
-                                                            class="form-label">Special
-                                                            Requirements or Notes</label>
-                                                        <textarea name="" id="textCustomerAgreementNote"
-                                                            class="form-control"
-                                                            onkeyup="validator(this,'^([A-Za-z]{1,16})([ ]{0,1})([A-Za-z]{0,16})([ ]{0,1})([A-Za-z]{0,16})([ ]{0,1})([A-Za-z]{0,16})([ ]{0,1})([A-Za-z]{0,16})$','customerAgreement','special_note')"></textarea>
+                                                    <div class="col-md-12 mb-3" id="otherDetails">
+                                                        <div class="table" id="customerAgreementViewTable">
+                                                            <h1 class="section-title" style="font-size:1.5rem;font-weight:600;color:#343a40;margin-bottom:16px;">Other Agreement Details</h1>
+                                                            <table class= "table table-hover" >
+                                                                <thead>
+                                                                <th>No</th>
+                                                                <th>Agreement No</th>
+                                                                <th>Vehicle Type</th>
+                                                                <th>Package Type</th>
+                                                                </thead>
+                                                                <tbody id="customerAgreementViewTableBody">
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div id="newCustomerNote" style="background-color:#f8f9fa;padding:12px;border-radius:6px;border:1px solid #dee2e6;">
+                                                            <p style="margin:0;color:#495057;font-weight:500;">This customer is new to our Company. Please review their details carefully before proceeding with the agreement.</p>
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-12 mb-3">
-                                                        <label for="textCustomerAgreementNote" class="form-label">
+                                                    <div class="col-md-12 mb-3" id="textCustomerAgreementApprovalNoteDiv">
+                                                        <label for="textCustomerAgreementApprovalNote" class="form-label">
                                                             Approval Note</label>
                                                         <textarea name="" id="textCustomerAgreementApprovalNote"
                                                             class="form-control" disabled readonly></textarea>
@@ -458,7 +502,7 @@
             <!--View  Modal -->
         </div>
     </div>
-
+    </div>
     <!-- loading overlay -->
     <div th:replace="fragments/loading :: overlayFragment"></div>
     <!-- loading overlay -->

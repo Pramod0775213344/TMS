@@ -44,16 +44,29 @@ const vehiclecountgeneratebytype = () =>{
             datasets: [{
                 label: '# of Votes',
                 data: data,
-                borderWidth: 1,
+                // borderWidth: 1,
+                // backgroundColor: [
+                //     '#22C55E',  // Primary green
+                //     '#4ADE80',  // Mint green
+                //     '#86EFAC',  // Soft light green
+                //     '#16A34A',  // Darker green
+                //     '#BBF7D0',  // Very light green
+                //     '#15803D',  // Forest green
+                //     '#A7F3D0'   // Mint pastel
+                // ],
+
                 backgroundColor: [
-                    '#22C55E',  // Primary green
-                    '#4ADE80',  // Mint green
-                    '#86EFAC',  // Soft light green
-                    '#16A34A',  // Darker green
-                    '#BBF7D0',  // Very light green
-                    '#15803D',  // Forest green
-                    '#A7F3D0'   // Mint pastel
+                    '#cc0000',
+                    '#ff3333',
+                    '#ff6666',
+                    '#ff9999',
+                    '#ffcccc',
+                    '#800000',
                 ],
+                borderColor: '#ffffff',
+                borderWidth: 2,
+                borderRadius: 8,
+                borderSkipped: false
             }]
         },
         options: {

@@ -6,7 +6,10 @@ window.addEventListener("load", () => {
   initMap();
   refreshForm();
 
-
+  // Booking Array
+  bookings = getServiceRequest('/booking/bystatus');
+  loadBookingTable(bookings);
+  showTableLoading();
 
 });
 
@@ -83,7 +86,20 @@ const loadBookingTable = (bookings) => {
   // Data Filling Function to Table
   dataFillIntoTheTable(bookingTableBody, bookings, propertyList, bookingView, bookingEdit, bookingDelete,);
 
-  $('#bookingTable').DataTable();
+  $("#bookingTable").dataTable({
+    "createdRow": function(row, data, dataIndex) {
+      $(row).find("td").css({
+        "text-align": "center",
+        "height": "80px"
+      });
+    },
+    "headerCallback": function(thead, data, start, end, display) {
+      $(thead).find("th").css({
+        "text-align": "center",
+        "padding": "20px"
+      });
+    }
+  });
 
 };
 
@@ -184,7 +200,57 @@ const bookingView = (dataOb, index) => {
   dataBookingStatus.innerText = dataOb.booking_status_id.status;
 
 
-  $("#bookingViewForm").modal("show");
+  viewBookingNo.innerText=dataOb.booking_no;
+  viewVehicleType.innerText = dataOb.vehicle_type_id.name;
+  viewPickupLocation.innerText = dataOb.pickup_locations_id.name;
+  viewPickupDateTime.innerText = dataOb.pickup_date_time;
+  viewDeliveryLocation.innerText = dataOb.delivery_locations_id.name;
+  viewDeliveryDateTime.innerText = dataOb.delivery_date_time;
+  viewDistance.innerText = dataOb.distance;
+  viewBookingStatus.innerText = dataOb.booking_status_id.status;
+  viewCustomerName.innerText = dataOb.customer_id.company_name;
+  viewCustomerAddress.innerText = dataOb.customer_id.company_address;
+  viewCustomerEmail.innerText = dataOb.customer_id.direct_email_no;
+  viewCustomerPhone.innerText = dataOb.customer_id.direct_telephone_no;
+  viewContactPersonName.innerText = dataOb.booking_contact_person_name;
+  viewContactPersonPhone.innerText = dataOb.booking_contact_person_mobileno;
+  // map intialize karanwa
+  map = new google.maps.Map(document.getElementById('viewMap'), {
+    zoom: 13,
+    center: { lat: 6.9271, lng: 79.8612 } // Colombo, Sri Lanka coordinates
+  });
+
+  // Initialize the DirectionsService and DirectionsRenderer
+  directionsService = new google.maps.DirectionsService();
+  directionsRenderer = new google.maps.DirectionsRenderer({
+    map: map,
+    panel: document.getElementById('directions-panel')
+  });
+
+  const origin = dataOb.pickup_locations_id.address;
+  const destination = dataOb.delivery_locations_id.address;
+  const locationList = (dataOb.locations || []).map(loc => ({
+    location: loc.address,
+    stopover: true
+  }));
+
+  // Create request for directions service
+  const request = {
+    origin: origin,
+    destination: destination,
+    waypoints: locationList,
+    optimizeWaypoints: true,
+    travelMode: google.maps.TravelMode.DRIVING
+  };
+
+  directionsService.route(request, function (response, status) {
+    if (status === google.maps.DirectionsStatus.OK) {
+      directionsRenderer.setDirections(response);
+
+    }
+    });
+
+  $("#bookingViewCanvas").offcanvas("show");
 };
 
 //Print Button  Of the Table
@@ -611,11 +677,6 @@ const refreshForm = () => {
   let deliveryLocation = getServiceRequest('/deliverylocation/alldata');;
   dataFilIntoSelect(textDeliveryLocation, "Select Delivery Location", deliveryLocation, "name")
 
-  // Booking Array
-  bookings = getServiceRequest('/booking/bystatus');
-  loadBookingTable(bookings);
-  showTableLoading();
-
   // current date validate and previous date restrict
   currentdatetimevalidator('textPickupDateAndTime')
 
@@ -712,8 +773,11 @@ selectCompanyNameElement.addEventListener("change", () => {
   waypointslist.innerHTML = '';
 
 // customer change karaddi  validation clean wenna oni
-  setDefault([textContactPerson, textContactPersonMobileNo, textPickupLocation, textDeliveryLocation, selectVehicleType])
+  setDefault([textContactPerson, textContactPersonMobileNo, textPickupLocation, textDeliveryLocation, selectVehicleType,textPickupDateAndTime])
 
+  // agreement div tag eka clean wenna oni
+  divParentRadio.innerHTML = "";
+  availableAgreementDiv.style.display = "none";
   generateBookingNo();
 
 });
@@ -773,8 +837,8 @@ let waypoints = [];
 function initMap() {
   // Initialize the map
   map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 6,
-    center: { lat: 37.7749, lng: -122.4194 } // San Francisco coordinates
+    zoom: 13,
+    center: { lat: 6.9271, lng: 79.8612 } // Colombo, Sri Lanka coordinates
   });
 
   // Initialize the DirectionsService and DirectionsRenderer
@@ -963,6 +1027,57 @@ vialocationchkbox.addEventListener('click', () => {
   calculateRoute();
 })
 
+// avialbele agreement gannwa booking add wela nathi select karana date range ekata
+let selectVehicleTypeElement = document.getElementById("selectVehicleType");
+selectVehicleTypeElement.addEventListener("change", () => {
+  setDefault([textPickupDateAndTime]);
+  textPickupDateAndTime.value = "";
+  divParentRadio.innerHTML = "";
+  availableAgreementDiv.style.display = "none";
+})
+
+let selectPickupDateAndTimeElement = document.getElementById("textPickupDateAndTime");
+console.log(selectPickupDateAndTimeElement.value);
+// only get date from date time filed
+selectPickupDateAndTimeElement.addEventListener("change", () => {
+  let dateValue = selectPickupDateAndTimeElement.value.split('T')[0];
+  console.log(dateValue);
+
+  customerAgreementsList = getServiceRequest("/customeragreement/bylistcutomerandvehicletype?customerId=" + JSON.parse(selectCompanyNameElement.value).id + "&vehicleTypeId=" + JSON.parse(selectVehicleTypeElement.value).id);
+  for (const customeragreement of customerAgreementsList) {
+    console.log(customeragreement)
+    if (customeragreement.package_id.package_type === 'Fix Rate') {
+      availableAgreementDiv.style.display = "";
+      divParentRadio.innerHTML = "";
+      let availableAgreements = getServiceRequest(
+          "/customeragreement/bycutomerandvehicletypeandgivendate?customerId=" + JSON.parse(selectCompanyNameElement.value).id + "&vehicleTypeId=" + JSON.parse(selectVehicleTypeElement.value).id + "&date=" + dateValue
+      );
+      console.log(availableAgreements)
+      availableAgreements.forEach(agreement => {
+        const div = document.createElement("div");
+        div.className = "form-check form-check-inline";
+        const input = document.createElement("input");
+        input.className = "form-check-input";
+        input.value = agreement.cus_agreement_no;
+        input.name = "customerAgreement";
+        input.type = "radio";
+        input.onchange = () => {
+          booking.customer_agreement_id = agreement;
+        };
+        const label = document.createElement("label");
+        label.innerText = agreement.cus_agreement_no;
+        label.className = "form-check-label fw-bold text-muted";
+        div.appendChild(input);
+        div.appendChild(label);
+        divParentRadio.appendChild(div);
+      });
+    } else if (customeragreement.package_id.package_type === 'Floating Rate') {
+      availableAgreementDiv.style.display = "none";
+      booking.customer_agreement_id = customeragreement;
+    }
+  };
+});
+
 // create booking no using customer name and previous booking no
 const generateBookingNo = () => {
 
@@ -988,8 +1103,12 @@ const generateBookingNo = () => {
 
   // Get the last booking number and increment it
   const lastBooking = bookingList[0];
-  let lastBookingNo = lastBooking.booking_no;
-
+  if (lastBooking == null) {
+    lastBookingNo = customerInitials + "00000001"; // If no previous booking, start with 00000001
+    booking.booking_no = lastBookingNo;
+    console.log(lastBookingNo);
+  }else{
+    let lastBookingNo = lastBooking.booking_no;
   // last booking no eken numbers tika witharak gannawa
   let numberPart = parseInt(lastBookingNo.slice(5));
   console.log(numberPart)
@@ -997,6 +1116,7 @@ const generateBookingNo = () => {
   let newBookingNo = customerInitials + String(numberPart + 1).padStart(8, "0");
   booking.booking_no = newBookingNo;
   console.log(newBookingNo);
+  }
 }
 
 // table eke loading spin eka load karanwa

@@ -1,16 +1,66 @@
 
 window.addEventListener("load", () => {
-
-    loadCustomerTable();
-
     refreshCustomerForm();
 
+    //  table eka load wenwawa
+    let customers = getServiceRequest('/customer/alldata');
+    loadCustomerTable(customers);
+    showTableLoading();
 })
 
-const loadCustomerTable = () => {
+// serach area
+const searchCustomer = () =>{
+    if ($.fn.dataTable.isDataTable('#customerTable')) {
+        $('#customerTable').DataTable().clear().destroy();
+    }
+    let searchBusinessType = document.getElementById('searchBusinessType').value;
+    let searchStatus = document.getElementById('searchStatus').value;
 
-    //Data array
-    let customer = getServiceRequest('/customer/alldata');
+    if (searchBusinessType != "" && searchStatus != "") {
+        customerByStatusAndBusinessType = getServiceRequest('/customer/bycustomerstatusandbusinesstype?businesstypeid=' + JSON.parse(searchBusinessType).id + '&customerstatusId=' + JSON.parse(searchStatus).id);
+        loadCustomerTable(customerByStatusAndBusinessType);
+        showTableLoading();
+
+    } else if (searchBusinessType != "") {
+
+        customerByBusinessType = getServiceRequest('/customer/businesstypeid?businesstypeid=' + JSON.parse(searchBusinessType).id);
+        loadCustomerTable(customerByBusinessType);
+        showTableLoading();
+
+    } else if (searchStatus != "") {
+
+        cutomerByStatus = getServiceRequest('/customer/bystatus?&customerstatusId=' + JSON.parse(searchStatus).id);
+        loadCustomerTable(cutomerByStatus);
+        showTableLoading();
+
+    } else  {
+        Swal.fire({
+            title: "Opps?",
+            text: "Please Select Business Type or Customer Status",
+            icon: "question",
+            allowOutsideClick: false,
+            customClass :{
+                confirmButton :'btn-3d btn-3d-other'
+            }
+        });
+        loadCustomerTable(customers);
+    }
+};
+
+// reset search area
+const resetSearch = () =>{
+    if ($.fn.dataTable.isDataTable('#customerTable')) {
+        $('#customerTable').DataTable().clear().destroy();
+    }
+    searchBusinessType.value = "";
+    searchStatus.value = "";
+    let customers = getServiceRequest('/customer/alldata');
+    loadCustomerTable(customers);
+    showTableLoading();
+}
+
+// customer table load area
+const loadCustomerTable = (customers) => {
 
     let propertyList = [
         { propertyName: getCompnayDetails, dataType: "function" },
@@ -21,17 +71,35 @@ const loadCustomerTable = () => {
 
     ]
 
-    dataFillIntoTheTable(customerTableBody, customer, propertyList, customerView, customerEdit, customerDelete, true);
+    dataFillIntoTheTable(customerTableBody, customers, propertyList, customerView, customerEdit, customerDelete, true);
 
-    $('#customerTable').DataTable();
+    $("#customerTable").dataTable({
+        "createdRow": function(row, data, dataIndex) {
+            $(row).find("td").css({
+                "text-align": "center",
+                "height": "80px"
+            });
+        },
+        "headerCallback": function(thead, data, start, end, display) {
+            $(thead).find("th").css({
+                "text-align": "center",
+                "padding": "20px"
+            });
+        }
+    });
 
 };
+
+// cutomer deatils
 const getCompnayDetails = (dataOb) => {
     return "<span>" + dataOb.company_name + "</span><span><p class='text-muted mt-2' >"+ dataOb.direct_email_no +"</p></span>";
 }
+
+// customer details
 const getContactPersonDeatils = (dataOb) => {
     return "<span>" + dataOb.contact_person_fullname + "</span><span><p class='text-muted mt-2' >"+ dataOb.contact_person_email +"</p></span>";
 }
+
 // status Function
 const getCustomerStatus = (dataOb) => {
     if (dataOb.customer_status_id.status == 'Active') {
@@ -456,6 +524,23 @@ const refreshCustomerForm = () => {
 
     statusDiv.style.display = "none";
 
+//     for sreach drop downs
+    dataFilIntoSelect(searchStatus, "Select Status", customerStatus, "status");
+    dataFilIntoSelect(searchBusinessType, "Select Business Type", businessTypes, "name");
+
+}
+
+// table eke loading spin eka load karanwa
+function showTableLoading() {
+    const loader = document.getElementById('loaderId');
+    const CustomerTable = document.getElementById('customerTable');
+    loader.style.display = ''; // Clear loading after 2 seconds
+    CustomerTable.style.display = 'none'; // Hide the booking table while loading
+    setTimeout(() => {
+        const loader = document.getElementById('loaderId');
+        loader.style.display = 'none'; // Clear loading after 2 seconds
+        CustomerTable.style.display = ''; // Hide the booking table while loading
+    }, 500);
 }
 
 //Alert Box Call function

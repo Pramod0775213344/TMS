@@ -236,8 +236,8 @@ const vehicleAssigningForm = (dataOb) => {
     }
 
     if (dataOb.booking_status_id.status == "Inproccess" || dataOb.booking_status_id.status == "Attend") {
-        let vehicleList = getServiceRequest("vehicle/vehiclebyvehiclegroupandvehicletype?customer_id="+dataOb.customer_id.id +"&vehicletype_id="+dataOb.vehicle_type_id.id);
-        dataFilIntoSelect(selectVehicleNo, "Select Vehicle ", vehicleList, "vehicle_no")
+        console.log(dataOb);
+        console.log(dataOb.vehicle_id);
 
         // vehicle details null neme nam refill wenna oni
         if (dataOb.vehicle_id != null) {
@@ -245,7 +245,11 @@ const vehicleAssigningForm = (dataOb) => {
 
             updateButton.style.display = "";
             submitButton.style.display = "none";
+            let vehicleList = getServiceRequest("vehicle/vehiclebyvehiclegroupandvehicletype?customer_id="+dataOb.customer_id +"&vehicletype_id="+dataOb.vehicle_type_id);
+            dataFilIntoSelect(selectVehicleNo, "Select Vehicle ", vehicleList, "vehicle_no")
+            console.log(vehicleList);
         }
+
 
         // driver details nul neme nam refill wenna oni
         if (dataOb.driver_id != null) {
@@ -522,7 +526,7 @@ const vehicleAssigningFormSubmitButton = () => {
                             confirmButton :'btn-3d btn-3d-other'
                         }                    });
                     search();
-                    refresh();
+                    refreshVehicleAssigningForm();
                     $("#vehicleAssigning").modal("hide");
                 } else {
                     Swal.fire({
@@ -620,7 +624,7 @@ const vehicleAssigningFormUpdate = () => {
                             }
                         });
                         search();
-                        refresh();
+                        refreshVehicleAssigningForm();
                         $("#vehicleAssigning").modal("hide");
 
                     } else {
@@ -683,7 +687,7 @@ const dateAddingButton = () => {
                 }
             });
             search();
-            refresh();
+            refreshVehicleAssigningForm();
             $("#datetimeAddingFormModal").modal("hide");
 
         } else {
@@ -743,7 +747,7 @@ const checkDateFormUpdates = () => {
     return updates;
 }
 
-// vehicle assigning form update button eka
+// date form form update button eka
 const dateUpadteButton = () => {
 
     // check form error for required element
@@ -788,9 +792,8 @@ const dateUpadteButton = () => {
                             }
                         });
                         search();
-                        refresh();
+                        refreshVehicleAssigningForm();
                         $("#datetimeAddingFormModal").modal("hide");
-
                     } else {
                         Swal.fire({
                             title: "Failed to Submit....?",
@@ -874,7 +877,9 @@ const refreshVehicleAssigningForm = ()=>{
     updateButton.style.display = "none";
     submitButton.style.display = "";
 
-    setDefault([selectVehicleNo,selectdriver])
+    datetimeAddingForm.reset();
+    setDefault([selectVehicleNo,selectdriver,pickupDateAndTime,departedPickupDateAndTime,arrivedDeliveryDateAndTime,departedDeliveryDateAndTime,textStartMeterReading,textEndtMeterReading]);
+
 }
 
 // select vehicle no with supplier transport name

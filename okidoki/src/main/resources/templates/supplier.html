@@ -10,9 +10,9 @@
 <body>
 
     <!-- sidebar -->
-    <div class="sidebar">
+    <div class="app">
         <div th:replace="fragments/sidebar :: sidebarFragment"></div>
-    </div>
+
 
     <div class="main-content">
         <div th:replace="fragments/topbar :: topbarFragment"></div>
@@ -22,13 +22,14 @@
             <!-- Title  and add button-->
             <div class="row align-items-center justify-content-between mb-2">
                 <div class="col-auto">
-                </div>
-                <div class="col-auto">
-                    <button class="btn-3d btn-3d-submit" type="button" data-bs-toggle="modal" id="addButton"
-                        data-bs-target="#supplierForm" aria-controls="staticBackdrop"><i
+                    <button class="btn-3d btn-3d-add" type="button" data-bs-toggle="modal" id="addButton"
+                            data-bs-target="#supplierForm" aria-controls="staticBackdrop"><i
                             class="fa-solid fa-plus me-3"></i>
                         Add Supplier
                     </button>
+                </div>
+                <div class="col-auto">
+
                 </div>
             </div>
 
@@ -36,7 +37,7 @@
             <!-- search area -->
             <div class="main-card mb-3">
                 <div class="row">
-                    <div class="col-5"></div>
+                    <div class="col-3"></div>
                     <div class="col-6">
                         <div class="row">
                             <div class="col-4">
@@ -55,11 +56,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-1 mt-4">
-                        <button class="btn btn-search mt-3" data-bs-toggle="tooltip" data-bs-placement="top"
-                            data-bs-title="Search"><i class="fas fa-search"></i></button>
-                        <button class="btn btn-reset mt-3" data-bs-toggle="tooltip" data-bs-placement="top"
-                            data-bs-title="Reset"><i class="fa-solid fa-rotate-right"></i></button>
+
+                    <div class="col-3 mt-3 d-flex justify-content-center align-items-center gap-3">
+                        <button class="btn-3d btn-3d-submit mt-3" data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-title="Search"><i class="fas fa-search me-3"></i> Search</button>
+                        <button class="btn-3d btn-3d-cancel mt-3" data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-title="Reset"><i class="fa-solid fa-rotate-right me-3"></i>Reset</button>
                     </div>
                 </div>
             </div>
@@ -67,37 +69,71 @@
 
             <!-- Main Table Card -->
             <div class="main-card">
-                <!-- Table Area -->
-                <div class="table-responsive">
-                    <table class="table table-hover" id="supplierTable">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Owner Name</th>
-                                <th>Driving License No</th>
-                                <th>Nic</th>
-                                <th>Email</th>
-                                <th>Mobile No</th>
-                                <th>Driving Status</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="supplierTableBody">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <button class="nav-link active" id="nav-individual-tab" data-bs-toggle="tab" data-bs-target="#nav-individual" type="button" role="tab" aria-controls="nav-individual" aria-selected="true">Individual</button>
+                        <button class="nav-link" id="nav-company-tab" data-bs-toggle="tab" data-bs-target="#nav-company" type="button" role="tab" aria-controls="nav-company" aria-selected="false">Company</button>
 
-                        </tbody>
-                    </table>
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-individual" role="tabpanel" aria-labelledby="nav-individual-tab" tabindex="0">
+                        <!-- Table Area -->
+                        <div class="table-responsive">
+                            <table class="table" id="supplierTable">
+                                <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Owner Name</th>
+                                    <th>Driving License No</th>
+                                    <th>Nic</th>
+                                    <th>Email</th>
+                                    <th>Mobile No</th>
+                                    <th>Driving Status</th>
+                                    <th>Status</th>
+                                    <th style="display: none"></th>
+                                </tr>
+                                </thead>
+                                <tbody id="supplierTableBody">
 
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <!-- Table Area End -->
+                    </div>
+                    <div class="tab-pane fade" id="nav-company" role="tabpanel" aria-labelledby="nav-company-tab" tabindex="0">
+                        <!-- Table Area -->
+                        <div class="table-responsive">
+                            <table class="table" id="supplierTableCompany">
+                                <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Company Name</th>
+                                    <th>Company Registration No</th>
+                                    <th>Email</th>
+                                    <th>Mobile No</th>
+                                    <th>Status</th>
+                                    <th style="display: none"></th>
+                                </tr>
+                                </thead>
+                                <tbody id="supplierTableBodyCompany">
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <!-- Table Area End -->
+                    </div>
                 </div>
-                <!-- Table Area End -->
             </div>
             <!-- Main Table Card End -->
 
 
             <!-- form Modal -->
-            <div class="modal fade modal-xl" id="supplierForm" data-bs-backdrop="static" data-bs-keyboard="false"
+            <div class="modal fade " id="supplierForm" data-bs-backdrop="static" data-bs-keyboard="false"
                 tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h1 class="modal-title fs-5" id="staticBackdropLabel">Supplier Registration</h1>
@@ -109,8 +145,24 @@
                                 <div class="row">
                                     <div class="profile-section">
                                         <div class="p-4">
-                                            <!-- Supplier Details -->
+<!--                                            category-->
                                             <div class="mb-4">
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="textSupplierCategory" class="form-label">Category
+                                                            <span class="text-danger">*</span></label>
+                                                        <select class="form-select" id="textSupplierCategory"
+                                                            onchange="selectElementValidator(this,'supplier','category_type')"
+                                                            required>
+                                                            <option selected disabled>Select Category</option>
+                                                            <option value="Company">Company</option>
+                                                            <option value="Individual">Individual</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Supplier Details -->
+                                            <div class="mb-4" id="individualSupplierDetails" style="display: none;">
                                                 <h4 class="section-title">Personal Information</h4>
                                                 <div class="row">
                                                     <div class="col-md-6 mb-3">
@@ -137,16 +189,38 @@
                                                             placeholder="Enter Address"
                                                             onkeyup="validator(this,'^([A-Za-z0-9/]{0,20}[\\s])+([A-Za-z0-9]{2,20})$','supplier','address')"></textarea>
                                                     </div>
-
-                                                    <div class="col-md-4 mb-3">
-                                                        <label for="textSupplierNic" class="form-label">Nic<span
-                                                                class="text-danger">*</span></label>
-                                                        <input type="text" id="textSupplierNic" class="form-control "
-                                                            placeholder="Enter NIC Number"
-                                                            onkeyup="validator(this,'^([6789][0-9]{8}[Vv])|([12][0-9]{11})$','supplier','nic')"
-                                                            required>
+                                                    <div class="col-md-12 mb-3 mt-3">
+                                                        <div class="row">
+                                                                    <div class="col-md-3 mb-3">
+                                                                        <p class="form-label">Is the supplier also a driver? <span class="text-danger">*</span></p>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <div id="drivingStatus">
+                                                                            <div class="form-check">
+                                                                                <input class="form-check-input" type="checkbox"
+                                                                                       id="drivingStatusChkbox" checked onchange="
+                                                                    if (this.checked) {
+                                                                        supplier.driving_status = true;
+                                                                        labelDrivingStatus.innerText = 'Yes';
+                                                                        drivingLicenseDiv.style.display = '';
+                                                                        supplierDrivingLicenseExpireDateDiv.style.display = '';
+                                                                    } else {
+                                                                        supplier.driving_status = false;
+                                                                        labelDrivingStatus.innerText = 'No';
+                                                                         drivingLicenseDiv.style.display = 'none';
+                                                                        supplierDrivingLicenseExpireDateDiv.style.display = 'none';
+                                                                    }">
+                                                                                <label class="form-check-label"
+                                                                                       for="drivingStatusChkbox"
+                                                                                       id="labelDrivingStatus">
+                                                                                    Yes</label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-md-4 mb-3">
+
+                                                    <div class="col-md-6 mb-3" id="drivingLicenseDiv">
                                                         <label for="textSupplierDrivingLicenseNo"
                                                             class="form-label ">Driving
                                                             License
@@ -155,7 +229,7 @@
                                                             class="form-control " placeholder="Enter Driving License No"
                                                             onkeyup="validator(this,'^([A-Z][0-9]{7})$','supplier','driving_licence_no')">
                                                     </div>
-                                                    <div class="col-md-4 mb-3">
+                                                    <div class="col-md-6 mb-3" id="supplierDrivingLicenseExpireDateDiv">
                                                         <label for="textSupplierDrivingLicenseExpireDate"
                                                             class="form-label">Driving
                                                             License Expire Date</label>
@@ -163,7 +237,15 @@
                                                             class="form-control"
                                                             onchange="dateElementValidator(this,'supplier','driving_licencen_expiredate')">
                                                     </div>
-                                                    <div class="col-md-6 mb-3">
+                                                    <div class="col-md-4 mb-3">
+                                                        <label for="textSupplierNic" class="form-label">Nic<span
+                                                                class="text-danger">*</span></label>
+                                                        <input type="text" id="textSupplierNic" class="form-control "
+                                                               placeholder="Enter NIC Number"
+                                                               onkeyup="validator(this,'^([6789][0-9]{8}[Vv])|([12][0-9]{11})$','supplier','nic')"
+                                                               required>
+                                                    </div>
+                                                    <div class="col-md-4 mb-3">
                                                         <label for="textSupplierEmail" class="form-label"> Email
                                                             <span class="text-danger">*</span></label>
                                                         <input type="email" class="form-control " id="textSupplierEmail"
@@ -171,7 +253,7 @@
                                                             onkeyup="validator(this,'^([A-Za-z0-9]{0,20})[@]([a-z]{3,8})[.]([a-z]{2,9})$','supplier','email')"
                                                             required>
                                                     </div>
-                                                    <div class="col-md-6 mb-3">
+                                                    <div class="col-md-4 mb-3">
                                                         <label for="textSupplierMobileNo" class="form-label">Mobile
                                                             No <span class="text-danger">*</span></label>
                                                         <input type="text" class="form-control "
@@ -182,13 +264,115 @@
                                                 </div>
                                             </div>
 
+                                            <!--company deatisl-->
+                                            <div id="companyDetails" class="mb-4" style="display: none;">
+                                                <h4 class="section-title">Company Details</h4>
+<!--                                                compnay name and reg no-->
+                                                <div class="row mt-3" >
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="textSupplierCompanyName"
+                                                               class="form-label">Company
+                                                            Name
+                                                            <span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control"
+                                                               id="textSupplierCompanyName"
+                                                               placeholder="Enter Company Name"
+                                                               onkeyup="validator(this,'^([A-Z][a-z]{1,20}[\\s])+([A-Z][a-z]{2,20})$','supplier','company_name')"
+                                                               required>
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="textSupplierCompanyRegNo"
+                                                               class="form-label">Company
+                                                            Reg No<span class="text-danger">*</span></label>
+                                                        <input type="text" id="textSupplierCompanyRegNo"
+                                                               class="form-control "
+                                                               placeholder="Enter Company Reg No"
+                                                               onkeyup="validator(this,'^([0-9]{8})$','supplier','company_reg_no')"
+                                                               required>
+                                                    </div>
+                                                </div>
+<!--                                                address-->
+                                                <div class="row mt-3">
+                                                    <div class="col-md-12 mb-3">
+                                                        <label for="textSupplierCompanyAddress"
+                                                               class="form-label ">Company
+                                                            Address
+                                                            <span class="text-danger">*</span></label>
+                                                        <textarea name="" id="textSupplierCompanyAddress"
+                                                                  class="form-control"
+                                                                  placeholder="Enter Company Address"
+                                                                  onkeyup="validator(this,'^([A-Za-z0-9/]{0,20}[\\s])+([A-Za-z0-9]{2,20})$','supplier','company_address')"
+                                                                  required></textarea>
+                                                    </div>
+                                                </div>
+<!--                                                company email and telephone no-->
+                                                <div class="row mt-3">
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="textSupplierCompanyEmail"
+                                                               class="form-label">Company
+                                                            Email
+                                                            <span class="text-danger">*</span></label>
+                                                        <input type="email" class="form-control "
+                                                               id="textSupplierCompanyEmail"
+                                                               placeholder="Enter Company Email"
+                                                               onkeyup="validator(this,'^([A-Za-z0-9]{0,20})[@]([a-z]{3,8})[.]([a-z]{2,9})$','supplier','company_email')"
+                                                               required>
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="textSupplierCompanyContactNo"
+                                                               class="form-label">Company
+                                                            Contact No <span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control "
+                                                               id="textSupplierCompanyContactNo"
+                                                               placeholder="Enter Company Contact Number"
+                                                               onkeyup="validator(this,'^([0][7][01245678][0-9]{7})$','supplier','company_contact_no')"
+                                                               required>
+                                                    </div>
+                                            </div>
+<!--                                                contact person details-->
+                                                <div class="row mt-3 mb-3">
+                                                    <div class="col-md-4 mb-3">
+                                                        <label for="textSupplierContactPersonName"
+                                                               class="form-label">Contact
+                                                            Person Name
+                                                            <span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control"
+                                                               id="textSupplierContactPersonName"
+                                                               placeholder="Enter Contact Person Name"
+                                                               onkeyup="validator(this,'^([A-Z][a-z]{1,20}[\\s])+([A-Z][a-z]{2,20})$','supplier','company_contact_person')"
+                                                               required>
+                                                    </div>
+                                                    <div class="col-md-4 mb-3">
+                                                        <label for="textSupplierContactPersonMobileNo"
+                                                               class="form-label">Contact
+                                                            Person Mobile No <span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control "
+                                                               id="textSupplierContactPersonMobileNo"
+                                                               placeholder="Enter Contact Person Mobile Number"
+                                                               onkeyup="validator(this,'^([0][7][01245678][0-9]{7})$','supplier','company_contact_person_mobileno')"
+                                                               required>
+                                                    </div>
+                                                    <div class="col-md-4 mb-3">
+                                                        <label for="textSupplierContactPersonEmail"
+                                                               class="form-label">Contact
+                                                            Person Email
+                                                            <span class="text-danger">*</span></label>
+                                                        <input type="email" class="form-control "
+                                                               id="textSupplierContactPersonEmail"
+                                                               placeholder="Enter Contact Person Email"
+                                                               onkeyup="validator(this,'^([A-Za-z0-9]{0,20})[@]([a-z]{3,8})[.]([a-z]{2,9})$','supplier','company_contact_person_email')"
+                                                               required>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                             <!-- Bank Deatisl -->
                                             <div class="mb-4">
                                                 <h4 class="section-title">Bank Information</h4>
                                                 <div class="row">
                                                     <div class="col-md-6 mb-3">
                                                         <label for="textSupplierAccountHolderName"
-                                                            class="form-label">Account No
+                                                            class="form-label">Account Name
                                                             <span class="text-danger">*</span></label>
                                                         <input type="text" class="form-control"
                                                             id="textSupplierAccountHolderName"
@@ -248,7 +432,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-6 mb-3">
+                                                    <div class="col-md-6 mb-3" style="display: none" id="textSupplierStatusDiv">
                                                         <label class="form-label">Status<span
                                                                 class="text-danger">*</span></label>
                                                         <select id="textSupplierStatus" class="form-select"
@@ -256,31 +440,6 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-md-6 mb-3">
-                                                        <div class="row mt-5">
-                                                            <div class="col-md-3 mb-3">
-                                                                <label class="form-label">Driving Status<span
-                                                                        class="text-danger">*</span></label>
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <div id="drivingStatus">
-                                                                    <div class="form-check form-switch">
-                                                                        <input class="form-check-input" type="checkbox"
-                                                                            id="drivingStatusChkbox" checked onchange="
-                                                                    if (this.checked) {
-                                                                        supplier.driving_status = true;
-                                                                        labelDrivingStatus.innerText = 'Yes';
-                                                                    } else {
-                                                                        supplier.driving_status = false;
-                                                                        labelDrivingStatus.innerText = 'No';
-                                                                    }">
-                                                                        <label class="form-check-label"
-                                                                            for="drivingStatusChkbox"
-                                                                            id="labelDrivingStatus">
-                                                                            Yes</label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
                                                     </div>
 
                                                 </div>
@@ -321,6 +480,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -331,7 +491,7 @@
         </div>
 
     </div>
-
+    </div>
     <div th:replace="fragments/loading :: overlayFragment"></div>
 
     <script src="/commenjs/reusabal.js"></script>

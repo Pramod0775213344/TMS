@@ -56,8 +56,37 @@ public class ReportUiController {
         bookingReportUi.setViewName("bookingReport.html");
         bookingReportUi.addObject("logedusername", auth.getName());
         bookingReportUi.addObject("loggeduserphoto", logeduser.getUser_photo());
-        bookingReportUi.addObject("pageTitle", "Booking Report");
+        bookingReportUi.addObject("pageTitle", "Booking Performance Report");
         return bookingReportUi;
+
+    }
+
+    @GetMapping(value = "/bookingdelayreport")
+    public ModelAndView loadBookingDelayReportUi() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User logeduser = userRepository.getByUsername(auth.getName());
+
+        ModelAndView bookingDelayReportUi = new ModelAndView();
+        bookingDelayReportUi.setViewName("reportBookingDelay.html");
+        bookingDelayReportUi.addObject("logedusername", auth.getName());
+        bookingDelayReportUi.addObject("loggeduserphoto", logeduser.getUser_photo());
+        bookingDelayReportUi.addObject("pageTitle", "Booking Delay Report");
+        return bookingDelayReportUi;
+
+    }
+
+
+    @GetMapping(value = "/dailybookingsummury")
+    public ModelAndView loadDailyBookingReportUi() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User logeduser = userRepository.getByUsername(auth.getName());
+
+        ModelAndView reportDailyBookingUi = new ModelAndView();
+        reportDailyBookingUi.setViewName("reportDailyBooking.html");
+        reportDailyBookingUi.addObject("logedusername", auth.getName());
+        reportDailyBookingUi.addObject("loggeduserphoto", logeduser.getUser_photo());
+        reportDailyBookingUi.addObject("pageTitle", "Daily Booking Summary Report");
+        return reportDailyBookingUi;
 
     }
 
@@ -88,4 +117,47 @@ public class ReportUiController {
         return insuranceExpireReportUi;
 
     }
+
+    @GetMapping(value = "/agreementdeatilsreport")
+    public ModelAndView loadAgreementDetailsUi() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User logeduser = userRepository.getByUsername(auth.getName());
+
+        ModelAndView agreementDetailsReportUi = new ModelAndView();
+        agreementDetailsReportUi.setViewName("reportAgreementDetails.html");
+        agreementDetailsReportUi.addObject("logedusername", auth.getName());
+        agreementDetailsReportUi.addObject("loggeduserphoto", logeduser.getUser_photo());
+        agreementDetailsReportUi.addObject("pageTitle", "Agreement Details Report");
+        return agreementDetailsReportUi;
+
+    }
+
+//    load karanwa driver performance report ui
+@GetMapping(value = "/driverperformancereport")
+public ModelAndView loadDriverPerformanceReportUi() {
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    User logeduser = userRepository.getByUsername(auth.getName());
+
+    ModelAndView agreementDetailsReportUi = new ModelAndView();
+    agreementDetailsReportUi.setViewName("reportDriverPerfomance.html");
+    agreementDetailsReportUi.addObject("logedusername", auth.getName());
+    agreementDetailsReportUi.addObject("loggeduserphoto", logeduser.getUser_photo());
+    agreementDetailsReportUi.addObject("pageTitle", "Driver Performance Report");
+    return agreementDetailsReportUi;
+}
+
+//load karanwa income reprot ui
+@GetMapping(value = "/incomeReport")
+public ModelAndView loadIncomeReportUi() {
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    User logeduser = userRepository.getByUsername(auth.getName());
+
+    ModelAndView incomeReportUi = new ModelAndView();
+    incomeReportUi.setViewName("reportIncome.html");
+    incomeReportUi.addObject("logedusername", auth.getName());
+    incomeReportUi.addObject("loggeduserphoto", logeduser.getUser_photo());
+    incomeReportUi.addObject("pageTitle", "Income Report");
+    return incomeReportUi;
+}
+
 }

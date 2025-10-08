@@ -23,7 +23,20 @@ const loadUserTable = () => {
 
     dataFillIntoTheTable(userTableBody, users, propertyList, userView, userEdit, userDelete, true);
 
-    $('#userTable').DataTable();
+    $("#userTable").dataTable({
+        "createdRow": function(row, data, dataIndex) {
+            $(row).find("td").css({
+                "text-align": "center",
+                "height": "80px"
+            });
+        },
+        "headerCallback": function(thead, data, start, end, display) {
+            $(thead).find("th").css({
+                "text-align": "center",
+                "padding": "20px"
+            });
+        }
+    });
 
 }
 
@@ -436,10 +449,9 @@ const refreshUserForm = () => {
 
     user = new Object();
     user.roles = new Array();
-
+    userRegistrationForm.reset();
     // update eked reytpe password eke value eka nathi nisa error ekak enw.eka nawaththanna error check karanna kalin old user null da kiyala balanna oni.update eka wunata passe aye old user null wenna oni
     oldUser = null;
-
 
     let employees = getServiceRequest("/employee/alldatawithoutuseracconut");
     dataFilIntoSelect(selectEmployee, "Select Employee", employees, "fullname");
@@ -491,6 +503,7 @@ const refreshUserForm = () => {
     textUserPassword.disabled = false;
     textUserRetypePassword.disabled = false;
 
+    setDefault([selectEmployee, textUserName, textUserEmail, textUserPassword, textUserRetypePassword, textUserNote]);
 
 }
 

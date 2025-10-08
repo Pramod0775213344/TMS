@@ -10,7 +10,7 @@ window.addEventListener("load", () => {
 
 // Get Table data from back end and transfer to front end
 const loadSupplierTable = () => {
-    const supplier = getServiceRequest("/supplier/alldata");
+    const supplierIndividual = getServiceRequest("/supplier/individual");
 
     const propertyList = [
         { propertyName: "fullname", dataType: "string" },
@@ -22,9 +22,51 @@ const loadSupplierTable = () => {
         { propertyName: getSupplierStatus, dataType: "function" }
     ];
 
-    dataFillIntoTheTable(supplierTableBody, supplier, propertyList, supplierView, supplierEdit, supplierDelete, true);
+    dataFillIntoTheTable(supplierTableBody, supplierIndividual, propertyList, supplierView, supplierEdit, supplierDelete, true);
 
-    $('#supplierTable').DataTable();
+
+    const supplierCompany = getServiceRequest("/supplier/company");
+
+    const propertyLists = [
+        { propertyName: "company_name", dataType: "string" },
+        { propertyName: "company_reg_no", dataType: "string" },
+        { propertyName: "company_email", dataType: "string" },
+        { propertyName: "company_contact_no", dataType: "string" },
+        { propertyName: getSupplierStatus, dataType: "function" }
+    ];
+
+    dataFillIntoTheTable(supplierTableBodyCompany, supplierCompany, propertyLists, supplierView, supplierEdit, supplierDelete, true);
+
+
+    $("#supplierTable").dataTable({
+        "createdRow": function(row, data, dataIndex) {
+            $(row).find("td").css({
+                "text-align": "center",
+                "height": "80px"
+            });
+        },
+        "headerCallback": function(thead, data, start, end, display) {
+            $(thead).find("th").css({
+                "text-align": "center",
+                "padding": "20px"
+            });
+        }
+    });
+    $("#supplierTableCompany").dataTable({
+        "createdRow": function(row, data, dataIndex) {
+            $(row).find("td").css({
+                "text-align": "center",
+                "height": "80px"
+            });
+        },
+        "headerCallback": function(thead, data, start, end, display) {
+            $(thead).find("th").css({
+                "text-align": "center",
+                "padding": "20px"
+            });
+        }
+    });
+
 };
 
 // driving status Function
@@ -58,16 +100,40 @@ const supplierEdit = (dataOb) => {
     console.log(dataOb);
 
     textSupplierFullName.value = dataOb.fullname;
+    textSupplierCategory.disabled = true;
+    // categeroy type eka anuwa changw wenna oni
+    if (dataOb.category_type === "Individual") {
+        textSupplierCategory.value = dataOb.category_type;
+        individualSupplierDetails.style.display = "";
+        companyDetails.style.display = "none";
 
-    const fullNameParts = textSupplierFullName.value.split(" ");
-    generateCallingName(dataOb.fullname, dataOb.callingname);
+        const fullNameParts = textSupplierFullName.value.split(" ");
+        generateCallingName(dataOb.fullname, dataOb.callingname);
 
-    textSupplierAddress.value = dataOb.address;
-    textSupplierNic.value = dataOb.nic;
-    textSupplierDrivingLicenseNo.value = dataOb.driving_licence_no;
-    textSupplierDrivingLicenseExpireDate.value = dataOb.driving_licencen_expiredate;
-    textSupplierEmail.value = dataOb.email;
-    textSupplierMobileNo.value = dataOb.mobileno;
+        textSupplierAddress.value = dataOb.address;
+        textSupplierNic.value = dataOb.nic;
+        textSupplierDrivingLicenseNo.value = dataOb.driving_licence_no;
+        textSupplierDrivingLicenseExpireDate.value = dataOb.driving_licencen_expiredate;
+        textSupplierEmail.value = dataOb.email;
+        textSupplierMobileNo.value = dataOb.mobileno;
+
+    }else if (dataOb.category_type === "Company") {
+        textSupplierCategory.value = dataOb.category_type;
+        individualSupplierDetails.style.display = "none";
+        companyDetails.style.display = "";
+
+        textSupplierCompanyName.value = dataOb.company_name;
+        textSupplierCompanyRegNo.value = dataOb.company_reg_no;
+        textSupplierCompanyAddress.value = dataOb.company_address;
+        textSupplierCompanyEmail.value = dataOb.company_email;
+        textSupplierCompanyContactNo.value = dataOb.company_contact_no;
+        textSupplierContactPersonName.value = dataOb.company_contact_person;
+        textSupplierContactPersonMobileNo.value = dataOb.company_contact_person_mobileno;
+        textSupplierContactPersonEmail.value = dataOb.company_contact_person_email;
+
+    }
+
+
     textSupplierAccountHolderName.value = dataOb.account_holder_name;
     textSupplierBankName.value = dataOb.bank_name;
     textSupplierBranchName.value = dataOb.branch_name;
@@ -77,6 +143,7 @@ const supplierEdit = (dataOb) => {
 
     updateButton.style.display = "";
     submitButton.style.display = "none";
+    textSupplierStatusDiv.style.display = "";
 
     supplier = JSON.parse(JSON.stringify(dataOb));
     oldSupplier = JSON.parse(JSON.stringify(dataOb));
@@ -176,6 +243,35 @@ const generateCallingName = (fullNameValue, selectedValue) => {
     });
 }
 
+// categeru eka select karaddi adala details view wenna oni
+let textSupplierCategory = document.getElementById("textSupplierCategory");
+textSupplierCategory.addEventListener("change", () => {
+
+    let selectedCategory = textSupplierCategory.value;
+    if (selectedCategory === "Company") {
+        individualSupplierDetails.style.display = "none";
+        companyDetails.style.display = "";
+        setDefault([textSupplierFullName, textSupplierAddress, textSupplierNic, textSupplierDrivingLicenseNo, textSupplierDrivingLicenseExpireDate, textSupplierEmail, textSupplierMobileNo, textSupplierAccountHolderName, textSupplierBankName, textSupplierBranchName, textSupplierAccountNo, textSupplierStatus,textSupplierCompanyName,textSupplierCompanyRegNo,textSupplierCompanyAddress,textSupplierCompanyEmail,textSupplierCompanyContactNo,textSupplierContactPersonName,textSupplierContactPersonMobileNo,textSupplierContactPersonEmail]);
+        // form reset without catiegary
+        // Store the current category value
+        let currentCategory = textSupplierCategory.value;
+       // Reset the form
+        supplierRegistrationForm.reset();
+         // Restore the category value
+        textSupplierCategory.value = currentCategory;
+
+    }else if (selectedCategory === "Individual") {
+        individualSupplierDetails.style.display = "";
+        companyDetails.style.display = "none";
+        setDefault([textSupplierFullName, textSupplierAddress, textSupplierNic, textSupplierDrivingLicenseNo, textSupplierDrivingLicenseExpireDate, textSupplierEmail, textSupplierMobileNo, textSupplierAccountHolderName, textSupplierBankName, textSupplierBranchName, textSupplierAccountNo, textSupplierStatus,textSupplierCompanyName,textSupplierCompanyRegNo,textSupplierCompanyAddress,textSupplierCompanyEmail,textSupplierCompanyContactNo,textSupplierContactPersonName,textSupplierContactPersonMobileNo,textSupplierContactPersonEmail]);
+        let currentCategory = textSupplierCategory.value;
+        // Reset the form
+        supplierRegistrationForm.reset();
+        // Restore the category value
+        textSupplierCategory.value = currentCategory;
+    }
+});
+
 //full name validator
 textSupplierFullName.addEventListener("keyup", () => {
 
@@ -237,30 +333,59 @@ textSupplierFullName.addEventListener("keyup", () => {
 const checkFormError = () => {
     let errors = "";
 
-    if (supplier.fullname == null) {
-        errors += "Please Enter the Full Name......"
-    };
-    if (supplier.callingname == null) {
-        errors += "Please Enter the Calling Name......"
-    };
-    if (supplier.address == null) {
-        errors += "Please Enter the Address......"
-    };
-    if (supplier.nic == null) {
-        errors += "Please Enter the NIC......"
-    };
+    if (textSupplierCategory.value ==="Individual") {
+        if (supplier.fullname == null) {
+            errors += "Please Enter the Full Name......"
+        }
+        if (supplier.callingname == null) {
+            errors += "Please Enter the Calling Name......"
+        }
+        if (supplier.address == null) {
+            errors += "Please Enter the Address......"
+        }
+        if (supplier.nic == null) {
+            errors += "Please Enter the NIC......"
+        }
+        if (supplier.email == null) {
+            errors += "Please Enter the Email......"
+        };
+        if (supplier.mobileno == null) {
+            errors += "Please Enter the Mobile No......"
+        };
+    }
+    if (textSupplierCategory.value ==="Company") {
+        if (supplier.company_name == null) {
+            errors += "Please Enter the Company Name......"
+        }
+        if (supplier.company_reg_no == null) {
+            errors += "Please Enter the Company Address......"
+        }
+        if (supplier.company_address == null) {
+            errors += "Please Enter the Address......"
+        }
+        if (supplier.company_contact_person == null) {
+            errors += "Please Enter the Contact Person Name......"
+        }
+        if (supplier.company_contact_person_email == null) {
+            errors += "Please Enter the  Contact Person email......"
+        }
+        if (supplier.company_contact_person_mobileno == null) {
+            errors += "Please Enter the Contact Person Mobile No......"
+        }
+        if (supplier.company_email == null) {
+            errors += "Please Enter the Company Email......"
+        }
+        if (supplier.company_contact_no == null) {
+            errors += "Please Enter the Company Mobile No......"
+        }
+    }
     // if (supplier.driving_licence_no == null) {
     //     errors += "Please Enter the Driving License No......"
     // };
     // if (supplier.driving_licencen_expiredate == null) {
     //     errors += "Please Enter the Driving License Expire Date......"
     // };
-    if (supplier.email == null) {
-        errors += "Please Enter the Email......"
-    };
-    if (supplier.mobileno == null) {
-        errors += "Please Enter the Mobile No......"
-    };
+
     if (supplier.account_holder_name == null) {
         errors += "Please Enter the Account Holder Name......"
     };
@@ -276,12 +401,6 @@ const checkFormError = () => {
     if (supplier.transportname == null) {
         errors += "Please Enter the Transport name........."
     }
-
-    if (supplier.supplier_status_id == null) {
-        errors += "Please Select the status......"
-    };
-
-
     return errors;
 
 }
@@ -426,6 +545,33 @@ const checkFormUpdates = () => {
         if (supplier.driving_status != oldSupplier.driving_status) {
             updates += "Driving Status is changed ";
         };
+        if (supplier.category != oldSupplier.category) {
+            updates += "Category is changed ";
+        };
+        if (supplier.company_name != oldSupplier.company_name) {
+            updates += "Company Name is changed ";
+        };
+        if (supplier.company_reg_no != oldSupplier.company_reg_no) {
+            updates += "Company Reg No is changed ";
+        };
+        if (supplier.company_address != oldSupplier.company_address) {
+            updates += "Company Address is changed ";
+        };
+        if (supplier.company_email != oldSupplier.company_email) {
+            updates += "Company Email is changed ";
+        };
+        if (supplier.company_contact_no != oldSupplier.company_contact_no) {
+            updates += "Company Contact No is changed ";
+        };
+        if (supplier.company_contact_person != oldSupplier.company_contact_person) {
+            updates += "Company Contact Person is changed ";
+        };
+        if (supplier.company_contact_person_mobileno != oldSupplier.company_contact_person_mobileno) {
+            updates += "Company Contact Person Mobile No is changed ";
+        };
+        if (supplier.company_contact_person_email != oldSupplier.company_contact_person_email) {
+            updates += "Company Contact Person Email is changed ";
+        };
 
     }
     return updates;
@@ -528,16 +674,22 @@ const refreshSupplierForm = () => {
     let supplierStatus = getServiceRequest('/supplierstatus/alldata');
     dataFilIntoSelect(textSupplierStatus, "Select Status", supplierStatus, "status")
 
-    drivingStatusChkbox.checked = "checked";
-    labelDrivingStatus.innerText = "Yes";
-    supplier.driving_status = true;
+    const drivingStatusChkbox = document.getElementById("drivingStatusChkbox");
+    drivingStatusChkbox.checked = false;
+    labelDrivingStatus.innerText = "No";
+    supplier.driving_status = false;
 
-    setDefault([textSupplierFullName, textSupplierAddress, textSupplierNic, textSupplierDrivingLicenseNo, textSupplierDrivingLicenseExpireDate, textSupplierEmail, textSupplierMobileNo, textSupplierAccountHolderName, textSupplierBankName, textSupplierBranchName, textSupplierAccountNo, textSupplierStatus]);
+    setDefault([textSupplierFullName, textSupplierAddress, textSupplierNic, textSupplierDrivingLicenseNo, textSupplierDrivingLicenseExpireDate, textSupplierEmail, textSupplierMobileNo, textSupplierAccountHolderName, textSupplierBankName, textSupplierBranchName, textSupplierAccountNo, textSupplierStatus,textSupplierCategory,textSupplierCompanyName,textSupplierCompanyRegNo,textSupplierCompanyAddress,textSupplierCompanyEmail,textSupplierCompanyContactNo,textSupplierContactPersonName,textSupplierContactPersonMobileNo,textSupplierContactPersonEmail]);
 
     submitButton.style.display = "";
     updateButton.style.display = "none";
+    textSupplierStatusDiv.style.display = "none";
+    textSupplierCategory.disabled = false;
 
     currentdatevalidator('textSupplierDrivingLicenseExpireDate')
+
+    individualSupplierDetails.style.display = "none";
+    companyDetails.style.display = "none";
 }
 
 //Alert Box Call function
